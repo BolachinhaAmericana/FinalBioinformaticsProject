@@ -4,4 +4,4 @@ ADD getSecBdTerm.py .
 
 RUN pip install request biopython
 
-CMD [ "python3","/getSecBdTerm"]
+CMD [ "python3","/getSecBdTerm.py" ]
