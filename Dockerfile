@@ -1,7 +1,6 @@
 FROM python:3.8.2
 
-ADD getSecBdTerm.py .
+RUN apt-get update
 
-RUN pip install requests biopython
-
-CMD [ "python3","/getSecBdTerm.py" ]
+RUN pip3 install requests biopython
+    
