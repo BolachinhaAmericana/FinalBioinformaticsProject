@@ -11,7 +11,7 @@ def obterArgumentosDoUtilizador():
     Os argumentos "Data Base" db (String) e o "term" term (String) escritos pelo utilizador
 
     '''
-
+    
     db = sys.argv[1]
     term = sys.argv[2]
     return db, term
