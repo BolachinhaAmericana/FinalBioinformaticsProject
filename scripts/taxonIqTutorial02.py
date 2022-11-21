@@ -1,7 +1,7 @@
 import sys
 import taxoniq
 
-
+########     ta meio escafiado, ja trato disto
 #def obterArgumentosDoUtilizador():
 taxonomia = ""
 rankTaxonomia = sys.argv[1]
