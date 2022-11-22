@@ -12,15 +12,18 @@ def loadTaxon(taxonId):
 def getSpecieInfo(t):
     specieName = t.scientific_name
     commonName = t.common_name
-    ranksList = specieName.ranked_lineage
+    ranksList = t.ranked_lineage
     return specieName, commonName, ranksList
 
 if __name__ == '__main__':
     
-    searchResult = tID.getSearchResult("Homo Sapiens") #full eSearch
+    term = tID.getUserArguments()
+    searchResult = tID.getSearchResult(term) #full eSearch
     taxonId = tID.getTaxonId(searchResult)
-    print(taxonId)
-    #t = loadTaxon(taxonId)
-    #print(t)
-    #specieName, commonName, ranksList = getSpecieInfo(t)
-    #print(specieName)
+    t = loadTaxon(taxonId)
+    specieName, commonName, ranksList = getSpecieInfo(t)
+    #specieName = getSpecieInfo(t)
+
+    print(specieName)
+    print(commonName)
+    #print(ranksList)

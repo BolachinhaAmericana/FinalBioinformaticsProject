@@ -20,14 +20,18 @@ def getSearchResult(term):
 
 def getTaxonId(result):
     taxonId = result["IdList"]
-    #print(result)
     os.system(f"echo {taxonId} > 1.txt")
-    clearedTaxonId = 'sim'
     subprocess.call("./clearTaxonId.sh")
-    return
+    with open('3.txt', 'r') as file:
+        clearedTaxonId = file.read().replace('\n', '')
+    os.system("rm 3.txt")
+    return clearedTaxonId
 
 if __name__ == '__main__':
 
     term = getUserArguments()
+    #term = "Homo Sapiens"
     searchResult = getSearchResult(term)
-    getTaxonId(searchResult)
+    taxonId = getTaxonId(searchResult)
+    print(taxonId)
+
