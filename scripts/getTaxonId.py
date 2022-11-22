@@ -1,4 +1,4 @@
-#!/usr/bin/python
+!/usr/bin/python
 
 
 # Get TaxonId by species Name.
@@ -7,6 +7,7 @@
 import sys
 from Bio import Entrez
 import os
+import subprocess
 
 def getUserArguments():
     term = sys.argv[1]
@@ -19,19 +20,14 @@ def getSearchResult(term):
 
 def getTaxonId(result):
     taxonId = result["IdList"]
-    os.system(f"echo {taxonId} > temp1.txt")
-    os.system("sed -i 's/\[//g' temp1.txt >> temp1.txt")
-    os.system("sed -i 's/\]//g' temp1.txt")
-    clearedTaxonId = os.system("cat temp1.txt")
-    os.system("rm temp1.txt")
-
-    return clearedTaxonId
-
+    #print(result)
+    os.system(f"echo {taxonId} > 1.txt")
+    clearedTaxonId = 'sim'
+    subprocess.call("./clearTaxonId.sh")
+    return
 
 if __name__ == '__main__':
 
     term = getUserArguments()
     searchResult = getSearchResult(term)
-    taxonId = getTaxonId(searchResult)
-    print(taxonId)
-
+    getTaxonId(searchResult)
