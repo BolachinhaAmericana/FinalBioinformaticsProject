@@ -74,7 +74,7 @@ def obterInformacaoEFetch(queryKey, webEnv):
 
     '''
 
-    fetchHandle = Entrez.efetch(db=db, webenv=webEnv, query_key=queryKey, rettype='fasta')
+    fetchHandle = Entrez.efetch(db=db, webenv=webEnv, query_key=queryKey, rettype='xml')
     informacao = fetchHandle.read()
     return informacao
 

@@ -5,21 +5,26 @@
 #Snakemake commands: 
 #pip install snakemake==5.26.1
 #python3 -m pip install snakemake
-#dataBase="Nucleotide" term="animal name for example" snakemake --cores all
+#term="Lagomorpha" rank="kingdom"  snakemake --cores all
+#taxonkit list --ids 33090 -nr --indent "    "
 
 import os
-dataBase = os.environ.get("dataBase")
 term = os.environ.get("term")
+rank = os.environ.get("rank")
 
 
-rule getSecBdTerm:
+rule getTaxonIdRankTerm:
     params:
-        bd = dataBase,
-        name = term    
+        cientificName = term,  
+        rank = rank
+    output:
+        "taxonId.fasta"
+    shell:
+        "python3 scripts/getTaxonId.py {params.cientificName} {params.rank} > {output}"
+
+
+rule getALLRankOrganism:
     output:
         "output.fasta"
     shell:
-        "python3 scripts/getSecBdTerm.py {params.bd} {params.name} > {output}"
-   
-
-
+        'taxonkit list --ids $(cat taxonId.fasta) -nr --indent "    " > {output}'

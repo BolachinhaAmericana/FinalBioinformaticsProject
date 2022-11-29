@@ -1,37 +1,25 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
+# Get TaxonId.
 
-# Get TaxonId by species Name.
-
-
-import sys
 from Bio import Entrez
-import os
-import subprocess
+import getRankName as nomeRank
 
-def getUserArguments():
-    term = sys.argv[1]
-    return term
-
-def getSearchResult(term):
-    eSearch = Entrez.esearch(db="Taxonomy", term=term, usehistory='y', retmax=20)
+def getSearchResult(nomeRankOrganismo):
+    eSearch = Entrez.esearch(db="Taxonomy", term=nomeRankOrganismo, usehistory='y', retmax=20)
     eSearchResult = Entrez.read(eSearch)
     return eSearchResult
 
-def getTaxonId(result):
-    taxonId = result["IdList"]
-    os.system(f"echo {taxonId} > 1.txt")
-    subprocess.call("./clearTaxonId.sh")
-    with open('3.txt', 'r') as file:
-        clearedTaxonId = file.read().replace('\n', '')
-    os.system("rm 3.txt")
-    return clearedTaxonId
+def getTaxonId(eSearchResult):
+    taxonId = str(eSearchResult["IdList"])
+    taxonId = taxonId.replace("[\'",'')
+    taxonId = taxonId.replace("\']",'')
+    return taxonId
 
 if __name__ == '__main__':
-
-    term = getUserArguments()
-    #term = "Homo Sapiens"
-    searchResult = getSearchResult(term)
+    term, rankTaxonomia = nomeRank.obterArgumentosDoUtilizador()
+    nomeRankOrganismo = nomeRank.obterNomeRankOrganismo(term,rankTaxonomia)             
+    searchResult = getSearchResult(nomeRankOrganismo)
     taxonId = getTaxonId(searchResult)
     print(taxonId)
 
