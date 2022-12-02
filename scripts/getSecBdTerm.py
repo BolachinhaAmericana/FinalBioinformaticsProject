@@ -3,7 +3,7 @@ import sys
 from Bio import Entrez
 
 
-def obterArgumentosDoUtilizador():
+def getArgumentFromUser():
     ''' 
 
     Obtem os argumentos "Data Base" e o "term" escritos pelo utilizador
@@ -11,13 +11,13 @@ def obterArgumentosDoUtilizador():
     Os argumentos "Data Base" db (String) e o "term" term (String) escritos pelo utilizador
 
     '''
-    
+
     db = sys.argv[1]
     term = sys.argv[2]
     return db, term
 
 
-def obterResultadoESearch(db, term):
+def getResultsFromESearch(db, term):
     ''' 
 
     Obtem o resultado de um ESearch feito à "Entrez API" com a "Data Base" e o "term" escritos pelo utilizador
@@ -29,13 +29,13 @@ def obterResultadoESearch(db, term):
     '''
 
     eSearch = Entrez.esearch(db=db, term=term, usehistory="y")
-    resultado = Entrez.read(eSearch)
-    return resultado
+    result = Entrez.read(eSearch)
+    return result
 
 
-def obterWebEnv(resultado):
+def getWebEnv(result):
     ''' 
-    
+
     Obtem o WebEnv a partir do resultado da função anterior
     param: 
     resultado: o resultado da pesquisa feito ESearch feito à "Entrez API"
@@ -44,13 +44,13 @@ def obterWebEnv(resultado):
 
     '''
 
-    webEnv = resultado["WebEnv"]
+    webEnv = result["WebEnv"]
     return webEnv
 
 
-def obterQueryKey(resultado):
+def getQueryKey(result):
     ''' 
-    
+
     Obtem a QueryKey a partir do resultado da primeira função
     param: 
     resultado: o resultado da pesquisa feito ESearch feito à "Entrez API"
@@ -59,31 +59,30 @@ def obterQueryKey(resultado):
 
     '''
 
-    queryKey = resultado["QueryKey"]
+    queryKey = result["QueryKey"]
     return queryKey
 
 
-def obterInformacaoEFetch(queryKey, webEnv):
+def getInformactionEFetch(queryKey, webEnv):
     ''' 
-    
+
     Obtem a informação do EFetch a partir da "Data Base", da QueryKey e do WebEnv que veem das funções anteriores
     param: 
     queryKey, webEnv: a QueryKey e o WebEnv do resultado feito com o ESearch feito à "Entrez API"
     return: 
-    A informacao pelo feito EFetch feiro com a "Data Base", QueryKey e WebEnv no formato fasta 
+    A informacao pelo feito EFetch feiro com a "Data Base", QueryKey e WebEnv no formato fasta
 
     '''
 
     fetchHandle = Entrez.efetch(db=db, webenv=webEnv, query_key=queryKey, rettype='xml')
-    informacao = fetchHandle.read()
-    return informacao
-
+    informaction = fetchHandle.read()
+    return informaction
 
 if __name__ == '__main__':
-    db, term = obterArgumentosDoUtilizador()
-    resultado = obterResultadoESearch(db, term)
-    queryKey, webEnv = obterQueryKey(resultado), obterWebEnv(resultado)
-    informacao = obterInformacaoEFetch(queryKey, webEnv)
-    print(informacao)
+    db, term = getArgumentFromUser()
+    result = getResultsFromESearch(db, term)
+    queryKey, webEnv = getQueryKey(result), getQueryKey(result)
+    informaction = getInformactionEFetch(queryKey, webEnv)
+    print(informaction)
     sys.stderr.write("Foi adicionado com sucesso um ficheiro sequenciacao.Fasta com o output >> ")
     

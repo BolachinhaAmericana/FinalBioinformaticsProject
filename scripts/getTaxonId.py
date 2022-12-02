@@ -17,9 +17,8 @@ def getTaxonId(eSearchResult):
     return taxonId
 
 if __name__ == '__main__':
-    term, rankTaxonomia = nomeRank.obterArgumentosDoUtilizador()
-    nomeRankOrganismo = nomeRank.obterNomeRankOrganismo(term,rankTaxonomia)             
-    searchResult = getSearchResult(nomeRankOrganismo)
+    term, rankTaxonomy = nomeRank.getArgumentFromUser()
+    nameRankOrganism = nomeRank.getNameRankOrganism(term,rankTaxonomy)
+    searchResult = getSearchResult(nameRankOrganism)
     taxonId = getTaxonId(searchResult)
     print(taxonId)
-
