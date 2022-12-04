@@ -1,2 +1,4 @@
-Ainda estou a tratar disto. Depois melhoro a situation
-Ta mt BOMMM
+Dood, se conseguires ve ai a situation do for loop no getScientificNames.py
+
+Se conseguirmos meter isso a funcionar depois falta so pedir os Accs e fazer o download das sequencias.
+TA MT BOM
