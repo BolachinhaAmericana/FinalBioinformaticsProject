@@ -1,9 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 # Get TaxonId.
 
 from Bio import Entrez
-import getRankName as nomeRank
+import getRankName
+
 
 def getSearchResult(nomeRankOrganismo):
     eSearch = Entrez.esearch(db="Taxonomy", term=nomeRankOrganismo, usehistory='y', retmax=20)
@@ -17,9 +18,19 @@ def getTaxonId(eSearchResult):
     return taxonId
 
 if __name__ == '__main__':
-    term, rankTaxonomia = nomeRank.obterArgumentosDoUtilizador()
-    nomeRankOrganismo = nomeRank.obterNomeRankOrganismo(term,rankTaxonomia)             
-    searchResult = getSearchResult(nomeRankOrganismo)
-    taxonId = getTaxonId(searchResult)
+    term, rankTaxonomia = getRankName.getUserArgs()
+    searchResults = getSearchResult(term)
+    taxonId = getTaxonId(searchResults)
+    nameRank = getRankName.getNameRank(taxonId, rankTaxonomia)
+
+    rankSearchResults = getSearchResult(nameRank)
+    rankTaxonId = getTaxonId(rankSearchResults)
+
+    print('Specie Taxon Id')
     print(taxonId)
+    print('Taxon Rank Name:')
+    print(nameRank)
+    print('Taxon Rank Id:')
+    print(rankTaxonId)
+
 
