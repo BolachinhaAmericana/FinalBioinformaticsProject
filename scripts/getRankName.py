@@ -1,24 +1,23 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 import sys
 import taxoniq
 
 
-def obterArgumentosDoUtilizador():
+def getUserArgs():
     term = sys.argv[1]
     rankTaxonomia = sys.argv[2]
     return term, rankTaxonomia
 
 
-def obterNomeRankOrganismo(term,rankTaxonomia):  
-    nomeCientifico = taxoniq.Taxon(scientific_name=term)
-    listaRanks = nomeCientifico.ranked_lineage
-    relacaoDeRankOrganismo = [(nomeCientifico.rank.name, nomeCientifico) for nomeCientifico in listaRanks]
-    for i in relacaoDeRankOrganismo:
-        if rankTaxonomia in str(i):
-            taxonomia = i[1]
-            nomeRankOrganismo = taxonomia.scientific_name
-            break
-    #print(nomeRankOrganismo)    
-    return nomeRankOrganismo    
+def getNameRank(taxonId, taxonRank):
+        t = taxoniq.Taxon(taxonId)
+        rankList = t.ranked_lineage
+        relation = [(t.rank.name, t) for t in rankList]
+        for i in relation:
+            if taxonRank in str(i):
+                tax = i[1]
+                taxNameRank = tax.scientific_name
+                break
+        return taxNameRank
 
 
