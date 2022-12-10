@@ -17,23 +17,27 @@ def eSearch(db, term):
         eSearchResult
     '''
     if db=='Gene':
-        eSearch = Entrez.esearch(db=db, term=term, usehistory="y", idtype="acc")
+        eSearch = Entrez.esearch(db=db, term=f'{term} AND alive[prop]', usehistory="y", idtype="acc")
     else: 
         eSearch = Entrez.esearch(db=db, term=term, usehistory="y", retmax = 9999)
     eSearchResult = Entrez.read(eSearch)
     return eSearchResult
 
-
+if os.path.exists('./GeneLists') == False:
+    os.system("mkdir ./GeneLists")
 
 with open('ScientificNames_list.txt', 'r') as List:
     nameList = [nameList.rstrip() for nameList in List]
 
 nameList= list(set(nameList)) 
-nameList.remove("")
+if "" in nameList:
+    nameList.remove("")
+
+
 
 for name in nameList:
 
-    term= (f'{name}') #One specie at a Time
+    term= (f'{name}') 
 
     search_results= eSearch("Gene", term)
 
@@ -41,13 +45,15 @@ for name in nameList:
     count = int(search_results["Count"])
     webenv = search_results["WebEnv"]
     query_key = search_results["QueryKey"]
-    batch_size = 9999
+    batch_size = 5000
 
+    if os.path.isfile('rawFile.txt')== True:
+        os.system('rm rawFile.txt')
 
-    os.system("mkdir ./GeneLists")
+    
     for start in range(0, count, batch_size):
         end = count
-        print("Going to download record %i to %i - %i" % (start + 1, end, term))
+        print(f"Going to download record {start+1} to {end} - {term}")
         fetch_handle = Entrez.efetch(
             db="Gene",
             rettype="gb",
@@ -60,15 +66,17 @@ for name in nameList:
             )
         data = fetch_handle.read()
 
-        myfile= open('rawFile.txt', 'a')
+        myfile= open('rawFile.txt', 'w')
         myfile.writelines(data)
         myfile.close()
+        os.system("grep -v ':' rawFile.txt > loading.txt")
+        os.system("grep '\.' loading.txt > rawFile.txt")
+        os.system("grep -v '\[' rawFile.txt > loading.txt")
+        os.system("sed 's/^.*\ //' loading.txt >> GeneList.txt")
+        
 
         fetch_handle.close()
 
-    os.system("grep -v ':' rawFile.txt > loading.txt")
-    os.system("grep '\.' loading.txt > rawFile.txt")
-    os.system("grep -v '\[' rawFile.txt > loading.txt")
-    os.system("sed 's/^.*\ //' loading.txt > GeneList.txt")
-    os.system("rm loading.txt")
+    
     os.rename('GeneList.txt', './GeneLists/{}_GeneList'.format(term))
+
