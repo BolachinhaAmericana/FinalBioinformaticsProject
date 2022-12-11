@@ -7,8 +7,8 @@ import os
 
 Entrez.email = 'NoWarningPls@gmail.com'
 
-term = 'Homo sapiens'
-taxonRank = 'order'
+#term = 'Homo sapiens'
+#taxonRank = 'order'
 
 def getUserArgs():
     '''
@@ -27,7 +27,7 @@ def getUserArgs():
     taxonRank= sys.argv[2]
     return term, taxonRank
 
-#term, taxonRank= getUserArgs()
+term, taxonRank= getUserArgs()
 
 def eSearch(db, term):
     '''
