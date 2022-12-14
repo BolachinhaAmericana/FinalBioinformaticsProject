@@ -1,0 +1,225 @@
+Atelocynus microtis
+Ursus environmental sample
+Viverridae sp. BNHS 5599
+Herpestes edwardsi
+Vulpes bengalensis
+Viverridae sp. CU AZ-2022
+Carnivora sp. BOLD:AAN3991
+Tremarctos sp.
+Lyncodon patagonicus
+Vulpes rueppellii
+Carnivora sp. BOLD:AAC8458
+Diplogale hosei
+Urva auropunctata
+Canis adustus
+Nasuella meridensis
+Carnivora sp. BOLD:AAN3846
+Vulpes cana
+Meles canescens
+Arctocephalus galapagoensis
+Mustela sp.
+Mustela strigidorsa
+Vulpes sp.
+Canis sp. 70-TX-08
+Carnivora sp. BOLD:AAC6751
+Carnivora sp. BOLD:AAD7556
+Genetta cristata
+Canis sp. CM038379
+Martes sp. OK-17100
+Martes martes x zibellina
+Conepatus sp. UFSC 6038
+Carnivora sp. BOLD:AAL2944
+Mustela haidarum
+Genetta felina x Genetta tigrina
+Canis sp. Belgium/36,000
+Galerella nigrata
+Carnivora sp. BOLD:AAE6246
+Genetta victoriae
+Neogale environmental sample
+Genetta thierryi
+Galidictis grandidieri
+Panthera spelaea
+Vulpes pallida
+Procyon environmental sample
+Bassariscus sumichrasti
+Felis catus x Leopardus geoffroyi
+Prionodon linsang
+Melogale personata
+Carnivora sp. BOLD:AAE2544
+Bassaricyon medius
+Lycalopex vetulus
+Nasua narica
+Carnivora sp. BOLD:AAF0193
+Ursus sp.
+Procyon minor
+Canis sp. KEB-2016
+Carnivora sp. BOLD:AAC2892
+Lycalopex sp. CAN005
+Felis chaus x Felis catus
+Miracinonyx trumani
+Neofelis diardi
+Lycalopex fulvipes
+Vulpes chama
+Crossarchus alexandri
+Bassaricyon alleni
+Carnivora sp. BOLD:AAJ7207
+Carnivora sp. BOLD:AAC5231
+Liberiictis kuhni
+Procyon pygmaeus
+Bassaricyon neblina
+Carnivora sp. BOLD:AAJ1863
+Herpestes fuscus
+Spilogale angustifrons
+Smilodon populator
+Canis sp. CM0006548
+Mustela felipei
+Carnivora sp. BOLD:AAC5230
+Leptailurus serval x Caracal caracal
+Mustela richardsonii
+Carnivora sp. BOLD:AAF1298
+Vulpes macrotis
+Galictis cuja
+Carnivora sp. BOLD:AAE7693
+Prionailurus iriomotensis
+Genetta johnstoni
+Homotherium latidens
+Carnivora sp. BOLD:AAC5017
+Leopardus guttulus
+Martes sp. OK-00510
+Herpestes smithii
+Crossarchus ansorgei
+Lontra felina
+Felis sp.
+Vulpes velox
+Cynogale bennetti
+Ursus ingressus
+Genetta bourloni
+Carnivora sp. BOLD:AAJ1637
+Lycalopex culpaeus
+Neomonachus tropicalis
+Helogale hirtula
+Conepatus sp.
+Canis indica
+Genetta felina
+Bdeogale jacksoni
+Carnivora sp. BOLD:AAA9549
+Canis sp. 70-TX-02
+Canis sp. 70-TX-03
+Carnivora sp. BOLD:AAA3869
+Carnivora sp. BOLD:AAK7142
+Galerella nigrata x sanguinea
+Urva edwardsii
+Bassaricyon sp. H018
+Felis environmental sample
+Nasuella olivacea
+Lycalopex sp. Fuegian dog
+Ursus rossicus
+Procyonidae sp. EG-2017
+Paradoxurus jerdoni
+Carnivora sp. BOLD:AAJ7206
+Canis dirus
+Arctocephalus philippii
+Felis sp. NG192
+Carnivora sp. BOLD:AAF4913
+Eira barbara
+Viverra tangalunga
+Meles sp.
+Mustela putorius x Mustela putorius furo
+Genetta poensis
+Poiana richardsonii
+Lutra environmental sample
+Mustela nudipes
+Dusicyon avus
+Neogale vison x Mustela lutreola
+Nasua sp. EG-2017
+Lycalopex gymnocercus
+Carnivora sp. BOLD:AAB7882
+Vulpes environmental sample
+Canis sp. CANInt1
+Spilogale pygmaea
+Genetta abyssinica
+Canis sp. 70-TX-07
+Urocyon littoralis
+Pteronura brasiliensis
+Lycalopex griseus
+Canis mesomelas
+Lutra nippon
+Ursus deningeri
+Spilogale interrupta
+Herpestes semitorquatus
+Bassaricyon beddardi
+Carnivora sp. BOLD:AAA1542
+Lycalopex sp. CAN003
+Canis environmental sample
+Viverra megaspila
+Ursus kanivetz
+Carnivora sp. BOLD:AAD3317
+Cerdocyon thous
+Herpestes brachyurus
+Mydaus javanensis
+Lycalopex sechurae
+Lontra provocax
+Paracynictis selousi
+Carnivora sp. BOLD:AAV6889
+Herpestinae sp. PAML-2006
+Genetta tigrina
+Arctocephalus tropicalis
+Paradoxurus zeylonensis
+Rhynchogale melleri
+Viverridae sp. ZSI AZ-2022
+Ommatophoca rossii
+Carnivora sp. BOLD:AAC0893
+Genetta sp. SC15-udzungwa
+Carnivora sp. BOLD:AAA7409
+Musteloidea sp. EG-2017
+Crossarchus obscurus
+Osbornictis piscivora
+Canis himalayensis
+Dusicyon australis
+Genetta pardina
+Canis sp. 70-TX-05
+Mydaus marchei
+Mustelidae sp. EG-2017
+Canis sp. 70-TX-06
+Ursus sp. Shennongjia white bear
+Mustela africana
+Macrogalidia musschenbroekii
+Carnivora sp. BOLD:AAD0672
+Canis sp. Russia/33,500
+Procyon cancrivorus
+Arctogalidia trivirgata
+Helogale parvula
+Panthera leo x Panthera tigris
+Canis sp. UMMZ91100
+Bassaricyon sp. H021
+Conepatus mesoleucus
+Smilodon fatalis
+Nasua sp. LD-2015
+Carnivora sp. BOLD:AAU5960
+Ursus kudarensis
+Felis catus x Prionailurus bengalensis
+Canis sp. 70-TX-01
+Salanoia durrelli
+Melogale cucphuongensis
+Genetta angolensis
+Bdeogale crassicauda
+Homotherium serum
+Canis sp.
+Carnivora sp. BOLD:AAD6819
+Mephitis macroura
+Canis sp. 70-TX-09
+Genetta maculata
+Galerella pulverulenta
+Mustela sp. BOLD:AAC0892
+Paradoxurus montanus
+Herpestes vitticollis
+Carnivora sp. BOLD:AAA5637
+Lontra longicaudis
+Herpestes urva
+Conepatus semistriatus
+Lynx environmental sample
+Carnivora sp. BOLD:AAE9178
+Genetta sp. schoutedeni
+Carnivora sp. BOLD:AAC2404
+Bassariscus astutus
+Hemigalus derbyanus
