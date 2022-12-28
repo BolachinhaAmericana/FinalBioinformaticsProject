@@ -1,0 +1,74 @@
+The flag 'directory' used in rule all is only valid for outputs, not inputs.
+The flag 'directory' used in rule all is only valid for outputs, not inputs.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	getSatisfiedList
+	1	getSecToAlign
+	1	getSpeciesGeneList
+	1	getSpeciesNamesList
+	1	getSpeciesRankName
+	6
+
+[Wed Dec 28 02:49:46 2022]
+rule getSpeciesRankName:
+    output: RankName.txt
+    jobid: 1
+
+[Wed Dec 28 02:49:48 2022]
+Finished job 1.
+1 of 6 steps (17%) done
+
+[Wed Dec 28 02:49:48 2022]
+rule getSpeciesNamesList:
+    input: RankName.txt
+    output: ScientificNames_list.txt
+    jobid: 2
+
+[Wed Dec 28 02:49:51 2022]
+Finished job 2.
+2 of 6 steps (33%) done
+
+[Wed Dec 28 02:49:51 2022]
+rule getSpeciesGeneList:
+    input: ScientificNames_list.txt
+    output: GeneLists
+    jobid: 3
+
+[Wed Dec 28 02:51:40 2022]
+Finished job 3.
+3 of 6 steps (50%) done
+
+[Wed Dec 28 02:51:40 2022]
+rule getSatisfiedList:
+    input: GeneLists
+    output: FiltredScientificNames_list.txt, FiltredGeneNames_list.txt
+    jobid: 4
+
+[Wed Dec 28 02:51:40 2022]
+Finished job 4.
+4 of 6 steps (67%) done
+
+[Wed Dec 28 02:51:40 2022]
+rule getSecToAlign:
+    input: FiltredScientificNames_list.txt, FiltredGeneNames_list.txt
+    output: Squences_Fasta
+    jobid: 5
+
+[Wed Dec 28 02:58:47 2022]
+Finished job 5.
+5 of 6 steps (83%) done
+
+[Wed Dec 28 02:58:47 2022]
+localrule all:
+    input: RankName.txt, ScientificNames_list.txt, GeneLists, FiltredScientificNames_list.txt, FiltredGeneNames_list.txt, Squences_Fasta
+    jobid: 0
+
+[Wed Dec 28 02:58:47 2022]
+Finished job 0.
+6 of 6 steps (100%) done
+Complete log: /home/guilherme/Desktop/laboratorio-binf-team-b-automatic-filogenetic/.snakemake/log/2022-12-28T024946.569976.snakemake.log
