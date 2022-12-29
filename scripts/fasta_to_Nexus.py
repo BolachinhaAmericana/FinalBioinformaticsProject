@@ -32,40 +32,102 @@ end;
 
 
 def nameSeq(file):
+
+	'''
+    What for
+		Get every name of gene seqs
+
+    Arguments: 
+        Fasta file
+
+    Vars -
+        nameList: list of names
+
+    Returns:
+        nameList it self
+    '''
+
 	nameList =  []
 	with open (f'{file}.fasta') as f:
 		for lines in f:
 			if '>' in lines:
 				if len(lines) <100:
-					linhas = lines.replace('\n', '')
-					linha = linhas.replace('>','').replace(' ','')
-					nameList.append(linha)
+					liness = lines.replace('\n', '')
+					line = liness.replace('>','').replace(' ','')
+					nameList.append(line)
 		return nameList
 
 
 def seqContent(file):
-	listSeq =[]
+
+	'''
+	What for
+		Get the genes seqs it self
+
+    Arguments: 
+        Fasta file
+
+    Vars -
+        listSeq: all gene seqs
+
+    Returns:
+        listSeq it self
+
+    '''
+
+	seqList =[]
 	with open (f'{file}.fasta') as f:
 		for lines in f:
 			if '>' not in lines:
-				linha = lines.replace('\n','')
-				listSeq.append(linha)
-		return listSeq
+				line = lines.replace('\n','')
+				seqList.append(line)
+		return seqList
 
-def getCorrectSeq(listaSeq):
+def getCorrectSeq(seqList):
+
+	'''
+    What for
+		Get only the wanted seqs
+
+    Arguments: 
+        seqList
+
+    Vars -
+        correct_seq: list with the wanted seqs
+
+    Returns:
+        correct_seq
+    '''
+
 	correct_seq =[]
 	curr_seq = ''
-	for i in range(len(listaSeq)):
-		curr_seq = curr_seq + listaSeq[i]
-		if len(listaSeq[i]) <= 59:
+	for i in range(len(seqList)):
+		curr_seq = curr_seq + seqList[i]
+		if len(seqList[i]) <= 59:
 			correct_seq.append(curr_seq)
 			curr_seq = ''
 			continue
 	return correct_seq
 
-def obterDict(correct_seq, Nomes):
+def getDict(correct_seq, Names):
+
+	'''
+    What for 
+		
+
+    Arguments: 
+        
+
+    Vars -
+        dict: 
+
+    Returns:
+        dict
+
+    '''
+
 	dict= {}
-	dict = dict.fromkeys(Nomes)
+	dict = dict.fromkeys(Names)
 	x = 0
 	while x< len(dict):
 		for l in nameList:
@@ -74,25 +136,73 @@ def obterDict(correct_seq, Nomes):
 	return dict
 
 def mrBayes(outgroup):
+
+	'''
+    What for 
+		searches if the outgroup correspond to a organism that was stored in nameList
+
+    Arguments: 
+        outgroup
+
+    Vars -
+        none
+
+    Returns:
+        outgroup 
+
+    '''
+
 	if outgroup not in nameList:
 		print('Organism not found')
 	else:
 		return outgroup
 
 def nexusToStdout(file):
+
+	'''
+    What for 
+		Get nexus file to standard output
+
+    Arguments: 
+        nexus file 
+
+    Vars -
+        none 
+
+    Returns:
+        output
+
+    '''
+
 	with open(f"{file}.nex", 'r') as r:
 		shutil.copyfileobj(r, sys.stdout)
 
 	return r
 
 def deleteNexus(file):
+
+	'''
+    What for 
+		Remove old nexus files
+
+    Arguments: 
+        Nexus file
+
+    Vars -
+        none
+
+    Returns:
+        none
+    '''
+
 	os.remove(f'{file}.nex')
 	return
+
 if __name__ ==  '__main__':
 	nameList = nameSeq(file)
 	seqList = seqContent(file)
 	correct_seq = getCorrectSeq(seqList)
-	dict = obterDict(correct_seq,nameList)
+	dict = getDict(correct_seq,nameList)
 	mrBayes(outgroup)
 	nexusbasic(file)
 	nexusToStdout(file)
