@@ -6,16 +6,17 @@ import subprocess
 #This script will receive 2 inputs that will be one folder with all the fasta files and the second is the list of species names.
 
 #alinhar fastas
+def alignFastas(inputFolder,outputFolder)
+    folder= inputFolder
+    outfolder = outputFolder
 
-folder= 'testefasta'
-outputdir = 'alignedfastas'
+    fasta_files = [f for f in os.listdir(folder) if f.endswith('.fasta')]
 
-if not os.path.exists(outputdir):
-    os.makedirs(outputdir)
-fastaFiles = [f for f in os.listdir(folder)]
 
-for fasta in fastaFiles:
-    subprocess.run(["mafft",fasta], cwd = folder)
+    for fasta in fasta_files:
+        f = open(f"{outfolder}/_aligned{fasta}","w")
+        subprocess.run(['mafft', folder + '/' + fasta], stdout = f)
+    return 0
 
 #concatenation of the fasta files
 #conca = ''
