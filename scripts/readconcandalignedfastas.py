@@ -16,13 +16,30 @@ def alignFastas(inputFolder,outputFolder)
     for fasta in fasta_files:
         f = open(f"{outfolder}/_aligned{fasta}","w")
         subprocess.run(['mafft', folder + '/' + fasta], stdout = f)
-    return 0
+    return outfolder
 
-#concatenation of the fasta files
-#conca = ''
-#for file in os.listdir(pasta):
-  #     with open(fastafile, 'r') as f:
-   #         conca+= f.read()
+#concatenate all the fastas
+def concatenateFastas(inputFolder):
+    folder = inputFolder
+    concatenatedFasta = {}
+    seq = ""
+    name = ""
+    for fasta in os.listdir(folder):
+        with open (f"{folder}/{fasta}","r") as r:
+            for line in r:
+                if line.startswith(">"):
+                    name = line.strip()
+                    if name not in concatenatedFasta:
+                        concatenatedFasta[name] = []
+                else:
+                    seq = line.strip()
+                    concatenatedFasta[name].append(seq)
+
+    with open ("concaFasta.fasta","w") as f:
+        for key, value in concatenatedFasta.items():
+            f.write('%s\n' %(key))
+            for i in value:
+                f.write(i+"\n")
 
 
 def getlistofNames(namesFile):
