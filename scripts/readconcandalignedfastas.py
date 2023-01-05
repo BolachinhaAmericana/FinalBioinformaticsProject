@@ -2,23 +2,26 @@
 
 import os
 import subprocess
-
+from Bio import SeqIO
+import json
 #This script will receive 2 inputs that will be one folder with all the fasta files and the second is the list of species names.
 
 #alinhar fastas
-def alignFastas(inputFolder,outputFolder)
+def alignFastas(inputFolder,outfolder):
     folder= inputFolder
-    outfolder = outputFolder
 
-    fasta_files = [f for f in os.listdir(folder) if f.endswith('.fasta')]
+    if not os.path.isdir(outfolder):
+        os.makedirs(outfolder)
+
+    fasta_Files = [f for f in os.listdir(folder) if f.endswith('.fasta')]
 
 
-    for fasta in fasta_files:
+    for fasta in fasta_Files:
         f = open(f"{outfolder}/_aligned{fasta}","w")
         subprocess.run(['mafft', folder + '/' + fasta], stdout = f)
-    return outfolder
 
-#concatenate all the fastas
+
+#concatenation of aligned fasta files
 def concatenateFastas(inputFolder):
     folder = inputFolder
     concatenatedFasta = {}
@@ -42,9 +45,10 @@ def concatenateFastas(inputFolder):
                 f.write(i+"\n")
 
 
+
+
 def getlistofNames(namesFile):
-    listaNomes= []
-    with open (f"{namesfile}", "r") as r:
+    with open (f"{namesFile}", "r") as r:
         for line in r:
             listaNomes.append(line.strip())
         return listaNomes
@@ -60,3 +64,9 @@ def fastaFinal(listNames,concatenatedFasta):
                 else:
                     f.write(line)
             f.close()
+
+alignFastas('Squences_Fasta','alignedFastas')
+concatenateFastas('alignedFastas')
+listaNomes = []
+getlistofNames('nameFile.txt')
+fastaFinal(listaNomes, 'concaFasta.fasta')
