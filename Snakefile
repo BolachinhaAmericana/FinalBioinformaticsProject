@@ -8,7 +8,6 @@
 #pip install snakemake==5.26.1
 #python3 -m pip install snakemake
 #term="'Passer domesticus'" rank="family" proximity="30" similarity="30"  snakemake --cores all
-#taxonkit list --ids 33090 -nr --indent "    "
 
 import os
 term = os.environ.get("term")
