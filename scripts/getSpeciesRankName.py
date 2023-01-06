@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-#Made by Valente feat. Silva
-from essentials import eSearch
-import taxoniq
+#Made by Silva feat. Valente
+from Bio import Entrez
 import sys
 
 
-def getUserArgs(term,taxonRank):
+def getUserArgs(specie,rank):
     '''
     Takes 2 arguments as std.input
     
@@ -19,52 +18,42 @@ def getUserArgs(term,taxonRank):
     Returns:
         term and taxonRank
     '''
-    term = sys.argv[1]
-    taxonRank= sys.argv[2] 
-    return term, taxonRank
+    specie = sys.argv[1]
+    rank = sys.argv[2] 
+    return specie, rank
 
-def getTaxonId(eSearchResult): # 2.1
+def get_taxon_name(specie,rank):
     '''
-    Will get the Taxon Id of our input search term
-
-    Arguments: 
-        Takes eSearch result as argument.
-    Vars - 
-        taxonId: filthering string
+    Returns the scientific name of a taxon based on a search term and taxonomic rank.
+    
+    Vars:
+        specie (str): Scientific name of the species to search for.
+        rank (str): Taxonomic rank of the taxon to search for. Must be one of the following:
+            ['superkingdom', 'kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
     Returns:
-        Filthered Taxon Id
-    '''
-    taxonId = str(eSearchResult["IdList"])
-    taxonId = taxonId.replace("[\'",'')
-    taxonId = taxonId.replace("\']",'')
-    return taxonId
 
-def getRankName(taxonId, taxonRank): #2.2
+        str: Scientific name of the taxon with the specified rank.
+        None: If no taxon with the specified rank is found.
     '''
-    Will get the specific name of the rank according to species and overall rank. Example: Human, order = Primates
-
-    Arguments:
-        Takes target taxon id and input taxonomy rank as arguments.
-    Vars -
-        t: loads taxon on var using Taxoniq API
-        rankList: List of lineage of loaded Taxon
-        relation: Compares the lineage with taxon ranks
-        tax: taxon id of the related rank
-        taxRankName: conversion of taxon id to scientific name using Taxoniq API
-    Returns:
-        taxRankName
-    '''
-    t = taxoniq.Taxon(taxonId)
-    rankList = t.ranked_lineage
-    relation = [(t.rank.name, t) for t in rankList]
-    for i in relation:
-        if taxonRank in str(i):
-            tax = i[1]
-            taxRankName = tax.scientific_name
-            break
-    return taxRankName
+    try:
+        Entrez.email = "no_warnings@email.com"
+        handle = Entrez.esearch(db="taxonomy", term=specie)
+        record = Entrez.read(handle)
+        taxon_id = record["IdList"][0]
+        handle = Entrez.efetch(db="taxonomy", id=taxon_id, retmode="xml")
+        record = Entrez.read(handle)
+        for taxon in record[0]["LineageEx"]:
+            if taxon["Rank"] == rank:
+                return taxon["ScientificName"]
+    except IndexError:
+        sys.exit("error: Bad ScientificName")
+    return None
 
 if __name__ == "__main__":
-    term, taxonRank= getUserArgs(term='', taxonRank='')
-    RankName= getRankName(getTaxonId(eSearch('Taxonomy', term)), taxonRank)
-    print(RankName)
+    specie,rank = getUserArgs(specie='',rank='')
+    taxon_name = get_taxon_name(specie, rank)
+    if taxon_name:
+        print(taxon_name) 
+    else:
+        print("No taxon with rank {} was found for species {}".format(rank, specie))
+
