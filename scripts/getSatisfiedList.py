@@ -6,6 +6,21 @@ import sys
 import os
 
 def getLoadindDir(geneLists_directory):
+    '''
+    What for 
+		Tells where to create the directory 
+        Creates an temporary folder with a gene list
+
+    Arguments: 
+        
+
+    Vars:
+         
+
+    Returns:
+        
+
+    '''
     while True:
         try:
             os.mkdir('filteredProximity_GeneLists')
@@ -23,6 +38,20 @@ def getUserArguments(term,proximity,similarity):
     return term,proximity,similarity
 
 def getsetGoldList(term,directory):
+    '''
+    What for 
+		Selects a directory and a term 
+
+    Arguments: 
+        
+
+    Vars:
+         
+
+    Returns:
+        Directory with the gold list and the gold list
+
+    '''
     try:
         for filename in os.listdir(directory):
             listPath = os.path.join(directory, filename)
@@ -37,6 +66,23 @@ def getsetGoldList(term,directory):
 
 
 def intersect(directory,setGeneList,setGoldList,proximity):
+    '''
+    What for 
+		Calculates the proximity percentage of the Gold gene related to the genes of other organisms of the list
+
+    Arguments: 
+        directory: wanted directory
+        setGeneList: List of genes
+        setGoldList: Animal of input
+        proximity: proximity percentage
+
+    Vars:
+        none
+
+    Returns:
+        logical value if the proximity percentage calculated is equal or superior of the proximity percentage inputed
+
+    '''
     proximity = int(proximity)
     if proximity > 100 or proximity < 0:
         shutil.rmtree(directory)
@@ -47,11 +93,41 @@ def intersect(directory,setGeneList,setGoldList,proximity):
 
 
 def getGoldEmptyDict(setGoldList):
+    '''
+    What for 
+		 
+
+    Arguments: 
+        
+
+    Vars:
+        none
+
+    Returns:
+        goldDict
+
+    '''
     goldDict = {gene:0 for gene in setGoldList}
     return goldDict
 
 
 def getGoldDictValue(setGoldList, directory, goldDict,proximity):
+    '''
+    What for 
+		cria novo conjunto e genes para cada gene 
+        se nao de remove 
+        se der adiciona +1 gene em todos os animas que for encontrado 
+
+    Arguments: 
+        
+
+    Vars:
+         
+
+    Returns:
+        True or false value 
+
+    '''
     intresectCount = 0
     for filename in os.listdir(directory):
         listPath = os.path.join(directory, filename)
@@ -85,6 +161,20 @@ def getFilteredScientificName_list(directory):
             os.remove("FiltredScientificNames_list.txt")           
 
 def haveSimilarity(directory,value,intresectCount,similarity):
+    '''
+    What for 
+		Tests the similarity 
+
+    Arguments: 
+        
+
+    Vars:
+         
+
+    Returns:
+        
+
+    '''
     similarity = int(similarity)
     if similarity > 100 or similarity < 0:
         shutil.rmtree(directory)
