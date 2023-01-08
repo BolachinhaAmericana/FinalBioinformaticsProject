@@ -35,7 +35,7 @@ def nameSeq(file):
 
 	'''
     What for
-		Get every name of gene seqs
+	Get every name of gene seqs
 
     Arguments: 
         Fasta file
@@ -62,7 +62,7 @@ def seqContent(file):
 
 	'''
 	What for
-		Get the genes seqs it self
+	Get the genes seqs it self
 
     Arguments: 
         Fasta file
@@ -87,7 +87,7 @@ def getCorrectSeq(seqList):
 
 	'''
     What for
-		Get only the wanted seqs
+	Get only the wanted seqs
 
     Arguments: 
         seqList
@@ -112,17 +112,18 @@ def getCorrectSeq(seqList):
 def getDict(correct_seq, Names):
 
 	'''
-    What for 
-		
-
+    What for:
+	Create a dictionary object where the keys are the names in a list and the values are the corresponding elements in another list. 
+	
     Arguments: 
-        
+    	correct_seq: A list of elements to be used as values in the dictionary.
+    	Names: A list of elements to be used as keys in the dictionary.
 
-    Vars -
-        dict: 
+    Vars:
+        dict: Dictionary that will store the keys and values.
 
     Returns:
-        dict
+        dict: Dictionary where the keys are the names in the 'Names' list and the values are the corresponding elements in the 'correct_seq' list.
 
     '''
 
@@ -138,8 +139,8 @@ def getDict(correct_seq, Names):
 def mrBayes(outgroup):
 
 	'''
-    What for 
-		searches if the outgroup correspond to a organism that was stored in nameList
+    What for: 
+	Searches if the outgroup correspond to a organism that was stored in nameList
 
     Arguments: 
         outgroup
@@ -160,8 +161,8 @@ def mrBayes(outgroup):
 def nexusToStdout(file):
 
 	'''
-    What for 
-		Get nexus file to standard output
+    What for: 
+	Get nexus file to standard output
 
     Arguments: 
         nexus file 
@@ -182,8 +183,8 @@ def nexusToStdout(file):
 def deleteNexus(file):
 
 	'''
-    What for 
-		Remove old nexus files
+	What for:
+	Remove old nexus files
 
     Arguments: 
         Nexus file

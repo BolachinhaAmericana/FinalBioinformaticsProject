@@ -7,18 +7,19 @@ import os
 
 def getLoadindDir(geneLists_directory):
     '''
-    What for 
-		Tells where to create the directory 
-        Creates an temporary folder with a gene list
-
-    Arguments: 
-        
+    What for:
+        Create a new directory, and copy all the files from the 'geneLists_directory' into this new directory.
+        If the 'filteredProximity_GeneLists' already exists, it will delete the directory and try creating it again.
+    
+    Arguments:
+        geneLists_directory: The path to the directory containing the gene lists to be copied.
 
     Vars:
-         
+        directory: string representing the name of the newly created directory.
+        filename: string representing the name of the file being copied from the 'geneLists_directory'.
 
     Returns:
-        
+        directory: The name of the newly created directory.
 
     '''
     while True:
@@ -32,6 +33,18 @@ def getLoadindDir(geneLists_directory):
             shutil.rmtree('filteredProximity_GeneLists')    
 
 def getUserArguments(term,proximity,similarity):
+    '''
+    What for:
+        Get the user wanted term, proximity, and similarity values.
+
+    Arguments/Vars:
+        term: The user-specified term.
+        proximity: The user-specified proximity.
+        similarity: The user-specified similarity.
+
+    Returns:
+        tuple: A tuple containing the term, proximity, and similarity values.
+    '''
     term = sys.argv[1]
     proximity = sys.argv[2]
     similarity = sys.argv[3]
@@ -39,17 +52,21 @@ def getUserArguments(term,proximity,similarity):
 
 def getsetGoldList(term,directory):
     '''
-    What for 
-		Selects a directory and a term 
+    What for: 
+        Get the gene list for the specified term. 
 
     Arguments: 
-        
+        term: The term for which to get the gene list.
+        directory: The directory containing the gene lists.
 
     Vars:
-         
+        listPath: This string represents the path to the file being processed in the for loop. 
+        pathToGoldList: This string represents the path to the gene list file.
+        geneGoldList: This is a list of strings representing the genes names from the gene list file.
+        setGoldList: This is a set of the geneGoldList, representing the gene names from the gene list file.
 
     Returns:
-        Directory with the gold list and the gold list
+        A tuple containing the set of genes in the gene list (setGoldList), the directory containing the gene lists (directory), and the path to the gene list file (pathToGoldList).
 
     '''
     try:
@@ -67,8 +84,8 @@ def getsetGoldList(term,directory):
 
 def intersect(directory,setGeneList,setGoldList,proximity):
     '''
-    What for 
-		Calculates the proximity percentage of the Gold gene related to the genes of other organisms of the list
+    What for: 
+        Calculates the proximity percentage of the Gold gene related to the genes of other organisms of the list
 
     Arguments: 
         directory: wanted directory
@@ -94,14 +111,14 @@ def intersect(directory,setGeneList,setGoldList,proximity):
 
 def getGoldEmptyDict(setGoldList):
     '''
-    What for 
-		 
+    What for:
+        Create an empty dictionary with the genes in 'setGoldList' as keys and values initialized to 0.
 
     Arguments: 
-        
+        setGoldList: The set of genes to use as keys in the dictionary.
 
     Vars:
-        none
+        goldDict: A dictionary with the genes in 'setGoldList' as keys and values initialized to 0.
 
     Returns:
         goldDict
@@ -111,21 +128,26 @@ def getGoldEmptyDict(setGoldList):
     return goldDict
 
 
-def getGoldDictValue(setGoldList, directory, goldDict,proximity):
+def getGoldDictValue(setGoldList, directory, goldDict, proximity):
     '''
-    What for 
-		cria novo conjunto e genes para cada gene 
-        se nao de remove 
-        se der adiciona +1 gene em todos os animas que for encontrado 
+    What for:
+        Update the values in the 'goldDict' dictionary for the genes that intersect with the gene lists in the 'directory'.
 
     Arguments: 
-        
+        setGoldList: Set of genes in the gold gene list.
+        directory: Directory containing the gene lists.
+        goldDict: Dictionary with the genes in 'setGoldList' as keys and values to be updated.
+        proximity: Proximity value.
 
     Vars:
-         
+        intresectCount: Integer that keeps track of the number of gene lists that intersect with the gold list.
+        listPath: String that represents the file path to a file in the directory.
+        geneList: List that represents the genes in a gene list file.
+        setGeneList: Represents the gene list read from a file in the directory. 
+        gene: Represents a gene in the intersection of the gold list and the gene list read from a file in the directory.
 
     Returns:
-        True or false value 
+        A tuple containing the updated 'goldDict' dictionary and the count of intersecting gene lists.
 
     '''
     intresectCount = 0
@@ -143,7 +165,24 @@ def getGoldDictValue(setGoldList, directory, goldDict,proximity):
             goldDict[gene] += 1
     return  goldDict, intresectCount          
 
+
 def getFilteredScientificName_list(directory):
+    '''
+    What for:
+        Read the names of all the files in a given directory and rewrite them in 'FiltredScientificNames_list.txt'. The names of the files are assumed to be scientific names.
+
+    Arguments: 
+        directory: The path to the directory where the scientific names are stored.
+
+    Vars:
+        listPath: Represents the file path to a file in the directory.
+        scientificName: Represents the scientific name of an organism, extracted from the file.
+        filtredScientificNames_list: Represents the file where the scientific names are being written.
+
+    Returns:
+        none
+
+    '''
     while True:
         try:
             #os.remove("ScientificNames_list.txt")
@@ -162,17 +201,20 @@ def getFilteredScientificName_list(directory):
 
 def haveSimilarity(directory,value,intresectCount,similarity):
     '''
-    What for 
-		Tests the similarity 
+    What for: 
+        Determine whether the value of a given metric is above a specified threshold.
 
     Arguments: 
-        
+        directory: Path to a directory.
+        value: Value of the metric to be compared to the threshold.
+        intresectCount: Number of elements in the set being compared.
+        similarity: Threshold value to be compared to the metric value.
 
     Vars:
-         
+        none
 
     Returns:
-        
+        True if the value of the metric is above the threshold, False otherwise.
 
     '''
     similarity = int(similarity)
@@ -185,6 +227,26 @@ def haveSimilarity(directory,value,intresectCount,similarity):
     
 
 def FiltredGeneNames_list(directory,goldDict,intresectCount,similarity):
+    '''
+    What for: 
+        Write the names of genes that pass a given threshold to a file.
+
+    Arguments: 
+        directory: Path to a directory.
+        value: Value of the metric to be compared to the threshold.
+        goldDict: Dictionary that stores gene names as keys and the number of occurrences as values.
+        intresectCount: Number of elements in the set being compared.
+        similarity: Threshold value to be compared to the metric value.
+
+    Vars:
+        value: Rrepresents the number of occurrences of a gene in the goldDict dictionary.
+        filtredGeneNames_list: Represents the file where the gene names that pass the threshold are being written.
+
+    Returns:
+        goldDict: Updated dictionary.
+
+
+    '''
     while True:
         try:
             os.remove("FiltredGeneNames_list.txt")
@@ -204,12 +266,27 @@ def FiltredGeneNames_list(directory,goldDict,intresectCount,similarity):
 
 
 def verifyDir(directory,pathToGoldList):
+    '''
+    What for:
+        Check if a directory contains only the gold list file. If it does, delete the directory and exit the program. Otherwise, delete the directory.
+
+    Arguments:
+        directory: Path to the directory to be checked.
+        pathToGoldList: File path to the gold list.
+
+    Vars:
+        pathToGoldGene: Represents the name of the gold list file, extracted from pathToGoldList.
+
+    Returns:
+        none
+
+    '''
     filenames = [filename for filename in os.listdir(directory)]
     pathToGoldGene = pathToGoldList.replace("filteredProximity_GeneLists/",'')
     if len(filenames) == 1 and pathToGoldGene in filenames:
         shutil.rmtree(directory)
         sys.exit(f"Error: Only input term {pathToGoldGene} have this level of proximity(%) and similarity(%)")
-    #Comentar linha a baixo para não apagar dir com genes filtrados por proximidade    
+    #Comment the line below to not delete the directory with filtered genes by proximity.    
     shutil.rmtree(directory)
 
 if __name__ == "__main__":
