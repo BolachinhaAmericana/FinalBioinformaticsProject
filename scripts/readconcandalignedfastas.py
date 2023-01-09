@@ -20,6 +20,8 @@ def alignFastas(inputFolder,outfolder):
         f = open(f"{outfolder}/_aligned{fasta}","w")
         subprocess.run(['mafft', folder + '/' + fasta], stdout = f)
 
+    subprocess.run(f'rm -r {folder}', shell = True)
+
 
 #concatenation of aligned fasta files
 def concatenateFastas(inputFolder):
@@ -38,6 +40,8 @@ def concatenateFastas(inputFolder):
                     seq = line.strip()
                     concatenatedFasta[name].append(seq)
 
+    subprocess.run(f'rm -r {folder}', shell = True)
+
     with open ("concaFasta.fasta","w") as f:
         for key, value in concatenatedFasta.items():
             f.write('%s\n' %(key))
@@ -51,9 +55,9 @@ def getlistofNames(namesFile):
     with open (f"{namesFile}", "r") as r:
         for line in r:
             listaNomes.append(line.strip())
-        return listaNomes
+    return listaNomes
 
-def fastaFinal(listNames,concatenatedFasta):
+def fastaFinal(listaNomes,concatenatedFasta):
     contador = 0
     with open(f"{concatenatedFasta}", "r") as r:
         with open ("concatenatedFinal.fasta","w") as f:
@@ -64,9 +68,12 @@ def fastaFinal(listNames,concatenatedFasta):
                 else:
                     f.write(line)
             f.close()
+    subprocess.run(f"rm {concatenatedFasta}", shell = True)
 
-alignFastas('Squences_Fasta','alignedFastas')
-concatenateFastas('alignedFastas')
-listaNomes = []
-getlistofNames('nameFile.txt')
-fastaFinal(listaNomes, 'concaFasta.fasta')
+
+if __name__ == "__main__":
+    listaNomes =[]
+    #alignFastas('Squences_Fasta','alignedFastas')
+    concatenateFastas('alignedFastas')
+    getlistofNames('nameFile.txt')
+    fastaFinal(listaNomes, 'concaFasta.fasta')
