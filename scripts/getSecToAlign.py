@@ -6,6 +6,21 @@ import shutil
 import os 
 
 def createSquences_Fasta_Dir(directory):
+    '''
+    What for:
+        Creates a directory at the specified path.
+        If the directory already exists, it will be removed and a new one will be created.
+
+    Arguments:
+        directory: The path to the directory to be created
+
+    Vars:
+        pathToFastaDir: Stores the path to the created directory
+
+    Returns:
+        pathToFastaDir: The path to the created directory
+
+    '''
     while True:
         try:
             os.mkdir(directory)
@@ -15,6 +30,30 @@ def createSquences_Fasta_Dir(directory):
             shutil.rmtree('Squences_Fasta') 
 
 def getFastas(pathToFastaDir,db):
+    '''
+    What for:
+        Takes a path to a directory and a database name as inputs, and retrieves fasta sequences for a list of genes and scientific names.
+        This function also reads two files, 'FiltredGeneNames_list.txt' and 'FiltredScientificNames_list.txt' and uses the eSearch and eFetch to fetch the fasta sequences, and save them into a file in the wanted path.
+
+    Arguments:
+        pathToFastaDir: The path to the directory where the fasta files will be saved.
+        db: The name of the database to search for the fasta sequences.
+
+    Vars:
+        gene_file: file that contains the list of gene names.
+        scientificNames_file: file that contains the list of scientific names.
+        fastaPath: Contains the path to the fasta file.
+        term: Contains the search term to fetch the fasta sequence, it is constructed by concatenating scientificName and gene
+        eSearchResults: Contains the result of the eSearch function, it is used to fetch the fasta sequence
+        webEnv: Contains the web environment needed to fetch the fasta sequence
+        queryKey: Contains the query key needed to fetch the fasta sequence
+        data: Contains the fasta sequence 
+        fastaFile: File used to write the fasta sequence
+
+    Returns:
+        none
+
+    '''
     gene_file  = open(f"FiltredGeneNames_list.txt", "r")
     for gene in gene_file:
         scientificNames_file = open("FiltredScientificNames_list.txt", "r")
