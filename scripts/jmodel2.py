@@ -2,21 +2,23 @@
 
 import subprocess
 
-#-d input file
-#-S Best Model
-#-tr number of cores
-#-p Criterion model
-#-s number of substituion 11 to use all models defined by jmodeltest documentation
-#-v model averaging and parameter importance
-#-t for choose what the base tree. Maximum likelihoodL in this example
-#fasta = ficheiro fasta concatenado recebido
 
-#subprocess.run(f'modeltest-ng -d nt, shell = True)
+def getBestModel(fasta):
 
-with open("help.txt") as file:
-    content = file.readlines()
-    lastLine = content[-4]
-if "+I" in lastLine:
-   print("Executar comando raxML com derivação +I")
-else:
-    print("Executar comando raxML sem derivação +I")
+    subprocess.run(f'modeltest-ng -d nt -i {fasta} -o teste2 -p 4 -f e -h i -s 11 > teste2.txt', shell = True)
+
+    with open("teste2.txt") as file:
+        content = file.readlines()
+        lastLine = content[-5]
+    return lastLine
+
+def executeRaxML(fasta, lastLine):
+    if "+I" in lastLine:
+        subprocess.run("raxmlHPC -s concat.fasta -n teste -m GTRCAT -p 256789 -x 256789 -# 1000", shell = True)
+    else:
+        subprocess.run("raxmlHPC -s concat.fasta -n teste -m GTRCAT -p 256789 -x 256789 -# 1000", shell = True)
+
+if __name__ == "__main__":
+    lastLine = ""
+    getBestModel("concat.fasta")
+    executeRaxML("concat.fasta", lastLine)
