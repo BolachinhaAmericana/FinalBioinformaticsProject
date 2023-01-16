@@ -14,9 +14,9 @@ def getBestModel(fasta):
 
 def executeRaxML(fasta, lastLine):
     if "+I" in lastLine:
-        subprocess.run("raxmlHPC -s concat.fasta -n teste -m GTRCAT -p 256789 -x 256789 -# 1000", shell = True)
+        subprocess.run("raxmlHPC -s concat.fasta -n teste -m GTRCAT -p 256789 -x 256789 -# autoFC", shell = True)
     else:
-        subprocess.run("raxmlHPC -s concat.fasta -n teste -m GTRCAT -p 256789 -x 256789 -# 1000", shell = True)
+        subprocess.run("raxmlHPC -s concat.fasta -n teste -m GTRCAT -p 256789 -x 256789 -# autoFC", shell = True)
 
 if __name__ == "__main__":
     lastLine = ""
