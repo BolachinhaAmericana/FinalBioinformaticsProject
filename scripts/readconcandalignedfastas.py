@@ -1,79 +1,72 @@
 #!/usr/bin/env python3
-
-import os
-import subprocess
 from Bio import SeqIO
-import json
-#This script will receive 2 inputs that will be one folder with all the fasta files and the second is the list of species names.
+import subprocess
+import shutil
+import glob
+import os
 
-#alinhar fastas
-def alignFastas(inputFolder,outfolder):
-    folder= inputFolder
-
-    if not os.path.isdir(outfolder):
-        os.makedirs(outfolder)
-
-    fasta_Files = [f for f in os.listdir(folder) if f.endswith('.fasta')]
+# Made by Pinto feat Silva (getNamed_fastas)
 
 
+def getNamed_fastas(dir):
+    with open("FiltredScientificNames_list.txt") as f:
+        new_names = f.read().splitlines()
+    if os.path.exists(dir):
+        shutil.rmtree(dir)
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    fasta_files = glob.glob("Squences_Fasta/*.fasta")
+    for fasta in fasta_files:
+        records = list(SeqIO.parse(fasta, "fasta"))
+        for record, new_name in zip(records, new_names):
+            record.id = new_name.replace(" ", "_") 
+            record.description = ""
+        new_file_name = os.path.basename(fasta).split(".")[0] + "_updated.fasta"
+        with open(f"{dir}/{new_file_name}", "w") as f:
+            SeqIO.write(records, f, "fasta")
+
+"""
+This function has 2 arguments the first one is a folder with the original fastas 
+and the second one will be folder where the aligned fastas will be.
+If the second folder does not exist, this function will create that directory
+and then proceed to align all the fastas
+"""
+def fastas_Aligner(inputFolder, output_Folder):
+
+    if not os.path.isdir(output_Folder):
+        os.makedirs(output_Folder)
+    fasta_Files = [f for f in os.listdir(inputFolder)]
     for fasta in fasta_Files:
-        f = open(f"{outfolder}/_aligned{fasta}","w")
-        subprocess.run(['mafft', folder + '/' + fasta], stdout = f)
-
-    subprocess.run(f'rm -r {folder}', shell = True)
+        f = open(f"{output_Folder}/_aligned{fasta}","w")
+        subprocess.run(['mafft', inputFolder + '/' + fasta], stdout = f)
 
 
-#concatenation of aligned fasta files
-def concatenateFastas(inputFolder):
-    folder = inputFolder
+"""
+This function will receive the aligned fastas folder and will concatenate them all.
+In the end we will get a massive fasta that we will use to build the trees.
+"""
+def fastas_Concatenator(input_Folder):
     concatenatedFasta = {}
     seq = ""
-    name = ""
-    for fasta in os.listdir(folder):
-        with open (f"{folder}/{fasta}","r") as r:
+    seq_Name = ""
+    for fasta in os.listdir(input_Folder):
+        with open (f"{input_Folder}/{fasta}","r") as r:
             for line in r:
                 if line.startswith(">"):
-                    name = line.strip()
-                    if name not in concatenatedFasta:
-                        concatenatedFasta[name] = []
+                    seq_Name = line.strip()
+                    if seq_Name not in concatenatedFasta:
+                        concatenatedFasta[seq_Name] = []
                 else:
                     seq = line.strip()
-                    concatenatedFasta[name].append(seq)
-
-    subprocess.run(f'rm -r {folder}', shell = True)
-
-    with open ("concaFasta.fasta","w") as f:
+                    concatenatedFasta[seq_Name].append(seq)
+    with open ("concat.fasta","w") as f:
         for key, value in concatenatedFasta.items():
             f.write('%s\n' %(key))
             for i in value:
                 f.write(i+"\n")
 
-
-
-
-def getlistofNames(namesFile):
-    with open (f"{namesFile}", "r") as r:
-        for line in r:
-            listaNomes.append(line.strip())
-    return listaNomes
-
-def fastaFinal(listaNomes,concatenatedFasta):
-    contador = 0
-    with open(f"{concatenatedFasta}", "r") as r:
-        with open ("concatenatedFinal.fasta","w") as f:
-            for line in r:
-                if line.startswith(">"):
-                    f.write(">"+ listaNomes[contador] +"\n")
-                    contador +=1
-                else:
-                    f.write(line)
-            f.close()
-    subprocess.run(f"rm {concatenatedFasta}", shell = True)
-
-
 if __name__ == "__main__":
-    listaNomes =[]
-    #alignFastas('Squences_Fasta','alignedFastas')
-    concatenateFastas('alignedFastas')
-    getlistofNames('nameFile.txt')
-    fastaFinal(listaNomes, 'concaFasta.fasta')
+    getNamed_fastas('named_Fastas')
+    fastas_Aligner('named_Fastas','alignedFastas')
+    fastas_Concatenator('alignedFastas')
+
