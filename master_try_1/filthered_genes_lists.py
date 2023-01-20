@@ -38,9 +38,20 @@ def directory_loader(path_gene_lists_dir): #
         working_directory = './filteredProximity_GeneLists'
         for filename in os.listdir(path_gene_lists_dir):
             shutil.copy2(os.path.join(path_gene_lists_dir,filename), working_directory)
-def get_user_arguments(): #
+
+
+def get_user_arguments():
     '''
-    getUserArguments(term,proximity,similarity):
+    What for:
+        Get the user wanted search_term, proximity, and similarity values.
+
+    Arguments/Vars:
+        search_term: The user-specified search_term.
+        proximity_value: The user-specified proximity.
+        similarity_value: The user-specified similarity.
+
+    Returns:
+        tuple: A tuple containing the search_term, proximity, and similarity values.
     '''
     try:
         search_term = sys.argv[1]
@@ -60,9 +71,13 @@ def get_user_arguments(): #
 
 def target_list_finder(search_term,working_directory):
     '''
-    getsetGoldList(term,directory)
-    return setGoldList, directory ,pathToGoldList
-    '''
+    What for:
+        Get the gene list for the specified search_term.
+    Arguments:
+        search_term: The search_term for which to get the gene list.
+        working_directory: The directory containing the gene lists.
+    Returns:
+        target_list, path_target_list'''
     try:
         for file_name in os.listdir(working_directory):
             path_list = os.path.join(working_directory, file_name)
@@ -82,8 +97,15 @@ def target_list_finder(search_term,working_directory):
 
 def proximity_tester(species_genes_list,target_list,proximity_value: int):
     '''
-    intersect(directory,setGeneList,setGoldList,proximity):
-    return T/F
+    What for:
+        Calculates the proximity percentage of the target gene
+        related to the genes of other organisms on the list
+    Arguments:
+        species_genes_list: List of genes to verify
+        target_list: input species gene list
+        proximity_value: proximity percentage to verify
+    Returns:
+        boolean value if proximity high enough or not
     '''
     proximity_value= int(proximity_value)
     if int(len(target_list.intersection(species_genes_list))/len(target_list)*100)>=proximity_value:
@@ -92,16 +114,29 @@ def proximity_tester(species_genes_list,target_list,proximity_value: int):
 
 def set_target_genes_empty_dict(target_list):
     '''
-    getGoldEmptyDict(setGoldList)
-    return goldDict
+    Arguments:
+        target_list: The set of genes to use as keys in the dictionary.
+    Returns:
+        target_genes_dict
+        - Dictionary containing genes in target_list as keys and values initialized to 0
     '''
     target_genes_dict = {gene:0 for gene in target_list}
     return target_genes_dict
 
 def set_target_dict_values(target_list, working_directory, target_genes_dict, proximity_value: int):
     '''
-    getGoldDictValue(setGoldList, directory, goldDict, proximity):
-    return goldDict, intresectCount
+    What for:
+        Update the values in the target dictory
+        dictionary for the genes that intersect with the gene lists in the 'directory'.
+    Arguments:
+        target_list
+        working_directory
+        target_genes_dictionary
+        proximity_value
+    Returns:
+        target_genes_dict, intersected count
+        target -> Genes that got approved
+        intersected count -> number of approved genes.
     '''
     intersected_count = 0
     for filename in os.listdir(working_directory):
@@ -120,9 +155,16 @@ def set_target_dict_values(target_list, working_directory, target_genes_dict, pr
 
 def get_approved_scientific_names_list(working_directory):
     '''
-    getFilteredScientificName_list(directory)
-    returns FiltheredScientificnames_list.txt
-    '''
+    What for:
+        Read the names of the files in a given dir and rewrite them in 'working_directory'.
+        The names of the files are assumed to be scientific names.
+    Arguments:
+        working_directory: The path to the directory where the scientific names are stored.
+    Vars:
+        list_path: Represents the file path to a file in the directory.
+        scientific_name: Represents the scientific name of an organism, extracted from the file.
+        approved_scientific_names_list: file where the scientific names are being written
+    Returns: none'''
     while True:
         try:
             for filename in os.listdir(working_directory):
@@ -142,18 +184,26 @@ def get_approved_scientific_names_list(working_directory):
 
 def similarity_tester(dictionary_value,intersected_count,similarity_value: int):
     '''
-    haveSimilarity(directory,value,intresectCount,similarity)
-    return true/false
+    What for:
+        check if similarity_value gets trough the threshold.
+    Arguments:
+        dictionary_value: Value of the metric to be compared to the threshold.
+        intresect_count: Number of elements in the set being compared.
+        similarity_value: Threshold value to be compared to the metric value.
+    Returns:
+        Boolean Value
     '''
     similarity_value= int(similarity_value)
     if dictionary_value/intersected_count*100 >= similarity_value:
         return True
     return False
 
-def get_approved_genes_list(working_directory,target_genes_dict,intersected_count,similarity_value):
+def get_approved_genes_list(target_genes_dict,intersected_count,similarity_value):
     '''
-    FiltredGeneNames_list(directory,goldDict,intresectCount,similarity)
-    return goldDict
+    What for:
+        Write the names of genes that pass a given threshold to a file.
+    Returns:
+        target_genes_dict: Updated dictionary.
     '''
     while True:
         try:
@@ -173,16 +223,22 @@ def get_approved_genes_list(working_directory,target_genes_dict,intersected_coun
 
 def dir_checker(working_directory,path_target_list):
     '''
-    verifyDir(directory,pathToGoldList)
-
-    '''
+    What for:
+        Check if a directory contains only the gold list file.
+        If it does, delete the directory and exit the program.
+        Otherwise, delete the directory.
+    Arguments:
+        working_directory: Path to the directory to be checked.
+        path_target_list: File path to the gold list.
+    Vars:
+        path_target_genes: Represents the name of the gold list file, extracted from pathToGoldList.
+    Returns:
+        none'''
     filenames = [filename for filename in os.listdir(working_directory)]
     path_target_genes = path_target_list.replace("filteredProximity_GeneLists/",'')
     if len(filenames) == 1 and path_target_genes in filenames:
         shutil.rmtree(working_directory)
-        sys.exit(f"Error: Only input search_term {path_target_genes} have this level of proximity(%) and similarity(%)")
-
-
+        sys.exit(f'Error: Only input search_term {path_target_genes} got approved!!!')
 if __name__ == "__main__":
 
     directory_loader('./GeneLists')
@@ -193,6 +249,6 @@ if __name__ == "__main__":
     goldDict = set_target_genes_empty_dict(setGoldList)
     goldDict,intresectCount = set_target_dict_values(setGoldList, working_dir, goldDict,proximity)
     get_approved_scientific_names_list(working_dir)
-    filtredDict = get_approved_genes_list(working_dir,goldDict,intresectCount,similarity)
+    filtredDict = get_approved_genes_list(goldDict,intresectCount,similarity)
     #print(filtredDict)
     dir_checker(working_dir,pathToGoldList)
