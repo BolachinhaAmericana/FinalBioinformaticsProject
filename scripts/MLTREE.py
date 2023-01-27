@@ -5,9 +5,9 @@ import subprocess
 
 def getBestModel(fasta):
 
-    subprocess.run(f'modeltest-ng -d nt -i {fasta} -o bestModel -p 4 -f e -h i -s 11 > teste2.txt', shell = True)
+    subprocess.run(f'modeltest-ng -d nt -i {fasta} -o Model -p 4 -f e -h i -s 11 > teste2.txt', shell = True)
 
-    with open("bestModel.txt") as file:
+    with open("Model.txt") as file:
         content = file.readlines()
         lastLine = content[-5]
     return lastLine
