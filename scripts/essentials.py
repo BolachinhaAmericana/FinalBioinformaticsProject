@@ -1,99 +1,99 @@
 #!/usr/bin/env python3
-
-#Made by Valente feat. Silva
-#V.Silva
-
-import sys
+'''
+This file has some general functions that will be user throughout the programs
+'''
 from Bio import Entrez
 
-def eSearch(db: str, term: str): #1.2
+def entrez_search(database: str, term: str): ######
     '''
-    Performs a search query on NCBI 
+    Performs a search query on NCBI
 
-    Arguments: 
+    Arguments:
         Takes the NCBI database type and search term as arguments.
     Vars -
-        eSearch: Uses the Entrez API to search our query with history and a retmax of 9999
-        eSearchResult: reads eSearch in a variable.
+        search: Uses the Entrez API to search our query with history and a retmax of 9999
+        search_result: reads eSearch in a variable.
     Returns:
-        eSearchResult
+        search_result
     '''
     Entrez.email = 'noWarningPlease@gmail.com'
 
-    if db == 'Nucleotide':
-        eSearch = Entrez.esearch(db=db, term=term, usehistory="y",retmax=1,sort='pub date')
-    if db == 'Gene':
-        eSearch = Entrez.esearch(db=db, term=term, usehistory="y", idtype="acc")
+    if database == 'Nucleotide':
+        search = Entrez.esearch(db=database, term=term, usehistory="y",retmax=1,sort='pub date')
+    if database == 'Gene':
+        search = Entrez.esearch(db=database, term=term, usehistory="y", idtype="acc")
     else:
-        eSearch = Entrez.esearch(db=db, term=term, usehistory="y", retmax = 9999)
-    eSearchResult = Entrez.read(eSearch)
-    return eSearchResult
+        search = Entrez.esearch(db=database, term=term, usehistory="y", retmax = 9999)
+    search_result = Entrez.read(search)
+    return search_result
 
-def eFetch(db: str, webEnv, queryKey): #1.4
+def entrez_fetch(database: str, web_environment, query_key): ######
     '''
     fetches data using Entrez API
 
     Arguments:
         takes one NCBI database, the querykey and the web environment from a eSearch
     Vars -
-        fetchHandle: Uses Entrez API to fetch information with specified paramethers
-        eFetchResult: Reads previous value
+        fetch_handle: Uses Entrez API to fetch information with specified paramethers
+        fetch_result: Reads previous value
     Returns:
-        eFetchResult
+        fetch_result
     '''
-    if db == 'Nucleotide':
-        fetchHandle = Entrez.efetch(db=db, webenv=webEnv, query_key=queryKey, rettype='fasta',retmax=1)
+    if database == 'Nucleotide':
+        fetch_handle = Entrez.efetch(db=database,
+                                     webenv=web_environment,
+                                     query_key=query_key,
+                                     rettype='fasta',
+                                     retmax=1)
     else:
-        fetchHandle = Entrez.efetch(db=db, webenv=webEnv, query_key=queryKey)
-    eFetchResult = fetchHandle.read()
-    return eFetchResult
+        fetch_handle = Entrez.efetch(db=database, webenv=web_environment, query_key=query_key)
+    fetch_result = fetch_handle.read()
+    return fetch_result
 
-def printOutputToFile(path: str, type: str, output): # 1.5
+def print_to_file(output_path, mode, output): ######
     '''
-    temporarily redirects stdout to a file.
+    prints value to file
     Arguments:
-        takes a path to output the file and its type (r, w, a) for example. And the output to print.
+        takes a path to output the file and its mode (r, w, a) for example. And the output to print.
     Vars -
-        stdout: saves unchanged standard output value
+        output_file: sets the output file
     Returns:
         None
     '''
-    stdout= sys.stdout
-    sys.stdout= open(path, type)
-    print(output)
-    sys.stdout= stdout
+    output_file= open(output_path, mode, encoding= 'utf8')
+    print(output, file= output_file)
     return None
 
-def readFile(path: str): #1.6
+def file_reader(path: str): ######
     '''
     reads file to var
     Arguments:
         file path
-    Vars- 
-        f: opened file
-        file: read file
+    Vars-
+        selected_file: opened file
+        file_content: read file
     Return:
-        file
+        file_content
     '''
-    f=open(path)
-    file= f.read()
-    f.close()
-    return file
+    selected_file= open(path, 'r', encoding='utf8')
+    file_content= selected_file.read()
+    selected_file.close()
+    return file_content
 
-def readFileToList(path_to_file: str): #1.7
+def file_reader_to_list(path_to_file: str): ######
     '''
     reads a file line by line. Adds lines to a list and removes repeated and empty items.
     Args:
         takes the path to the file as an argument
-    Vars - 
+    Vars -
         fileList: unchanged file content
         List: transformation of the file content into a python list.
     Returns:
         cleared and transformed list.
     '''
-    with open(path_to_file, 'r') as fileList:
-        List = [List.rstrip() for List in fileList]
-    List= list(set(List)) 
-    if "" in List:
-        List.remove("")
-    return List
+    with open(path_to_file, 'r', encoding= 'utf8') as file_content_list:
+        content_list = [content_list.rstrip() for content_list in file_content_list]
+    content_list= list(set(content_list))
+    if "" in content_list:
+        content_list.remove("")
+    return content_list
