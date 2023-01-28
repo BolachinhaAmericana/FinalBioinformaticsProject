@@ -1,36 +1,45 @@
 #!/usr/bin/env python3
+'''
+This file will output a file that contains the list of every species related
+Outputs ScientificNames_list.txt
+'''
 
-#Made by Valente
-from essentials import eSearch, printOutputToFile, readFile, eFetch
 import sys
 import os
+from essentials import entrez_search, entrez_fetch, print_to_file, file_reader
 
+def get_user_arguments():
+    '''
+    takes arguments
+    '''
+    try:
+        rank_name = sys.argv[1]
+        return rank_name
+    except IndexError:
+        sys.exit('No input was give. This program takes a species taxonomy level (ex: primates).')
 
-def getUserArgs(RankName):
-
-    RankName = sys.argv[1]
-    return RankName
-
-
-def downloadScientificNamesList(RankName: str):
+def scientific_names_list_downloader(rank_name: str):
     '''
     Downloads ScientificNames_list.txt, with all species from said taxonomy rank name
     Args:
-        RankName: Name of the taxonomy rank according to said specie. Example: Human order = Primates
+        rank_name: Name of the taxonomy rank according to said specie
     Vars-
-        webEnv and queryKey: Web Environment and Query Key
+        web_environment and query_key: Web Environment and Query Key
         filther: filthering instance from efetch query.
-    Returns: 
-        None, but will create a ScientificNames_list.txt file with the scientific name of all species from RankName Argument.
+    Returns:
+        None
     '''
-    webEnv, queryKey= eSearch('Taxonomy', RankName+'[subtree]')["WebEnv"], eSearch('Taxonomy', RankName+'[subtree]')["QueryKey"]
-    printOutputToFile('./eFetch.dump', 'w', eFetch('Taxonomy', webEnv, queryKey)) #get eFetch
-    filther= readFile('./eFetch.dump').replace('<ScientificName>', '\n')
-    printOutputToFile('./filthering.dump', 'w', filther)
+    web_environment= entrez_search('Taxonomy', rank_name+'[subtree]')["WebEnv"]
+    query_key= entrez_search('Taxonomy', rank_name+'[subtree]')["QueryKey"]
+
+    print_to_file('./eFetch.dump', 'w', entrez_fetch('Taxonomy', web_environment, query_key))
+    filther= file_reader('./eFetch.dump').replace('<ScientificName>', '\n')
+    print_to_file('./filthering.dump', 'w', filther)
     os.system("grep 'species' filthering.dump > list.dump")
     os.system("grep -v 'subspecies' list.dump > loading.dump")
-    filther= readFile('./loading.dump').replace('</ScientificName>', '\n')
-    printOutputToFile('./finalFilther.dump', 'w', filther)
+    filther= file_reader('./loading.dump').replace('</ScientificName>', '\n')
+    print_to_file('./finalFilther.dump', 'w', filther)
+
     os.system("grep -v 'species' ./finalFilther.dump > ./ScientificNames_list.txt")
     os.system('rm ./*.dump')
     return None
@@ -38,7 +47,5 @@ def downloadScientificNamesList(RankName: str):
 
 
 if __name__ == "__main__":
-    RankName = getUserArgs(RankName='') 
-    downloadScientificNamesList(RankName)
-
-# Outputs ScientificNames_list.txt
+    RANK_NAME = get_user_arguments()
+    scientific_names_list_downloader(RANK_NAME)
