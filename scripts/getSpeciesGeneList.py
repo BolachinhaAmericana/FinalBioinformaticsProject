@@ -16,8 +16,26 @@ from essentials import entrez_search, file_reader_to_list, print_to_file
 
 def species_gene_list_downloader(species: str, batch_size: int):
     '''
-    gets all information needed from the Entrez API
-    uses multiprocessing while fetching the information.
+    What for:
+        This function is used to download a list of genes from the NCBI Gene database for a given species. 
+        Uses the Entrez API to search the database and retrieve the genes. 
+        To avoid overloading the API, the genes are retrieved in batches using the batch_size parameter.
+        Uses multiprocessing while fetching the information.
+
+    Arguments:
+        species: Species for which the genes are to be retrieved.
+        batch_size: Number of genes to be retrieved at a time.
+
+    Vars:
+        search_result: Search results obtained from the Entrez API
+        count: Total number of genes found for the species
+        web_environment: Web environment parameter required for the Entrez API
+        query_key: Query key parameter required for the Entrez API
+        gene_list: Contains the names of the genes retrieved from the API
+
+    Returns:
+        None
+
     '''
     search_result = entrez_search('Gene', f'{species} AND alive[prop]')
     count = int(search_result["Count"])
@@ -41,7 +59,26 @@ def species_gene_list_downloader(species: str, batch_size: int):
 
 
 def fetch_genes(web_environment, query_key, start, batch_size, species, count):
-    """Function to fetch genes for a specific batch"""
+    '''
+    What for:
+        This function is used to fetch a batch of gene records from NCBI Gene database for a specific species.
+        It takes a batch of gene records starting from the 'start' index, up to 'batch_size' number of records.
+
+    Arguments:
+        web_environment: Web environment of the Entrez search results.
+        query_key: Query key of the Entrez search results.
+        start: Starting index of the batch of records to fetch.
+        batch_size: Number of records to fetch in the batch.
+        species: Species name to search for in the NCBI Gene database.
+        count: Total number of records in the search results.
+
+    Vars:
+        genes: A set to store the fetched genes.
+
+    Returns:
+       genes: A set of gene names fetched from the NCBI Gene database.
+        
+    '''
     genes = set()
     while True:
         try:
@@ -74,7 +111,18 @@ SPECIES_NAMES_LIST = file_reader_to_list('./ScientificNames_list.txt')
 
 def downloading():
     '''
-    runs species_gene_list_downloader if
+    What for:
+        This function is used to run the species_gene_list_downloader function for a list of species.
+
+    Arguments:
+        None
+
+    Vars:
+        SPECIES_NAMES_LIST: List of species names used as input for the species_gene_list_downloader function.
+    
+    Returns:
+        None
+
     '''
     for specie in SPECIES_NAMES_LIST:
         species_gene_list_downloader(specie, 7500)
@@ -83,7 +131,19 @@ def downloading():
 
 def empty_downloads_handler():
     '''
-    handles all species w64,ith 0 genes and adds their name to the 'noGenes.txt' file.
+    What for:
+        This function is used to handle species that do not have any genes and add their names to the 'noGenes.txt' file.
+
+    Arguments:
+        None
+
+    Vars:
+        SPECIES_NAMES_LIST: List of species names
+        specie: Variable that holds the current species name
+
+    Returns:
+        None
+        
     '''
     for specie in SPECIES_NAMES_LIST:
         try:
