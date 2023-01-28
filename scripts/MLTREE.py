@@ -12,7 +12,7 @@ def getBestModel(fasta):
         lastLine = content[-5]
     return lastLine
 
-def executeRaxML(fasta, lastLine):
+def raxMLExecutor(fasta, lastLine):
     if "+I" in lastLine:
         subprocess.run("raxmlHPC -s concat.fasta -n teste -m GTRCAT -p 256789 -x 256789 -# autoFC", shell = True)
     else:
