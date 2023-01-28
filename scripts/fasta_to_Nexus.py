@@ -5,8 +5,6 @@ import shutil
 import os
 
 ficheiro = sys.argv[1]
-ngen = sys.argv[2]
-outgroup = sys.argv[3]
 
 
 def nexusbasic(ficheiro):
@@ -17,13 +15,12 @@ DIMENSIONS NTAX={len(dict)} NCHAR={len(dict[listaNomes[0]])};
 FORMAT DATATYPE=DNA MISSING=N GAP=-;
 MATRIX\n""")
 		for key, value in dict.items():
-			w.write(' '+ key +'  '+ value + '\n')
+			w.write(key +'  '+ value + '\n')
 		w.write(f""" ;
 END;\n
 begin mrbayes;
 set autoclose=yes;
-outgroup {outgroup};
-mcmcp ngen={ngen} printfreq=1000 samplefreq=100 diagnfreq=1000 nchains=4 savebrlens=yes filename=MyRun01;
+mcmcp ngen=1000 printfreq=1000 samplefreq=100 diagnfreq=1000 nchains=4 savebrlens=yes filename=MyRun01;
 mcmc;
 sumt filename=MyRun01;
 end;
@@ -73,11 +70,6 @@ def obterDict(seq_corretas, Nomes):
 			x = x+1
 	return dict
 
-def mrBayes(outgroup):
-	if outgroup not in listaNomes:
-		print('Organism not found')
-	else:
-		return outgroup
 
 def nexusToStdout(ficheiro):
 	with open(f"{ficheiro}.nex", 'r') as r:
@@ -85,15 +77,10 @@ def nexusToStdout(ficheiro):
 
 	return r
 
-def eliminarNexus(ficheiro):
-	os.remove(f'{ficheiro}.nex')
-	return
 if __name__ ==  '__main__':
 	listaNomes = nomeSeq(ficheiro)
 	listaSeq = seqConteudo(ficheiro)
 	seq_corretas = obterSeqCorretas(listaSeq)
 	dict = obterDict(seq_corretas,listaNomes)
-	mrBayes(outgroup)
 	nexusbasic(ficheiro)
 	nexusToStdout(ficheiro)
-	eliminarNexus(ficheiro)
