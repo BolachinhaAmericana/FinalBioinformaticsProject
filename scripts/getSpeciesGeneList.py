@@ -2,86 +2,109 @@
 '''
 Will read the list of scientific names and download all gene names from those species.
 '''
+
+import time
+import concurrent.futures
 import os
+import shutil
+import sys
 from Bio import Entrez
-from essentials import entrez_search, print_to_file, file_reader_to_list
+from essentials import entrez_search, file_reader_to_list, print_to_file
 
-def species_gene_list_downloader(species: str, batch_size: int): #####
-    '''
-    Downloads one species gene list
-    Arguments:
-        specie: scientific name of a specie to get gene list
-        batch_size: max= 10000. The number of genes that it will fetch at a time.
-    Vars-
-        search_result: result of a eSearch, filthering all replaced or discontinued genes.
-        count: number of total genes that will be fetched
-        web_environment: Web Environment
-        query_key: Query Key
-        fetch_handle: eFetch Query.
-        data: read of the fetch_handle
-    Returns: None, but will create a LoadingGeneList.txt file
 
+
+
+def species_gene_list_downloader(species: str, batch_size: int):
     '''
-    search_result= entrez_search('Gene', f'{species} AND alive[prop]')
+    gets all information needed from the Entrez API
+    uses multiprocessing while fetching the information.
+    '''
+    search_result = entrez_search('Gene', f'{species} AND alive[prop]')
     count = int(search_result["Count"])
     web_environment = search_result["WebEnv"]
     query_key = search_result["QueryKey"]
+    gene_list = set()
 
-    for start in range(0, count, batch_size):
-        while True:
-            try:
-                print(f"Downloading record {start+1} to {count} - {specie}")
-                fetch_handle = Entrez.efetch(db="Gene",
-                                             rettype="gb",
-                                             retmode="text",
-                                             retstart=start,
-                                             retmax=batch_size,
-                                             webenv=web_environment,
-                                             query_key=query_key,
-                                             idtype="acc")
-                data = fetch_handle.read()
-                fetch_handle.close()
-                print_to_file('loading.dump', 'w', data)
-                os.system("grep -v ':' loading.dump > loading1.dump")
-                os.system("grep '\.' loading1.dump > loading2.dump")
-                os.system("grep -v '\[' loading2.dump > loading3.dump")
-                os.system("sed 's/^.*\ //' loading3.dump >> LoadingGeneList.txt")
-                os.system('rm ./*.dump')
-                break
-            except Exception:
-                print('Error while downloading. Trying again...')
-    return None #Outputs the file  LoadingGeneList.txt
-
-def species_gene_list_handler(species: str, gene_list_path):
-    '''
-    Organizes the gene list and reacts incase list is empty.
-    Arguments:
-        takes the specie name and output path as arguments
-    Vars-
-        None
-    Returns:
-        None, but will rename and move a file to GeneLists/
-    '''
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [executor.submit(fetch_genes, web_environment, query_key, start, batch_size, species, count) for start in range(0, count, batch_size)]
+        for future in concurrent.futures.as_completed(futures):
+            gene_list |= future.result()
     try:
-        os.rename(gene_list_path, f'./GeneLists/{species}_GeneList')
+        with open(f'./GeneLists/{species}_GeneList.txt', 'w', encoding='utf8') as f:
+            for gene in gene_list:
+                f.write(gene + '\n')
+        return None
     except FileNotFoundError:
-        print_to_file('./GeneLists/noGeneSpecies.txt', 'a', species)
-        print(f'The following species has zero genes: {species}')
-    return None
-#3- Done- Genes Lists
+        print(f'{species} has 0 genes.')
+        print_to_file('./GeneLists/noGene.txt', 'a', species)
 
 
 
+def fetch_genes(web_environment, query_key, start, batch_size, species, count):
+    """Function to fetch genes for a specific batch"""
+    genes = set()
+    while True:
+        try:
+            print(f"Downloading record {start+1} to {start+batch_size} of {count} - {species}")
+            fetch_handle = Entrez.efetch(db="Gene",
+                                         rettype="gb",
+                                         retmode="text",
+                                         retstart=start,
+                                         retmax=batch_size,
+                                         webenv=web_environment,
+                                         query_key=query_key,
+                                         idtype="acc")
+            print(f"Completed: {start+1} to {start+batch_size} of {count} - {species}")
+            time.sleep(1)
 
+            data = fetch_handle.read()
+            fetch_handle.close()
+            # working data after gathering
+            for line in data.splitlines():
+                if ']' not in line and ':' not in line:
+                    filthered = line.strip().split(' ')[-1]
+                    genes.add(filthered)
+            
+            break
+        except Exception:
+            print('Error while downloading. Trying again...')
+    return genes
+
+SPECIES_NAMES_LIST = file_reader_to_list('./ScientificNames_list.txt')
+
+def downloading():
+    '''
+    runs species_gene_list_downloader if
+    '''
+    for specie in SPECIES_NAMES_LIST:
+        species_gene_list_downloader(specie, 7500)
+
+
+
+def empty_downloads_handler():
+    '''
+    handles all species w64,ith 0 genes and adds their name to the 'noGenes.txt' file.
+    '''
+    for specie in SPECIES_NAMES_LIST:
+        try:
+            if os.path.getsize(f'./GeneLists/{specie}_GeneList.txt') == 0:
+                os.remove(f'./GeneLists/{specie}_GeneList.txt')
+                print_to_file('./GeneLists/noGene.txt', 'a', specie)
+                print(f'{specie} has 0 genes.')
+        except Exception:
+            print('idk why this wouldnt work but yeah...')
+            continue
 
 if __name__ == "__main__":
-    speciesList= file_reader_to_list('./ScientificNames_list.txt')
-
-
-    if os.path.exists('./GeneLists'):
-        os.system('rm ./GeneLists/*')
-    else: os.system('mkdir ./GeneLists')
-
-    for specie in speciesList:
-        species_gene_list_downloader(specie, 7500)
-        species_gene_list_handler(specie, './LoadingGeneList.txt')
+    try:
+        if os.path.exists('./GeneLists'):
+            shutil.rmtree('./GeneLists')
+            os.rmdir('./GeneLists')
+    except FileNotFoundError:
+        pass
+    except OSError:
+        print('Please delete GeneLists dir manually')
+        sys.exit()
+    os.mkdir('./GeneLists')
+    downloading()
+    empty_downloads_handler()
