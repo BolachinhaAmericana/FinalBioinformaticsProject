@@ -10,6 +10,8 @@
 #term="'Passer domesticus'" rank="family" proximity="30" similarity="30"  snakemake --cores all
 
 import os
+import shutil
+
 term = os.environ.get("term")
 rank = os.environ.get("rank")
 proximity = os.environ.get("proximity")
@@ -22,10 +24,31 @@ rule all:
         directory("GeneLists"),
         "FiltredScientificNames_list.txt",
         "FiltredGeneNames_list.txt",
-        directory("Squences_Fasta")      
-           
+        directory("Squences_Fasta"),
+        directory("output_dir")   
 
+rule copy_outputs:
+    input:
+        "RankName.txt",
+        "ScientificNames_list.txt",
+        "GeneLists",
+        "FiltredScientificNames_list.txt",
+        "FiltredGeneNames_list.txt",
+        "Squences_Fasta",
+        "named_Fastas",
+        "concat.fasta"
+    output:
+        directory("output_dir")
+    run:
+        if not os.path.exists("output_dir"):
+            os.mkdir("output_dir")
+        for item in input:
+            if os.path.isdir(item):
+                shutil.copytree(item, "output_dir"+"/"+os.path.basename(item))
+            else: 
+                shutil.copy(item, "output_dir")                
 
+          
 rule getSpeciesRankName:
     params:
         cientificName = term,
@@ -59,7 +82,7 @@ rule getSpeciesGeneList:
         python3 scripts/getSpeciesGeneList.py  
         """
 
-rule getSatisfiedList:
+rule getFiltheredGenesLists:
     input:
         rules.getSpeciesGeneList.output
     params:
@@ -73,15 +96,41 @@ rule getSatisfiedList:
         
     shell:
         """
-        python3 scripts/getSatisfiedList.py {params.cientificName} {params.proximity} {params.similarity}
+        python3 scripts/getFiltheredGenesLists.py {params.cientificName} {params.proximity} {params.similarity}
         """ 
 
 rule getSecToAlign:
     input:
-        rules.getSatisfiedList.output
+        rules.getFiltheredGenesLists.output
     output:
         directory("Squences_Fasta")
     shell:
         """
         python3 scripts/getSecToAlign.py
-        """         
+        """
+
+rule getConcatAlignNamedFasta:
+    input:
+        rules.getSecToAlign.output
+    output:
+        directory("named_Fastas"),
+        "concat.fasta" 
+    shell:
+        """
+        python3 scripts/getConcatAlignNamedFasta.py
+        """  
+
+rule clean:
+    input:
+        "RankName.txt",
+        "ScientificNames_list.txt",
+        "GeneLists",
+        "FiltredScientificNames_list.txt",
+        "FiltredGeneNames_list.txt",
+        "Squences_Fasta",
+        "named_Fastas",
+        "Squences_Fasta",
+        "named_Fastas",
+        "concat.fasta"
+    shell:
+        "rm -r {input}"  
