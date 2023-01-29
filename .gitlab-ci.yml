@@ -1,4 +1,4 @@
-image: python:3.8
+image: snakemake/snakemake
 
 stages:
   - test
@@ -6,7 +6,7 @@ stages:
 test:
   stage: test
   script:
-    - pip install pytest
+    - pip3 install pytest
     - python3 -m pytest  /TestSuit/test_fasta_script.py
     - python3 -m pytest  /TestSuit/test_model_tree.py
     - python3 -m pytest  /TestSuit/test_getFiltheredGenesLists.py
