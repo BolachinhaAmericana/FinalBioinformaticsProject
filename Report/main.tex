@@ -1,0 +1,204 @@
+\documentclass[12pt]{article}
+
+
+%%%%%%% PACKAGES (pode ser necessário acrescentar mais, dependendo do que se pretender inserir no documento) %%%%%%%
+\usepackage[utf8]{inputenc}
+ % para podermos escrever em português
+\usepackage{geometry}
+\newgeometry{left=2cm,bottom=2cm} 
+\usepackage{setspace}
+\onehalfspacing 
+
+
+% para que o índice possa ter o título de ``Índice'' (caso contrário fica ``Conteúdo'')
+
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+
+% para a inclusão de figuras
+\usepackage{graphicx}
+
+% para que não haja indentação no início dos parágrafos
+\setlength{\parindent}{0pt} 
+
+% para que os links apareçam como hiperligações
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage[usenames,dvipsnames]{color}    
+%para introduzirmos fragmentos de script de R (ou de outra linguagem de programação)
+\usepackage{listings} %para inserir excertos de codigo
+
+\newcommand*{\authorimg}[1]{\raisebox{-.0\baselineskip}{\includegraphics[height=12pt,width=12pt,keepaspectratio,]{#1}}} %Para inserir o símbolo do R
+
+\lstset{ 
+  language=R,                     % linguagem
+  basicstyle=\small\ttfamily, % tamanho das fontes usadas
+  numbers=left,                   % onde colocar numeração das linhas de código
+ numberstyle=\tiny\color{blue},  % estilo a usar para numeração das linhas
+  stepnumber=1,                   % distância entre duas linhas numeradas (se for 1, cada linha será numerada)
+  numbersep=5pt,                  % distância a que a numeração das linhas está do código
+  backgroundcolor=\color{white},  % cor do background
+  showspaces=false,               
+  showstringspaces=false,         % sublinhar espaços em strings
+  showtabs=false,                
+  frame=single,                   % coloca uma moldura à volta do código
+  rulecolor=\color{black},        % cor do frame
+  tabsize=2,                    
+  captionpos=b,                   % posição da legenda
+  breaklines=true,                % line breaking automático
+  breakatwhitespace=false,        
+  keywordstyle=\color{RoyalBlue},      % estilo das keywords
+  commentstyle=\color{YellowGreen},   % estilo dos comentários
+  stringstyle=\color{ForestGreen}      % estilo das strings
+} 
+%%%%%%% INÍCIO DO DOCUMENTO %%%%%%%
+\begin{document}
+\thispagestyle{empty}
+% CAPA
+\begin{flushleft}
+\includegraphics[scale=0.15]{ESTB.jpg}
+\end{flushleft}
+
+\begin{center}
+\Large{Instituto Politécnico de Setúbal}
+\end{center}
+
+\begin{center}
+\Large{Escola Superior de Tecnologia do Barreiro}
+\end{center}
+
+\medskip % para dar um espaço vertical
+
+
+\begin{center}
+\Large{\textbf{Laboratório em Bioinformática}}
+\end{center}
+\begin{center}
+\Large{Licenciatura em Bioinformática}
+\end{center}
+
+\vspace{3cm} % espaço vertical (uma alternativa ao \medskip, que pode ser customizada para efeitos estéticos)
+
+\begin{center}
+\huge{\textbf{Automagic phylogenies}} 
+\end{center}
+
+
+\begin{center}
+\Large{January, 2023}
+\end{center}
+
+\medskip
+\begin{center}
+\large{Group}
+
+\large{Duarte Valente (202000053)}
+
+\large{Gonçalo Alves (202000170)}
+
+\large{Matilde Machado (202000174)}
+
+\large{Rodrigo Pinto (202000177)}
+
+\large{Guilherme Silva(202000178)}
+
+\large{Marine Fournier(202000224)}
+\end{center}
+
+% FIM DA CAPA
+
+\newpage
+\pagenumbering{roman}
+%\phantomsection
+
+% Página com o índice
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+
+%%%%%%% SECÇÃO "INTRODUÇÃO" %%%%%%%
+\section{Introduction}\label{sec:introducao} % a label pode ser o que se quiser
+This report provides an overview of a software program designed to generate phylogenetic trees. Phylogenetic trees are graphical representations of evolutionary relationships among species or groups of organisms. The program utilizes various algorithms and data inputs to generate accurate and comprehensive phylogenetic trees. This report will provide a brief overview of the features and capabilities of the software, as well as its intended use and target audience. The software program is designed to be user-friendly and accessible for both researchers and educators in the field of evolutionary biology. It integrates advanced algorithms for tree construction, allowing for the analysis of large and complex datasets. The program also includes visualization tools for tree presentation, as well as options for customizing and annotating the tree output. Additionally, the software can import and export data in a variety of formats, making it easy to integrate with other analysis tools. The program is intended to provide a comprehensive and efficient solution for phylogenetic tree construction and analysis, and is an essential tool for anyone studying evolutionary relationships among species or groups of organisms.
+
+\section{Background}\label{sec:desenvolvimentos}
+
+
+\section{Methodology}\label{sec:desenvolvimentos}
+
+
+\section{Implementation}\label{sec:desenvolvimentos}
+
+- Includes the specific programming languages, libraries, and tools used to develop the program. It also includes information about the programming techniques that were employed and any specific coding practices that were followed. 
+
+- This section is where the code itself is typically included or referenced, and it should be detailed enough for someone with a similar level of expertise to understand how the program works and could potentially make changes or modifications to the code.
+
+\section{Antigos Requirements}\label{sec:desenvolvimentos}
+\subsection{Operating System}
+The software must be compatible with Linux.
+\subsection{Software Specifications}
+- Docker v20.10.22 \& \newline
+- Snakemake \& \newline
+- Python 3.10.9\newline
+- Biopython 1.77 (seqmagick)\newline 
+- Biopython 1.80 (18 November 2022)\newline
+- Mafft v7.490 \newline
+- RaxML 8.0.0 \newline
+- Modeltest-ng \newline
+- Mrbayes\newline
+\newpage
+
+\subsection{Inputs and Outputs}
+As input the program will need 4 arguments:\newline
+     1 - Scientific name of the species\newline
+     2 - Taxonomy Hierarchy\newline
+     3 - Proximity value (Proximity values would indicate how closely related two organisms are, the higher the percentage, higher the relationship between organisms)\newline
+     4 - Simularity value (Similarity value is a measure of how alike two or more sequences or organisms are, based on their genetic or physical characteristics. The higher the similarity value, the more similar these two organisms are.)\newline
+In the end as output the program will generate 2 pdfs with phylogenetics trees.
+    
+\section{Antigo Design}\label{sec:desenvolvimentos}
+- Preencher
+
+- Architecture: This includes a high-level overview of the overall structure and organization of the program, including any major components or modules and how they interact with each other.
+
+- Algorithms: This includes a detailed explanation of any key algorithms or computational methods used in the program, including any trade-offs or decisions made in their selection.
+
+- Data structures: This includes information about the specific data structures used to store and organize data within the program, and how they support the algorithms and overall program architecture.
+
+- User interface: This includes information about how the program is intended to be used by the end-user, including any specific user interface elements (such as buttons, menus, etc.) and how they function.
+
+
+
+
+
+\section{Results}\label{sec:desenvolvimentos}
+
+- Colocar os mambinhos dos graficos e exemplis de fastas, alignments, concatenate, etc
+
+- Summary of the results obtained from testing the software, including any performance metrics and examples of the generated phylogenetic trees. 
+
+- Observations or insights gained from the results, and how they compare to expected or previous results. 
+
+- It should provide any visualizations or plots that help to interpret the results and explain any patterns or trends found in the data.
+
+
+
+
+%%%%%%% SECÇÃO "CONCLUSÕES" %%%%%%%
+\section{Conclusion}\label{sec:conclusoes}
+
+
+%%% Bibliografia
+
+\begin{thebibliography}{}
+
+\bibitem{edaseq}
+Risso D, Schwartz K, Sherlock G, Dudoit S (2011). GC-Content Normalization for RNA-Seq Data. \textit{BMC Bioinformatics}, 12(1), 480
+
+\bibitem{mickey}
+asdfasdfasdf \textit{}, 12(1), 480
+
+\end{thebibliography}
+
+
+\end{document}
