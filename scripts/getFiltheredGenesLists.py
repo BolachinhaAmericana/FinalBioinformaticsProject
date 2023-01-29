@@ -81,7 +81,7 @@ def target_list_finder(search_term,working_directory):
     try:
         for file_name in os.listdir(working_directory):
             path_list = os.path.join(working_directory, file_name)
-            path_target_list = f"{working_directory}/{search_term}_GeneList.txt"
+            path_target_list = f"{working_directory}/{search_term}_GeneList"
 
             if path_list == path_target_list:
 
