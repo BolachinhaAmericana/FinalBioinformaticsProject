@@ -1,8 +1,8 @@
 import os
 import shutil
-from getSatisfiedList import getLoadingDir, getsetGoldList, intersect, getGoldEmptyDict
+from scripts.getSatisfiedList import getLoadindDir, getsetGoldList, intersect, getGoldEmptyDict
 
-def test_getLoadingDir():
+def test_getLoadindDir():
     # Create a test directory with some test files
     test_dir = 'test_dir'
     os.mkdir(test_dir)
@@ -11,7 +11,7 @@ def test_getLoadingDir():
         open(os.path.join(test_dir, file), 'w').close()
     
     # Use the function to copy the test files to a new directory
-    new_dir = getLoadingDir(test_dir)
+    new_dir = getLoadindDir(test_dir)
     
     # Check that the new directory was created
     assert os.path.exists(new_dir) == True
@@ -29,7 +29,7 @@ def test_getsetGoldList():
     gold_set = {'gene1', 'gene2', 'gene3'}
     
     # Execução da função
-    test_set = getsetGoldList('test_term')
+    test_set = getsetGoldList('test_term', 'lista_de_genes')
     
     # Verificação se o conjunto retornado é igual ao conjunto de ouro de teste
     assert test_set == gold_set
