@@ -7,5 +7,5 @@ test:
   stage: test
   script:
     - pip install pytest
-    - pytest -v /TestSuit/test_fasta_script.py
-    - pytest -v /TestSuit/test_model_tree.py
+    - python3 -m pytest  /TestSuit/test_fasta_script.py
+    - python3 -m pytest  /TestSuit/test_model_tree.py
