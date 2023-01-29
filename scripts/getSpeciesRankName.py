@@ -8,17 +8,18 @@ from Bio import Entrez
 
 def get_user_arguments(): ######
     '''
-    Takes 2 arguments as std.input.
-    These should be a scientific name of a species and a taxonomy tank
+    What for:
+        Takes 2 arguments as std.input.
+        These should be a scientific name of a species and a taxonomy tank
 
     Arguments:
-         None
-    Vars -
-        scientific_name:
-            Search term. Should be a species scientific name following the example: "Canis lupus".
-        taxonomy_rank:
-            Taxonomy Rank relation. If you dont know what to do here enter an item of this list:
+        None
+
+    Vars:
+        scientific_name: Search term. Should be a species scientific name following the example: "Canis lupus".
+        taxonomy_rank: Taxonomy Rank relation. If you dont know what to do here enter an item of this list:
             ['superkingdom', 'kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
+
     Returns:
         scientific_name and taxonomy_rank
     '''
@@ -36,18 +37,21 @@ def get_user_arguments(): ######
 
 def get_taxon_name(scientific_name: str,taxonomy_rank: str): ######
     '''
-    Returns the scientific name of a taxon based on species scientific name and taxonomy rank.
+    What for:
+        Returns the scientific name of a taxon based on species scientific name and taxonomy rank.
 
     Args:
         scientific_name
         taxonomy_rank: Taxonomic rank of the taxon to search for. Must be one of the following:
             ['superkingdom', 'kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
+    
     Vars:
         search_handle: search query
         search_record: result of search query
         taxon_id: taxon id from our argument species
         fetch_handle: fetch query
         fetch_record: result of fetch query
+
     Returns:
         taxon rank with from the assigned species.
         Example: species= homo sapiens taxonomy_rank= order will return primates.
@@ -67,11 +71,14 @@ def get_taxon_name(scientific_name: str,taxonomy_rank: str): ######
 
 def error_handle_taxon_name(scientific_name,taxonomy_rank): ######
     '''
-    Uses get_taxon_name. With this it will verify if the scientific name is correct.
+    What for:
+        Uses get_taxon_name. With this it will verify if the scientific name is correct.
+
     Vars:
         specie (str): Scientific name of the species to search for.
         rank (str): Taxonomic rank of the taxon to search for. Must be one of the following:
             ['superkingdom', 'kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
+            
     Returns:
         taxon
     '''

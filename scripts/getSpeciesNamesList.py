@@ -10,7 +10,17 @@ from essentials import entrez_search, entrez_fetch, print_to_file, file_reader
 
 def get_user_arguments():
     '''
-    takes arguments
+    What for:
+        Retrieves takes arguments passed by the user.
+
+    Arguments:
+        None
+
+    Vars:
+        rank_name: The rank name input by the user.
+
+    Returns:
+        rank_name
     '''
     try:
         rank_name = sys.argv[1]
@@ -20,12 +30,16 @@ def get_user_arguments():
 
 def scientific_names_list_downloader(rank_name: str):
     '''
-    Downloads ScientificNames_list.txt, with all species from said taxonomy rank name
-    Args:
-        rank_name: Name of the taxonomy rank according to said specie
-    Vars-
+    What for:
+        Downloads ScientificNames_list.txt, with all species from said taxonomy rank name.
+
+    Arguments:
+        rank_name: Name of the taxonomy rank according to said specie.
+
+    Vars:
         web_environment and query_key: Web Environment and Query Key
         filther: filthering instance from efetch query.
+
     Returns:
         None
     '''
