@@ -25,7 +25,11 @@ rule all:
         "FiltredScientificNames_list.txt",
         "FiltredGeneNames_list.txt",
         directory("Squences_Fasta"),
-        directory("output_dir")   
+        "named_Fastas",
+        "concat.fasta",
+        directory("output_dir"),
+        "RAxML_bootstrap.nhk", 
+        "MyBayes.tre" 
 
 rule copy_outputs:
     input:
@@ -36,7 +40,9 @@ rule copy_outputs:
         "FiltredGeneNames_list.txt",
         "Squences_Fasta",
         "named_Fastas",
-        "concat.fasta"
+        "concat.fasta",
+        "RAxML_bootstrap.nhk", 
+        "MyBayes.tre"
     output:
         directory("output_dir")
     run:
@@ -47,8 +53,7 @@ rule copy_outputs:
                 shutil.copytree(item, "output_dir"+"/"+os.path.basename(item))
             else: 
                 shutil.copy(item, "output_dir")                
-
-          
+         
 rule getSpeciesRankName:
     params:
         cientificName = term,
@@ -60,7 +65,6 @@ rule getSpeciesRankName:
         python3 scripts/getSpeciesRankName.py {params.cientificName} {params.rank} > {output}
         """
 
-
 rule getSpeciesNamesList:
     input:
         rules.getSpeciesRankName.output
@@ -71,7 +75,6 @@ rule getSpeciesNamesList:
         python3 scripts/getSpeciesNamesList.py $(cat {input}) > {output}
         """
         
-
 rule getSpeciesGeneList:
     input:
         rules.getSpeciesNamesList.output
@@ -82,7 +85,7 @@ rule getSpeciesGeneList:
         python3 scripts/getSpeciesGeneList.py  
         """
 
-rule getFiltheredGenesLists:
+rule getSatisfiedList:
     input:
         rules.getSpeciesGeneList.output
     params:
@@ -93,15 +96,14 @@ rule getFiltheredGenesLists:
     output:
         "FiltredScientificNames_list.txt",
         "FiltredGeneNames_list.txt"
-        
     shell:
         """
-        python3 scripts/getFiltheredGenesLists.py {params.cientificName} {params.proximity} {params.similarity}
+        python3 scripts/getSatisfiedList.py {params.cientificName} {params.proximity} {params.similarity}
         """ 
 
 rule getSecToAlign:
     input:
-        rules.getFiltheredGenesLists.output
+        rules.getSatisfiedList.output
     output:
         directory("Squences_Fasta")
     shell:
@@ -118,19 +120,51 @@ rule getConcatAlignNamedFasta:
     shell:
         """
         python3 scripts/getConcatAlignNamedFasta.py
-        """  
+        """ 
+
+rule getMl_Tree:
+    input:
+        rules.getConcatAlignNamedFasta.output
+    output:
+        "RAxML_bootstrap.nhk"
+    shell:
+        """
+        python3 scripts/getML_Tree.py 
+        """
+
+rule getBayes_Tree:
+    input:
+        rules.getMl_Tree.output
+    output:
+        "MyBayes.tre"
+    shell:
+        """
+        python3 scripts/getBayes_Tree.py
+        """
+
+rule get_toy_tree:
+    input:
+        rules.getConcatAlignNamedFasta.output
+    output:
+        "RAxML_bootstrap.nhk"
+        "MyBayes.tre"
+    shell:
+        """
+        python3 scripts/get_toy_tree.py {params.cientificName}
+        """
 
 rule clean:
     input:
         "RankName.txt",
         "ScientificNames_list.txt",
-        "GeneLists",
+        directory("GeneLists"),
         "FiltredScientificNames_list.txt",
         "FiltredGeneNames_list.txt",
-        "Squences_Fasta",
+        directory("Squences_Fasta"),
         "named_Fastas",
-        "Squences_Fasta",
-        "named_Fastas",
-        "concat.fasta"
+        "concat.fasta",
+        "RAxML_bootstrap.nhk",
+        "MyBayes.tre"
     shell:
-        "rm -r {input}"  
+        "rm -rf {input}"  
+
