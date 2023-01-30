@@ -16,8 +16,3 @@ test:
     - python3 -m pytest /TestSuit/test_getSatisfiedlist.py 
     - python3 -m pytest /TestSuit/test_getSpeciesNamesList.py 
     - python3 -m pytest /TestSuit/test_getSpeciesRankName.py 
-  
-  artifacts:
-    paths:
-      - /TestSuit
-    when: always
