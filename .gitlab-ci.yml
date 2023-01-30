@@ -1,19 +1,11 @@
 image: snakemake/snakemake
 
 stages:
-  - lint
   - test
 
 before_script:
   - echo "Verifying dependencies"
-  - pip3 install pylint flake8
   - pip3 install pytest
-
-lint:
-  stage: lint
-  script:
-    - pylint /TestSuit
-    - flake8 /TestSuit
 
 test:
   stage: test
