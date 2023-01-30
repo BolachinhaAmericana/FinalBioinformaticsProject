@@ -83,10 +83,10 @@ def species_gene_list_downloader(species: str, batch_size: int):
             gene_list.remove('')
     try:
         if len(gene_list) == 0:
-            print_to_file('./GeneLists/noGene.txt', 'a', species)
+            print_to_file('./GeneLists/noGene', 'a', species)
             print(f'{species} has 0 genes.')
         else:
-            with open(f'./GeneLists/{species}_GeneList.txt', 'w', encoding='utf8') as file:
+            with open(f'./GeneLists/{species}_GeneList', 'w', encoding='utf8') as file:
                 for gene in gene_list:
                     file.write(gene + '\n')
         return None
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     try:
         SPECIES_NAMES_LIST = file_reader_to_list('./ScientificNames_list.txt')
     except FileNotFoundError:
-        print('./ScientificNames_list.txt file Not found. Cjeck working dir. Exiting.')
+        print('./ScientificNames_list file Not found. Cjeck working dir. Exiting.')
         sys.exit()
 
     env_setup(OUTPUT_DIR)
