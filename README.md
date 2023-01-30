@@ -26,13 +26,12 @@ Instructions on how to run any automated tests for the project.
 Instructions on how to use the project, including any necessary configuration or settings.
 
 ## Authors
-# Deem update ao vosso
 * **Duarte Valente** - *genes gathering and filtering* - [GitHub](https://github.com/BolachinhaAmericana) - [GitLab](https://gitlab.com/BolachinhaAmericana)
-* **Gonçalo Alves** - *Yes* - - [GitHub](https://github.com/BolachinhaAmericana) - [GitLab](https://gitlab.com/BolachinhaAmericana)
-* **Guilherme Silva** - *Yes* - [GitHub](https://github.com/BolachinhaAmericana) - [GitLab](https://gitlab.com/BolachinhaAmericana)
-* **Marine Fournier** - *Yes* - [GitHub](https://github.com/BolachinhaAmericana) - [GitLab](https://gitlab.com/BolachinhaAmericana)
-* **Matilde Machado** - *Yes* - - [GitHub](https://github.com/BolachinhaAmericana) - [GitLab](https://gitlab.com/BolachinhaAmericana)
-* **Rodrigo Pinto** - *Yes* - - [GitHub](https://github.com/BolachinhaAmericana) - [GitLab](https://gitlab.com/BolachinhaAmericana)
+* **Gonçalo Alves** - *code reviwer and report manager* - - [GitHub](https://github.com/GonaloAlves) - [GitLab](https://gitlab.com/alvesgoncas2014)
+* **Guilherme Silva** - *general manager* - [GitHub](https://github.com/GuilhermeVCCdaSilva) - [GitLab](https://gitlab.com/guilherme.vcc.silva)
+* **Marine Fournier** - *overall helper and testing* - [GitHub](https://github.com/MarineF22) - [GitLab](https://gitlab.com/marine.fournier2002)
+* **Matilde Machado** - *mr bayes tree and report writing* - [GitLab](https://gitlab.com/matildemachado)
+* **Rodrigo Pinto** - *fasta management and maximum likelyhood tree* - - [GitHub](https://github.com/Sepay) - [GitLab](https://gitlab.com/Sepay1)
 
 ## Acknowledgments
 Any credits or acknowledgements for third-party libraries or code used in the project.
