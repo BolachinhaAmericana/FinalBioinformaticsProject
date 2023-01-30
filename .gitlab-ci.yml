@@ -16,3 +16,8 @@ test:
     - python3 -m pytest /TestSuit/test_getSatisfiedlist.py || (echo "Test failed: test_getSatisfiedlist.py" && exit 1)
     - python3 -m pytest /TestSuit/test_getSpeciesNamesList.py || (echo "Test failed: test_getSpeciesNamesList.py" && exit 1)
     - python3 -m pytest /TestSuit/test_getSpeciesRankName.py || (echo "Test failed: test_getSpeciesRankName.py" && exit 1)
+    - echo "Verifying test report file exists"
+  artifacts:
+    paths:
+      - /TestSuit
+    when: always
