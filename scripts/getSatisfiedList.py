@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-#Made by Silva feat. Marine
+#Made by Silva
 import shutil
 import sys
 import os
@@ -55,7 +55,7 @@ def getsetGoldList(term,directory):
     What for: 
         Get the gene list for the specified term. 
 
-    Arguments: 
+    Arguments: feat. Marine
         term: The term for which to get the gene list.
         directory: The directory containing the gene lists.
 
@@ -297,5 +297,4 @@ if __name__ == "__main__":
     goldDict,intresectCount = getGoldDictValue(setGoldList, directory, goldDict,proximity)
     getFilteredScientificName_list(directory)
     filtredDict = FiltredGeneNames_list(directory,goldDict,intresectCount,similarity)
-    #print(filtredDict)
     verifyDir(directory,pathToGoldList)
