@@ -15,13 +15,12 @@ snakemake v()
 
 ### Installing
 
-# Como instalar as coisas. Need to do
-
 ## Running the tests
 # Need to do
 Instructions on how to run any automated tests for the project.
 
 ## Usage
+This program works using a set of files working with input and outputs 
 # Need to do
 Instructions on how to use the project, including any necessary configuration or settings.
 
@@ -34,4 +33,26 @@ Instructions on how to use the project, including any necessary configuration or
 * **Rodrigo Pinto** - *fasta management and maximum likelyhood tree* - - [GitHub](https://github.com/Sepay) - [GitLab](https://gitlab.com/Sepay1)
 
 ## Acknowledgments
-Any credits or acknowledgements for third-party libraries or code used in the project.
+- ChatCPT
+We used external help from ChatGPT, an AI language model developed by OpenAI to improve our code and help with tests.
+
+## How the programs work individually
+
+Incase it is desired to run the programs individually and outside of the provided docker image, run the scripts in the following order:
+1. getSpeciesRankName.py\
+Takes a specie name and a taxonomy rank as arguments, returns the name of the especific taxon rank name. If this is confusing here is an example of how the code would work:
+```bash
+python3 getSpeciesRankName.py <specie_name> <taxonomy_rank>
+python3 getSpeciesRankName.py 'Homo sapiens' 'order'
+>> Primates
+```
+2. getSpeciesNamesList.py
+Takes the output of the previous file, ```Primates``` as in the example and queries all species that share this taxonomy rank. Outputs a list of these species to ```ScientificNames_list.txt``` file.
+3. getSpeciesGeneList.py
+Runs the ```ScientificNames_list.txt``` file to check all species and downloads all gene names from each specie to ```/GeneLists/{specie}_GeneList```
+4. getSatisfiedList.py
+Filthers unecessary gene lists using two methods.
+    - species filthering
+will remove all species gene lists that don't make the cut of >input< percentage. Essensialy it compares the number of similar genes regarding the original species and if it shares a number above the (%), gets approved and clears the '1st stage'.
+    - gene filthering
+    In order to avoid the count of genes exclusive to the input species, we filther the genes that don't appear on a input (%) of other species that already passed the 'first stage'. Those who pass this 'second stage', get labeled as approved and are sent to ```FiltheredGeneNames_list.txt```
