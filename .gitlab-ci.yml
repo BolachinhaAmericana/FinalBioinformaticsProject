@@ -4,24 +4,30 @@ stages:
   - lint
   - test
 
+before_script:
+  - echo "Verifying dependencies"
+  - pip3 install pylint flake8
+  - pip3 install pytest
+
 lint:
   stage: lint
   script:
-    - pip3 install pylint flake8
     - pylint /TestSuit
     - flake8 /TestSuit
-
-before_script:
-  - pip3 install pytest
 
 test:
   stage: test
   script:
-    - python3 -m pytest  /TestSuit/test_fasta_script.py
-    - python3 -m pytest  /TestSuit/test_model_tree.py
-    - python3 -m pytest  /TestSuit/test_getSatisfiedlist.py
-    - python3 -m pytest  /TestSuit/test_getSpeciesNamesList.py
-    - python3 -m pytest  /TestSuit/test_getSpeciesRankName.py
+    - echo "Running tests"
+    - python3 -m pytest /TestSuit/test_fasta_script.py || (echo "Test failed: test_fasta_script.py" && exit 1)
+    - python3 -m pytest /TestSuit/test_model_tree.py || (echo "Test failed: test_model_tree.py" && exit 1)
+    - python3 -m pytest /TestSuit/test_getSatisfiedlist.py || (echo "Test failed: test_getSatisfiedlist.py" && exit 1)
+    - python3 -m pytest /TestSuit/test_getSpeciesNamesList.py || (echo "Test failed: test_getSpeciesNamesList.py" && exit 1)
+    - python3 -m pytest /TestSuit/test_getSpeciesRankName.py || (echo "Test failed: test_getSpeciesRankName.py" && exit 1)
   artifacts:
     paths:
       - /TestSuit/test-reports
+    when: always
+  script:
+    - echo "Verifying test report file exists"
+    - if [ ! -f "/TestSuit/test-reports" ]; then echo "Test report file not found" && exit 1; fi
