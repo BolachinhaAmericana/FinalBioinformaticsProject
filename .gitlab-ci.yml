@@ -11,8 +11,8 @@ test:
   stage: test
   script:
     - echo "Running tests"
-    - python3 -m pytest /TestSuit/test_fasta_script.py 
-    - python3 -m pytest /TestSuit/test_model_tree.py 
-    - python3 -m pytest /TestSuit/test_getSatisfiedlist.py 
-    - python3 -m pytest /TestSuit/test_getSpeciesNamesList.py 
-    - python3 -m pytest /TestSuit/test_getSpeciesRankName.py 
+    - python3 -m pytest TestSuit/test_fasta_script.py 
+    - python3 -m pytest TestSuit/test_model_tree.py 
+    - python3 -m pytest TestSuit/test_getSatisfiedlist.py 
+    - python3 -m pytest TestSuit/test_getSpeciesNamesList.py 
+    - python3 -m pytest TestSuit/test_getSpeciesRankName.py 
