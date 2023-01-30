@@ -123,25 +123,37 @@ This report provides an overview of a software program designed to generate phyl
 
 \section{Background}\label{sec:desenvolvimentos}
 
-- In this section will be provided a quick background information on the field of phylogenetics and the challenges associated with creating phylogenetic trees.
-
-- Phylogenetics is a study that aims to understand the evolutionary relationships among vast groups of similar organisms. It uses molecular biology to achieve to compare the genetic and morphological characteristics of different organisms, infering their evolutionary relationships. The main goal of this process is to construct evolutionary/phylogenetic trees, which depict the evolutionary relationships among different organisms.
-
-- The process of creating a phylogenetic tree can be challenging. One of the main challenges is the availability of data. For example, it can be difficult to obtain high-quality genetic data for a certain group of organisms. The complexity of determining evolutionary relationships can be compounded by various factors such as, the method used, the type of data, and the assumptions made. Also, the construction of a phylogenetic tree assumes that similarities among organisms are the result of a shared ancestry, but it's possible that similarities may have developed independently within different groups of organisms.
-
-- Finally, creating a phylogenetic tree requires making choices about the appropriate model and the appropriate method for inferring relationships, like Maximum likelihood, Bayesian and Distance-based methods. Selecting the most fitting model can be challenging, but fortunately, there are resources available to assist in making the best choice.
-
-- The field of phylogenetics requires expertise from multiple areas, like molecular biology and computer science. Phylogenetic trees can offer significant insights into the evolutionary connections among organisms, however, it is crucial to keep in mind the difficulties and ambiguities that can arise during the creation of these trees.
+In this section will be provided a quick background information on the field of phylogenetics and the challenges associated with creating phylogenetic trees.\newline
+Phylogenetics is a study that aims to understand the evolutionary relationships among vast groups of similar organisms. It uses molecular biology to achieve to compare the genetic and morphological characteristics of different organisms, infering their evolutionary relationships. The main goal of this process is to construct evolutionary/phylogenetic trees, which depict the evolutionary relationships among different organisms.\newline
+The process of creating a phylogenetic tree can be challenging. One of the main challenges is the availability of data. For example, it can be difficult to obtain high-quality genetic data for a certain group of organisms. The complexity of determining evolutionary relationships can be compounded by various factors such as, the method used, the type of data, and the assumptions made. Also, the construction of a phylogenetic tree assumes that similarities among organisms are the result of a shared ancestry, but it's possible that similarities may have developed independently within different groups of organisms.\newline
+Finally, creating a phylogenetic tree requires making choices about the appropriate model and the appropriate method for inferring relationships, like Maximum likelihood, Bayesian and Distance-based methods. Selecting the most fitting model can be challenging, but fortunately, there are resources available to assist in making the best choice.\newline
+The field of phylogenetics requires expertise from multiple areas, like molecular biology and computer science. Phylogenetic trees can offer significant insights into the evolutionary connections among organisms, however, it is crucial to keep in mind the difficulties and ambiguities that can arise during the creation of these trees.
 
 
 \section{Methodology}\label{sec:desenvolvimentos}
+The methodology for building phylogenetic trees involves several key steps, including data acquisition, data processing, and tree inference. Data acquisition involves obtaining high-quality genetic or morphological data for each of the organisms being analyzed. Data processing involves cleaning, organizing, and transforming the data into a format that is suitable for tree inference. Finally, tree inference involves using a variety of algorithms and models to construct the phylogenetic tree based on the processed data. In the next subsections it will be explained every part of the program from the data acquisition to the tree build and what methods were used.
 
+\subsection{Data Acquisition}
+For the data acquisition we used the EntrezAPI, which The Entrez API is a component of the NCBI (National Center for Biotechnology Information) programmatic access to the vast collections of data maintained by the NCBI. The API provides a set of programmatic tools for accessing NCBI databases, including PubMed, GenBank, and others. The API allows developers to retrieve and manipulate data in a format that is suitable for analysis and integration into other programs or applications. The API supports a wide range of programming languages and platforms, making it a versatile and convenient tool for a wide range of scientific, medical, and research applications. The API is designed to be flexible, allowing developers to specify the data they need and the format they want it in, while also providing a variety of options for filtering, sorting, and transforming data to meet their specific needs. Overall, the Entrez API provides a powerful and flexible tool for accessing NCBI data and integrating it into a wide range of scientific and medical applications.\newline
+The final output of the stage is a folder full of FASTA files that we will use to build the tree.
+
+\subsection{Tree Inference}
 
 \section{Implementation}\label{sec:desenvolvimentos}
 
 - Includes the specific programming languages, libraries, and tools used to develop the program. It also includes information about the programming techniques that were employed and any specific coding practices that were followed. 
 
-- This section is where the code itself is typically included or referenced, and it should be detailed enough for someone with a similar level of expertise to understand how the program works and could potentially make changes or modifications to the code.
+- This section is where the code itself is typically included or referenced, and it should be detailed enough for someone with a similar level of expertise to understand how the program works and could potentially make changes or modifications to the code. For this we used SeqIO from Bio library. SeqIO is a module in the Biopython library used for reading and writing biological sequence files, such as FASTA and GenBank files.
+
+\section{Results}\label{sec:desenvolvimentos}
+
+- Colocar os mambinhos dos graficos e exemplis de fastas, alignments, concatenate, etc
+
+- Summary of the results obtained from testing the software, including any performance metrics and examples of the generated phylogenetic trees. 
+
+- Observations or insights gained from the results, and how they compare to expected or previous results. 
+
+- It should provide any visualizations or plots that help to interpret the results and explain any patterns or trends found in the data.
 
 \section{Antigos Requirements}\label{sec:desenvolvimentos}
 \subsection{Operating System}
@@ -178,18 +190,6 @@ In the end as output the program will generate 2 pdfs with phylogenetics trees.
 - User interface: This includes information about how the program is intended to be used by the end-user, including any specific user interface elements (such as buttons, menus, etc.) and how they function.
 
 
-
-
-
-\section{Results}\label{sec:desenvolvimentos}
-
-- Colocar os mambinhos dos graficos e exemplis de fastas, alignments, concatenate, etc
-
-- Summary of the results obtained from testing the software, including any performance metrics and examples of the generated phylogenetic trees. 
-
-- Observations or insights gained from the results, and how they compare to expected or previous results. 
-
-- It should provide any visualizations or plots that help to interpret the results and explain any patterns or trends found in the data.
 
 
 
