@@ -6,7 +6,7 @@ This file will output the taxon rank name of a input species.
 import sys
 from Bio import Entrez
 
-def get_user_arguments(): ######
+def get_user_arguments(scientific_name,taxonomy_rank): 
     '''
     What for:
         Takes 2 arguments as std.input.
@@ -87,10 +87,9 @@ def error_handle_taxon_name(scientific_name,taxonomy_rank): ######
         return taxon
     except IndexError:
         sys.exit("error: Bad Scientific Name")
-        return None
-
+        
 if __name__ == "__main__":
-    species,rank = get_user_arguments()
+    species,rank = get_user_arguments(scientific_name='',taxonomy_rank='')
     taxon_name = error_handle_taxon_name(species, rank)
     if taxon_name:
         print(taxon_name)
