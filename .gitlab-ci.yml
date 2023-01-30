@@ -1,23 +1,25 @@
 image: snakemake/snakemake
 
 stages:
-  - test
+- test
 
 before_script:
-  - echo "Verifying dependencies"
-  - pip3 install pytest
+- echo "Verifying dependencies"
+- pip3 install pytest
 
 test:
   stage: test
   script:
     - echo "Running tests"
-    - python3 -m pytest /TestSuit/test_fasta_script.py || (echo "Test failed: test_fasta_script.py" && exit 1)
-    - python3 -m pytest /TestSuit/test_model_tree.py || (echo "Test failed: test_model_tree.py" && exit 1)
-    - python3 -m pytest /TestSuit/test_getSatisfiedlist.py || (echo "Test failed: test_getSatisfiedlist.py" && exit 1)
-    - python3 -m pytest /TestSuit/test_getSpeciesNamesList.py || (echo "Test failed: test_getSpeciesNamesList.py" && exit 1)
-    - python3 -m pytest /TestSuit/test_getSpeciesRankName.py || (echo "Test failed: test_getSpeciesRankName.py" && exit 1)
-    - echo "Verifying test report file exists"
+    - |
+      python3 -m pytest /TestSuit/test_fasta_script.py || (echo "Test failed: test_fasta_script.py" && exit 1)
+      python3 -m pytest /TestSuit/test_model_tree.py || (echo "Test failed: test_model_tree.py" && exit 1)
+      python3 -m pytest /TestSuit/test_getSatisfiedlist.py || (echo "Test failed: test_getSatisfiedlist.py" && exit 1)
+      python3 -m pytest /TestSuit/test_getSpeciesNamesList.py || (echo "Test failed: test_getSpeciesNamesList.py" && exit 1)
+      python3 -m pytest /TestSuit/test_getSpeciesRankName.py || (echo "Test failed: test_getSpeciesRankName.py" && exit 1)
   artifacts:
     paths:
       - /TestSuit
     when: always
+  script:
+    - echo "Verifying test report file exists"
