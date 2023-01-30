@@ -1,0 +1,28 @@
+The flag 'directory' used in rule all is only valid for outputs, not inputs.
+The flag 'directory' used in rule all is only valid for outputs, not inputs.
+The flag 'directory' used in rule all is only valid for outputs, not inputs.
+The flag 'directory' used in rule clean is only valid for outputs, not inputs.
+The flag 'directory' used in rule clean is only valid for outputs, not inputs.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	copy_outputs
+	1	getBayes_Tree
+	1	getConcatAlignNamedFasta
+	1	getMl_Tree
+	1	getSatisfiedList
+	1	getSecToAlign
+	1	getSpeciesGeneList
+	1	getSpeciesNamesList
+	1	getSpeciesRankName
+	10
+
+[Mon Jan 30 12:24:20 2023]
+rule getSpeciesRankName:
+    output: RankName.txt
+    jobid: 1
+
