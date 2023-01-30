@@ -136,10 +136,28 @@ The methodology for building phylogenetic trees involves several key steps, incl
 \subsection{Data Acquisition}
 For the data acquisition we used the EntrezAPI, which The Entrez API is a component of the NCBI (National Center for Biotechnology Information) programmatic access to the vast collections of data maintained by the NCBI. The API provides a set of programmatic tools for accessing NCBI databases, including PubMed, GenBank, and others. The API allows developers to retrieve and manipulate data in a format that is suitable for analysis and integration into other programs or applications. The API supports a wide range of programming languages and platforms, making it a versatile and convenient tool for a wide range of scientific, medical, and research applications. The API is designed to be flexible, allowing developers to specify the data they need and the format they want it in, while also providing a variety of options for filtering, sorting, and transforming data to meet their specific needs. Overall, the Entrez API provides a powerful and flexible tool for accessing NCBI data and integrating it into a wide range of scientific and medical applications.\newline
 The final output of the stage is a folder full of FASTA files that we will use to build the tree.
+\subsection{Data processing}
+As soon as the FASTA files were gathered, there are four necessary steps to make this FASTA files operable.\newline
+The initial procedure involves assigning new, more descriptive labels to each sequence contained within each FASTA file, thereby rendering the information contained within each sequence more readily comprehended.\newline
+The second step entails the alignment of each FASTA file, which will be executed utilizing the MAFFT software, which is a software tool for multiple sequence alignment. It can align large numbers of sequences efficiently and accurately, making it a popular choice in the field of molecular biology and genetics.\newline
+The third operation involves the meticulous concatenation of all FASTA files, culminating in the creation of a comprehensive and unified file. To make this possible we used only python dictionaries. This procedure paves the way for conducting a maximum likelihood tree analysis, yet to undertake a Bayesian tree analysis, a final step is require.\newline
+Finally, the final step involves tranforming the FASTA file into the NEXUS file format, with the aid of the SeqMagick tool, to optimize the data for further analysis, culminating in the creation of a Bayesian phylogenetic tree. SeqMagick is a powerful and flexible software package that allows for efficient manipulation and conversion of multiple sequence alignment (MSA) files in various formats.
+\subsection{Tree Inference}
+The end result of this phase will be the production of two distinct phylogenetic trees - one generated through the Maximum Likelihood method and the other, a Bayesian tree.\newline
+To construct the maximum likelihood tree, it was imperative to utilize a FASTA file and the software of choice was RaxML. RaxML is a popular open-source software that uses maximum likelihood algorithms to construct phylogenetic trees from molecular sequence data. The implementation of RaxML within this project allowed for the efficient and accurate creation of the maximum likelihood tree.\newline
+The final step in this phylogenetic tree building procedure will entail utilizing the NEXUS file and the MrBayes software to construct a Bayesian tree. A brief introduction to MrBayes, a widely-utilized software for Bayesian inference of phylogenetic trees, must also be provided to contextualize its application in this process.
 
+\subsection{Test Suite}
+To ensure the accuracy of our results, a comprehensive test suite was implemented throughout the phylogenetic tree building process. The test suite consisted of a series of validation checks for each step, starting the data acquisition with EntrezAPI, to the final phylogenetic tree output using MrBayes. The validation checks included verifying the integrity of input data, examining the alignment quality, and evaluating the consistency of tree topology. The results of the tests were recorded and analyzed to ensure that the program meets the required standards and produces accurate phylogenetic trees. The test were implment using pytest. Pytest is a popular testing framework for Python programming language that is used to write and run tests for applications and libraries. It allows developers to write tests in a simple, concise and readable manner. Pytest provides a rich set of tools for writing tests, including fixtures for setup and teardown, assertion introspection and plugins for extended functionality.
+\section{Implementation}\label{sec:desenvolvimentos}
+The implementation phase is a crucial step in the development process where the methodology and techniques outlined in the previous stages are put into action. This phase involves executing the steps and methods that were designed and tested in the planning phase, resulting in the creation of a functional product or solution. The implementation phase, much like its predecessor, the methodology phase, will encompass four distinct stages of execution.
+\subsection{Data acquisition}
+
+\subsection{Data Processing}
+After getting the FASTA folder, it was necessary to change the names of each sequence in each FASTA file inside the folder. The list of names was obtained from the FiltredScientificNames_list.txt (an output from the data acquisition phase)
 \subsection{Tree Inference}
 
-\section{Implementation}\label{sec:desenvolvimentos}
+\subsection{Test Suite}
 
 - Includes the specific programming languages, libraries, and tools used to develop the program. It also includes information about the programming techniques that were employed and any specific coding practices that were followed. 
 
@@ -154,41 +172,6 @@ The final output of the stage is a folder full of FASTA files that we will use t
 - Observations or insights gained from the results, and how they compare to expected or previous results. 
 
 - It should provide any visualizations or plots that help to interpret the results and explain any patterns or trends found in the data.
-
-\section{Antigos Requirements}\label{sec:desenvolvimentos}
-\subsection{Operating System}
-The software must be compatible with Linux.
-\subsection{Software Specifications}
-- Docker v20.10.22 \& \newline
-- Snakemake \& \newline
-- Python 3.10.9\newline
-- Biopython 1.77 (seqmagick)\newline 
-- Biopython 1.80 (18 November 2022)\newline
-- Mafft v7.490 \newline
-- RaxML 8.0.0 \newline
-- Modeltest-ng \newline
-- Mrbayes\newline
-\newpage
-
-\subsection{Inputs and Outputs}
-As input the program will need 4 arguments:\newline
-     1 - Scientific name of the species\newline
-     2 - Taxonomy Hierarchy\newline
-     3 - Proximity value (Proximity values would indicate how closely related two organisms are, the higher the percentage, higher the relationship between organisms)\newline
-     4 - Simularity value (Similarity value is a measure of how alike two or more sequences or organisms are, based on their genetic or physical characteristics. The higher the similarity value, the more similar these two organisms are.)\newline
-In the end as output the program will generate 2 pdfs with phylogenetics trees.
-    
-\section{Antigo Design}\label{sec:desenvolvimentos}
-- Preencher
-
-- Architecture: This includes a high-level overview of the overall structure and organization of the program, including any major components or modules and how they interact with each other.
-
-- Algorithms: This includes a detailed explanation of any key algorithms or computational methods used in the program, including any trade-offs or decisions made in their selection.
-
-- Data structures: This includes information about the specific data structures used to store and organize data within the program, and how they support the algorithms and overall program architecture.
-
-- User interface: This includes information about how the program is intended to be used by the end-user, including any specific user interface elements (such as buttons, menus, etc.) and how they function.
-
 
 
 
