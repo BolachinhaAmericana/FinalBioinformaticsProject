@@ -8,7 +8,7 @@ import sys
 import os
 from essentials import entrez_search, entrez_fetch, print_to_file, file_reader
 
-def get_user_arguments():
+def get_user_arguments(rank_name):
     '''
     What for:
         Retrieves takes arguments passed by the user.
@@ -61,5 +61,5 @@ def scientific_names_list_downloader(rank_name: str):
 
 
 if __name__ == "__main__":
-    RANK_NAME = get_user_arguments()
+    RANK_NAME = get_user_arguments(rank_name='')
     scientific_names_list_downloader(RANK_NAME)
