@@ -3,17 +3,23 @@ import toytree # Uma biblioteca para o desenho gráfico de árvores
 import toyplot.pdf
 import sys
 
+def get_user_input(MLTree, MrBayes):
+    MLTree = sys.argv[1] 
+    MrBayes = sys.argv[2]
+    return MLTree, MrBayes
+
 def get_user_args(specieName):
-    specieName = sys.argv[1]
+    specieName = sys.argv[3]
     specieName = specieName.replace(" ", "_")
     print(specieName) 
     return specieName
 
 
 def oppen_tree_file(treeFile):
-    with open(treeFile,'r') as file:
-        treeFile = file.read()
+    with open(treeFile,'r') as text:
+        treeFile = text.read()
     tre = toytree.tree(treeFile) 
+    print(tre)
     return tre
 
 def style_MLtree(specieName,tre):
@@ -38,7 +44,7 @@ def style_MLtree(specieName,tre):
         "node_colors": toytree.colors[2],
     }
     # Guarda os valores que retornam do desenho da arvore em canvas, axes, mark
-    mlCanvas = tre.draw(height=900,**mystyle)
+    mlCanvas ,axes, mark = tre.draw(height=900,**mystyle)
     return mlCanvas
 
 def style_MBtree(specieName,tre):
@@ -63,9 +69,8 @@ def style_MBtree(specieName,tre):
         "node_colors": toytree.colors[2],
     }
 
-
     # Guarda os valores que retornam do desenho da arvore em canvas, axes, mark
-    mbCanvas = tre.draw(height=900,**mystyle)
+    mbCanvas, axes, mark = tre.draw(height=900,**mystyle)
     return mbCanvas
 
 def write_to_pdf(mlCanvas,mbCanvas):
@@ -73,10 +78,11 @@ def write_to_pdf(mlCanvas,mbCanvas):
     toyplot.pdf.render(mbCanvas, "tree-plot_MB.pdf")
 
 if __name__ == '__main__':
-    specieName = get_user_args(specieName='')
-    tre = oppen_tree_file(treeFile="RAxML_bootstrap.nhk")
+    MLTree, MrBayes = get_user_input(MLTree='', MrBayes='')
+    specieName = get_user_args(specieName='')   
+    tre = oppen_tree_file(treeFile=MLTree)
     mlCanvas = style_MLtree(specieName,tre)
-    tre = oppen_tree_file(treeFile="MyBayes.tre")
+    tre = oppen_tree_file(treeFile=MrBayes)
     mbCanvas = style_MBtree(specieName,tre)
     write_to_pdf(mlCanvas,mbCanvas)
 
