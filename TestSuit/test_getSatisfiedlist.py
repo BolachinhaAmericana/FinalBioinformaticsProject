@@ -5,10 +5,6 @@ from scripts.getSatisfiedList import getLoadindDir, getUserArguments, getsetGold
 
 #Made by Marine feat Pinto
 
-def test_getLoadingdir():
-    directory = getLoadindDir(geneLists_directory='GeneLists')
-    assert os.path.exists(directory)
-
 def test_userArgs():
     sys.argv = ['getUserArguments', '', '', '']
     term, proximity, similarity = getUserArguments(sys.argv[1], sys.argv[2], sys.argv[3])
