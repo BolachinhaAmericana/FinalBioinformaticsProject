@@ -1,4 +1,6 @@
-image: snakemake/snakemake
+ # Get docker image
+image: peixeaquatico/magic_phylogenetic:latest
+
 
 stages:
 - test
