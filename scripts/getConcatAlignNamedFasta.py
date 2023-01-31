@@ -44,7 +44,7 @@ def getNamed_fastas(dir):
 
 
 
-def alignFastas(inputFolder,outfolder):
+def fastas_Aligner(inputFolder,outfolder):
     '''
     What for:
         This function aligns the fasta files in a specified input folder using the MAFFT alignment tool.
@@ -66,7 +66,7 @@ def alignFastas(inputFolder,outfolder):
         subprocess.run(['mafft', folder + '/' + fasta], stdout = f)
 
 
-def concatenateFastas(inputFolder):
+def fastas_Concatenator(inputFolder):
     '''
     What for:
         This function concatenates all the fasta files in the directory and stores the concatenated fasta in a new file called "concat.fasta" in the current directory. 
@@ -108,5 +108,5 @@ def concatenateFastas(inputFolder):
 
 if __name__ == "__main__":
     getNamed_fastas('named_Fastas')
-    alignFastas('named_Fastas','alignedFastas')
-    concatenateFastas('alignedFastas')
+    fastas_Aligner('named_Fastas','alignedFastas')
+    fastas_Concatenator('alignedFastas')
