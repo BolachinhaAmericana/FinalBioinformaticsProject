@@ -27,9 +27,11 @@ rule all:
         directory("Squences_Fasta"),
         "named_Fastas",
         "concat.fasta",
-        directory("output_dir"),
-        "RAxML_bootstrap.nhk", 
-        "MyBayes.tre" 
+        "MyBayes.con.tre",
+        "RAxML_bootstrap.nwk",
+        "tree-plot_bootstrap_ML.pdf",
+        "tree-plot_MB.pdf",
+         directory("output_dir")
 
 rule copy_outputs:
     input:
@@ -41,8 +43,10 @@ rule copy_outputs:
         "Squences_Fasta",
         "named_Fastas",
         "concat.fasta",
-        "RAxML_bootstrap.nhk", 
-        "MyBayes.tre"
+        "MyBayes.con.tre",
+        "RAxML_bootstrap.nwk", 
+        "tree-plot_bootstrap_ML.pdf",
+        "tree-plot_MB.pdf"
     output:
         directory("output_dir")
     run:
@@ -122,35 +126,40 @@ rule getConcatAlignNamedFasta:
         python3 scripts/getConcatAlignNamedFasta.py
         """ 
 
-rule getMl_Tree:
-    input:
-        rules.getConcatAlignNamedFasta.output
-    output:
-        "RAxML_bootstrap.nhk"
-    shell:
-        """
-        python3 scripts/getML_Tree.py 
-        """
-
 rule getBayes_Tree:
     input:
-        rules.getMl_Tree.output
+        rules.getConcatAlignNamedFasta.output    
     output:
-        "MyBayes.tre"
+        "MyBayes.con.tre"
     shell:
         """
         python3 scripts/getBayes_Tree.py
         """
 
-rule get_toy_tree:
+rule getMl_Tree:
     input:
-        rules.getConcatAlignNamedFasta.output
+       rules.getBayes_Tree.output
     output:
-        "RAxML_bootstrap.nhk"
-        "MyBayes.tre"
+        "RAxML_bootstrap.nwk"
     shell:
         """
-        python3 scripts/get_toy_tree.py {params.cientificName}
+        python3 scripts/getML_Tree.py 
+        """
+
+rule get_toy_tree:
+    params:
+        cientificName = term,
+        RaxMl = "RAxML_bootstrap.nwk",
+        MyBayes = "MyBayes.con.tre"
+    input:
+        rules.getBayes_Tree.output,
+        rules.getMl_Tree.output
+    output:
+        "tree-plot_bootstrap_ML.pdf",
+        "tree-plot_MB.pdf"
+    shell:
+        """
+        python3 scripts/get_toy_tree.py {params.RaxMl} {params.MyBayes} {params.cientificName}
         """
 
 rule clean:
@@ -163,8 +172,9 @@ rule clean:
         directory("Squences_Fasta"),
         "named_Fastas",
         "concat.fasta",
-        "RAxML_bootstrap.nhk",
-        "MyBayes.tre"
+        "MyBayes.nex.con.tre",
+        "RAxML_bootstrap.nwk",
+        "tree-plot_bootstrap_ML.pdf",
+        "tree-plot_MB.pdf"
     shell:
-        "rm -rf {input}"  
-
+        "rm -rf {input}"
