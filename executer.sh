@@ -18,6 +18,9 @@ if [ -z "$term" ] || [ -z "$rank" ] || [ -z "$proximity" ] || [ -z "$similarity"
     exit 1
 fi
 
-#docker build -t myimage . && 
-#docker run --rm -v $(pwd):/data myimage 
-term="'$term'" rank="$rank" proximity="$proximity" similarity="$similarity"  snakemake --cores all
+if command -v docker >/dev/null 2>&1; then
+    docker build -t myimage . && 
+    docker run -it --rm -v $(pwd):/lab -e term="'$term'" -e rank="$rank" -e proximity="$proximity" -e similarity="$similarity" myimage bash -c "snakemake --cores all; exec /bin/bash"
+else
+    echo "Docker is not installed Check this link https://docs.docker.com/desktop/install/linux-install/"
+fi
