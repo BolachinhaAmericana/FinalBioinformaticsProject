@@ -1,5 +1,4 @@
 import os
-import pytest
 from scripts.getSpeciesNamesList import scientific_names_list_downloader
 
 def test_scientific_names_list_downloader():

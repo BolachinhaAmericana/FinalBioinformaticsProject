@@ -2,7 +2,7 @@
 
 import os
 import shutil
-from scripts.readconcandalignedfastas import  fastas_Aligner, getNamed_fastas, fastas_Concatenator
+from scripts.getConcatAlignNamedFasta import  fastas_Aligner, getNamed_fastas, fastas_Concatenator
 
 def test_Aligned_Fastas():
     fastas_Aligner("named_Fastas", "alignedFastas")
