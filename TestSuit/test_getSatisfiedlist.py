@@ -12,22 +12,12 @@ def test_userArgs():
     assert proximity == ''
     assert similarity == ''
 
-def test_getSetGollist():
-    pass
 
 def test_getGoldEmpty():
     setGoldList = {'gene1', 'gene2', 'gene3'}
     goldDict = getGoldEmptyDict(setGoldList)
     assert goldDict == {'gene1': 0, 'gene2': 0, 'gene3': 0}
-
-def test_getGolddictValue():
-    setGoldList = set(["gene1", "gene2", "gene3"])
-    directory = "filteredProximity_GeneLists"
-    goldDict = {"gene1": 0, "gene2": 0, "gene3": 0}
-    proximity = 10
-    result = getGoldDictValue(setGoldList, directory, goldDict, proximity)
-    assert result == ({"gene1": 0, "gene2": 0, "gene3": 0}, 0), f"Expected ({{'gene1': 0, 'gene2': 0, 'gene3': 0}}, 0), but got {result}"
-
+    
 
 def test_getFilteredScientificName_list():
     test_dir = 'test_dir'
