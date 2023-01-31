@@ -1,6 +1,4 @@
- # Get docker image
 image: peixeaquatico/magic_phylogenetic:latest
-
 
 stages:
 - test
@@ -8,13 +6,16 @@ stages:
 before_script:
 - echo "Verifying dependencies"
 - python3 -m pip install pytest
+- python3 -m pip install pytest-cov
 
 test:
   stage: test
   script:
-    - echo "Running tests"
-    - python3 -m pytest TestSuit/test_getSpeciesRankName.py
-    - python3 -m pytest TestSuit/test_getSpeciesNamesList.py 
-    - python3 -m pytest TestSuit/test_getSatisfiedlist.py  
-    - python3 -m pytest TestSuit/test_getConcatAlignNamedFasta.py 
-    - python3 -m pytest TestSuit/test_model_tree.py 
+    - echo "Running tests with coverage measurement"
+    - python3 -m pytest --cov=./ TestSuit/test_getConcatAlignNamedFasta.py 
+    - python3 -m pytest --cov=./ TestSuit/test_getSatisfiedlist.py 
+    - python3 -m pytest --cov=./ TestSuit/test_getSpeciesNamesList.py 
+    - python3 -m pytest --cov=./ TestSuit/test_getSpeciesRankName.py 
+    - python3 -m pytest --cov=./ TestSuit/test_model_tree.py 
+    - echo "Coverage report"
+    - python3 -m coverage report
