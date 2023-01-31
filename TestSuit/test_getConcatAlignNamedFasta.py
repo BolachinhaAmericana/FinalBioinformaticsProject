@@ -13,6 +13,5 @@ def test_Aligned_Fastas():
 def test_Concatenator():
     fastas_Concatenator('TestSuit/alignedFastas')
     assert os.path.isfile("concat.fasta")
-    subprocess.run("rm concat.fasta", shell = True)
 
 
