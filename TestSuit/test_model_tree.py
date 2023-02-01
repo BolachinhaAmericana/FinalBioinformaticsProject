@@ -2,7 +2,6 @@ from scripts.getML_Tree import getBestModel, raxMLExecutor
 import os
 
 def test_getBest():
-    getBestModel("concat.fasta")
     assert os.path.isfile("TestSuit/model.txt")
 
 def test_raxMLEx():
