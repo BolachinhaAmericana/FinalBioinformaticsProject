@@ -21,6 +21,9 @@ $ bash executer.sh -s <term> -r <rank> -p <proximity> -i <similarity>
 ```
 
 ### FAQ
+#### Q: "Please provide all required arguments" Error, why is this happening?
+##### Missing Brackets
+You need to put all inputs with between brackets ("") for the program to work
 #### Q: How do I set the parameter correctly?
 The variables that you need to pass to the program are the following:
 ##### Species (term)
@@ -245,5 +248,5 @@ python3 get_toy_tree.py <ml_tree_file> <mb_tree_file> <input_species>
 * **Rodrigo Pinto** - *fasta management and maximum likelyhood tree* - - [GitHub](https://github.com/Sepay) - [GitLab](https://gitlab.com/Sepay1)
 
 ## Acknowledgments
-- ChatGPT
+- ChatGPT-3
 We used external help from ChatGPT, an AI language model developed by OpenAI to improve our code and help with tests. We also recurred to this tool to help with writing the report and this README!
