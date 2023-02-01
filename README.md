@@ -23,7 +23,7 @@ $ bash executer.sh -s <term> -r <rank> -p <proximity> -i <similarity>
 ### FAQ
 #### Q: "Please provide all required arguments" Error, why is this happening?
 ##### Missing Brackets
-You need to put all inputs with between brackets ("") for the program to work
+You need to put all inputs between brackets ("") for the program to work
 #### Q: How do I set the parameter correctly?
 The variables that you need to pass to the program are the following:
 ##### Species (term)
