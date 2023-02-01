@@ -7,5 +7,5 @@ def test_getBest():
 
 def test_raxMLEx():
     lastLine = "23  +I"
-    raxMLExecutor("teste_ali.fasta",lastLine)
+    raxMLExecutor(lastLine)
     assert os.path.isfile("RAxML_bootstrap.nwk")
