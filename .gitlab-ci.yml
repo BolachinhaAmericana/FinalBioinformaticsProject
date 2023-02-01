@@ -12,27 +12,13 @@ test:
   stage: test
   script:
     - echo "Running tests with coverage measurement"
-    - python3 -m pytest TestSuit/test_getSpeciesRankName.py
-    - coverage run -m pytest TestSuit/test_getSpeciesRankName.py
-    - coverage report
-    - python3 -m pytest TestSuit/test_getSpeciesNamesList.py
-    - coverage run -m pytest TestSuit/test_getSpeciesNamesList.py
-    - coverage report
-    - python3 -m pytest TestSuit/test_getSpeciesGeneList.py
-    - coverage run -m pytest TestSuit/test_getSpeciesGeneList.py
-    - coverage report 
-    - python3 -m pytest TestSuit/test_getSatisfiedlist.py
-    - coverage run -m pytest TestSuit/test_getSatisfiedlist.py
-    - coverage report 
-    - python3 -m pytest TestSuit/test_getSatisfiedlist.py
-    - coverage run -m pytest TestSuit/test_getSatisfiedlist.py
-    - coverage report  
-    - python3 -m pytest TestSuit/test_model_tree.py
-    - coverage run -m pytest TestSuit/test_model_tree.py
-    - coverage report  
-    - python3 -m pytest TestSuit/test_getToyTree.py
-    - coverage run -m pytest TestSuit/test_getToyTree.py
-    - coverage report 
+    - python3 -m pytest --cov=./ TestSuit/test_getSpeciesRankName.py 
+    - python3 -m pytest --cov=./ TestSuit/test_getSpeciesNamesList.py
+    - python3 -m pytest --cov=./ TestSuit/test_getSpeciesGeneList.py 
+    - python3 -m pytest --cov=./ TestSuit/test_getSatisfiedlist.py
+    - python3 -m pytest --cov=./ TestSuit/test_getConcatAlignNamedFasta.py 
+    - python3 -m pytest --cov=./ TestSuit/test_model_tree.py 
+    - python3 -m pytest --cov=./ TestSuit/test_getToyTree.py
     - echo "Coverage report"
     - coverage report
     - coverage xml
