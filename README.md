@@ -250,3 +250,12 @@ python3 get_toy_tree.py <ml_tree_file> <mb_tree_file> <input_species>
 ## Acknowledgments
 - ChatGPT-3
 We used external help from ChatGPT, an AI language model developed by OpenAI to improve our code and help with tests. We also recurred to this tool to help with writing the report and this README!
+- Buzzer Fireman and Mako for docstrings.
+
+# Very Important block.
+```python
+for genes in genoma:
+  print('Obrigado, Thank you, You migth need be able to take Excalibur from the stone')
+  print('Buzzer Fireman!')
+```
+
