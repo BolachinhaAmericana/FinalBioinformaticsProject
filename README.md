@@ -1,11 +1,11 @@
 # Automagic phylogenies
 
-In this project, we aim to automate the creation and visualization of a phylogenetic tree based on a species input by the user. Our goal is to make the process of creating such trees more efficient and accessible, allowing for for deeper insights into evolutionary relationships within the animal kingdom.
+In this project, we aim to automate the creation and visualization of a phylogeny tree based on a species input by the user. Our goal is to make the process of creating such trees more efficient and accessible, allowing for for deeper insights into evolutionary relationships within the animal kingdom.
 
 ## Dependencies
 The following dependencies are required to run this project:
 > Docker v20.10.22
-- All other dependencies are automatically installed on our sname-make image. Therefore the only program the user **HAS** to have is docker.
+- All other dependencies are automatically installed on our snake-make image. Therefore the only program the user **HAS** to have is docker.
 
 ## Running the tests
 The tests are run every time there is a commit on the master branch of our repository.
@@ -20,12 +20,34 @@ $ cd auto_magic_phylogenetic
 $ bash executer.sh -s <term> -r <rank> -p <proximity> -i <similarity>
 ```
 
+### FAQ
+#### Q: How do I set the parameter correctly?
+The variables that you need to pass to the program are the following:
+##### Species (term)
+Input the scientific name of the species that is intended for the study.
+##### Taxonomy Rank (rank)
+Input of the taxonomy level which complements the specie.\
+In you unfamiliar with these levels, they can be:
+- `kingdom`
+- `phylum`
+- `class`
+- `order`
+- `family`
+- `genus`
+
+Take in consideration that the recommended input on this parameter is `family` for the data to be neither too big nor too small for a decent and fast analysis.
+##### Proximity Value
+Percentage of proximity value. This parameter is better explained further down on this file!
+##### Similarity Value
+Percentage of similarity value. This parameter is better explained further down on this file!
+
 ## How the programs work individually
 
 In-case it is desired to run the programs individually and outside of the provided docker image, run the scripts as following. `**Fair Warning**` keep in mind that you would have to install all additional programs that run on automatically on our snake-make image manually!!
 
 1. **getSpeciesRankName.py**\
-Takes a specie name and a taxonomy rank as arguments, returns the name of the specific taxon rank name. If this is confusing here is an example of how the code would work:
+Takes a specie name and a taxonomy rank as arguments, returns the name of the specific taxon rank name.\
+If this is confusing here is an example on how the code would work:
 
 ```bash
 python3 getSpeciesRankName.py <specie_name> <taxonomy_rank>
