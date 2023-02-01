@@ -44,6 +44,7 @@ def get_named_fastas(directory):
         records = list(SeqIO.parse(fasta, "fasta"))
         for record, new_name in zip(records, new_names):
             record.id = new_name.replace(" ", "_")
+            record.id = new_name.replace("'", "")
             record.description = ""
         new_file_name = os.path.basename(fasta).split(".")[0] + "_updated.fasta"
         with open(f"{directory}/{new_file_name}", "w", encoding= 'utf8') as doc:
