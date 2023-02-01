@@ -3,7 +3,7 @@ import os
 
 def test_getBest():
     getBestModel("concat.fasta")
-    assert os.path.isfile("model.txt")
+    assert os.path.isfile("TestSuit/model.txt")
 
 def test_raxMLEx():
     lastLine = "23  +I"

@@ -1,0 +1,232 @@
+                             _      _ _            _      _   _  _____ 
+                            | |    | | |          | |    | \ | |/ ____|
+         _ __ ___   ___   __| | ___| | |_ ___  ___| |_   |  \| | |  __ 
+        | '_ ` _ \ / _ \ / _` |/ _ \ | __/ _ \/ __| __|  | . ` | | |_ |
+        | | | | | | (_) | (_| |  __/ | ||  __/\__ \ |_   | |\  | |__| |
+        |_| |_| |_|\___/ \__,_|\___|_|\__\___||___/\__|  |_| \_|\_____|
+--------------------------------------------------------------------------------
+modeltest x.y.z
+Copyright (C) 2017 Diego Darriba, David Posada, Alexandros Stamatakis
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by Diego Darriba.
+--------------------------------------------------------------------------------
+
+Physical cores: 8
+Logical cores:  16
+Memory:         15GB
+Extensions:     AVX
+
+WARNING: MSA has not enough sites to infer reliable results
+Creating new checkpoint file: model.ckp
+--------------------------------------------------------------------------------
+ModelTest-NG vx.y.z
+
+Input data:
+  MSA:        concat.fasta
+  Tree:       Maximum parsimony
+    file:           -
+  #taxa:            16
+  #sites:           68242
+  #patterns:        4545
+  Max. thread mem:  33 MB
+
+Output:
+  Log:           model.log
+  Starting tree: model.tree
+  Results:       model.out
+
+Selection options:
+  # dna schemes:      11
+  # dna models:       11
+  include model parameters:
+    Uniform:         false
+    p-inv (+I):      true
+    gamma (+G):      false
+    both (+I+G):     false
+    free rates (+R): false
+    fixed freqs:     false
+    estimated freqs: true
+  gamma rates mode:   mean
+  asc bias:           none
+  epsilon (opt):      0.01
+  epsilon (par):      0.05
+  keep branches:      false
+
+Additional options:
+  verbosity:        very low
+  threads:          4/8
+  RNG seed:         12345
+  subtree repeats:  enabled
+--------------------------------------------------------------------------------
+modeltest was called as follows: 
+>> modeltest-ng -d nt -i concat.fasta -o model -p 4 -f e -h i -s 11 
+
+
+Partition 1/1
+
+    4/11   TIM1+I         0h:00:00   0h:00:00         -307919.7700       -  0.6155
+    5/11   TIM2+I         0h:00:00   0h:00:00         -307795.4769       -  0.6246
+    2/11   GTR+I          0h:00:00   0h:00:00         -307649.2070       -  0.6384
+    7/11   TrN+I          0h:00:00   0h:00:00         -308118.6297       -  0.6218
+    3/11   TVM+I          0h:00:00   0h:00:00         -307647.9544       -  0.6381
+    6/11   TIM3+I         0h:00:00   0h:00:00         -308104.7346       -  0.6253
+   11/11   HKY+I          0h:00:01   0h:00:01         -308160.7880       -  0.6117
+    8/11   TPM1uf+I       0h:00:01   0h:00:01         -307891.0051       -  0.6375
+   12/11   F81+I          0h:00:00   0h:00:01         -328422.4948       -  0.6075
+    9/11   TPM2uf+I       0h:00:01   0h:00:01         -307788.1403       -  0.6383
+   10/11   TPM3uf+I       0h:00:01   0h:00:01         -308136.4517       -  0.6161
+ ----ID---  ----MODEL---- ---Time--- -Elapsed--- -------LnL------- -Alpha- -P-inv-
+
+Computation of likelihood scores completed. It took 0h:00:01
+
+BIC       model              K            lnL          score          delta    weight
+--------------------------------------------------------------------------------
+       1  TVM+I              8   -307647.9544    615707.7490         0.0000    0.9989
+       2  GTR+I              9   -307649.2070    615721.3850        13.6360    0.0011
+       3  TPM2uf+I           6   -307788.1403    615965.8591       258.1102    0.0000
+       4  TIM2+I             7   -307795.4769    615991.6632       283.9143    0.0000
+       5  TPM1uf+I           6   -307891.0051    616171.5888       463.8398    0.0000
+       6  TIM1+I             7   -307919.7700    616240.2494       532.5004    0.0000
+       7  TIM3+I             7   -308104.7346    616610.1787       902.4297    0.0000
+       8  TrN+I              6   -308118.6297    616626.8379       919.0889    0.0000
+       9  TPM3uf+I           6   -308136.4517    616662.4819       954.7329    0.0000
+      10  HKY+I              5   -308160.7880    616700.0238       992.2748    0.0000
+--------------------------------------------------------------------------------
+Best model according to BIC
+---------------------------
+Model:              TVM+I
+lnL:                -307647.9544
+Frequencies:        0.3132 0.3324 0.1379 0.2164
+Subst. Rates:       1.3493 8.8404 0.9441 0.2644 8.8404 1.0000 
+Inv. sites prop:    0.6381
+Gamma shape:        -
+Score:              615707.7490
+Weight:             0.9989
+---------------------------
+Parameter importances
+---------------------------
+P.Inv:              1.0000
+Gamma:              -
+Gamma-Inv:          -
+Frequencies:        1.0000
+---------------------------
+Model averaged estimates
+---------------------------
+P.Inv:              0.6381
+Alpha:              -
+Alpha-P.Inv:        -
+P.Inv-Alpha:        -
+Frequencies:        0.3132 0.3324 0.1379 0.2164 
+
+Commands:
+  > phyml  -i concat.fasta -m 012314 -f m -v e -a 0 -c 1 -o tlr
+  > raxmlHPC-SSE3 -s concat.fasta -c 1 -m GTRCATIX -n EXEC_NAME -p PARSIMONY_SEED
+  > raxml-ng --msa concat.fasta --model TVM+I
+  > paup -s concat.fasta
+  > iqtree -s concat.fasta -m TVM+I
+
+AIC       model              K            lnL          score          delta    weight
+--------------------------------------------------------------------------------
+       1  TVM+I              8   -307647.9544    615369.9088         0.0000    0.9049
+       2  GTR+I              9   -307649.2070    615374.4140         4.5052    0.0951
+       3  TPM2uf+I           6   -307788.1403    615646.2806       276.3718    0.0000
+       4  TIM2+I             7   -307795.4769    615662.9539       293.0451    0.0000
+       5  TPM1uf+I           6   -307891.0051    615852.0103       482.1015    0.0000
+       6  TIM1+I             7   -307919.7700    615911.5400       541.6312    0.0000
+       7  TIM3+I             7   -308104.7346    616281.4693       911.5605    0.0000
+       8  TrN+I              6   -308118.6297    616307.2593       937.3505    0.0000
+       9  TPM3uf+I           6   -308136.4517    616342.9034       972.9946    0.0000
+      10  HKY+I              5   -308160.7880    616389.5761      1019.6673    0.0000
+--------------------------------------------------------------------------------
+Best model according to AIC
+---------------------------
+Model:              TVM+I
+lnL:                -307647.9544
+Frequencies:        0.3132 0.3324 0.1379 0.2164
+Subst. Rates:       1.3493 8.8404 0.9441 0.2644 8.8404 1.0000 
+Inv. sites prop:    0.6381
+Gamma shape:        -
+Score:              615369.9088
+Weight:             0.9049
+---------------------------
+Parameter importances
+---------------------------
+P.Inv:              1.0000
+Gamma:              -
+Gamma-Inv:          -
+Frequencies:        1.0000
+---------------------------
+Model averaged estimates
+---------------------------
+P.Inv:              0.6381
+Alpha:              -
+Alpha-P.Inv:        -
+P.Inv-Alpha:        -
+Frequencies:        0.3132 0.3324 0.1379 0.2164 
+
+Commands:
+  > phyml  -i concat.fasta -m 012314 -f m -v e -a 0 -c 1 -o tlr
+  > raxmlHPC-SSE3 -s concat.fasta -c 1 -m GTRCATIX -n EXEC_NAME -p PARSIMONY_SEED
+  > raxml-ng --msa concat.fasta --model TVM+I
+  > paup -s concat.fasta
+  > iqtree -s concat.fasta -m TVM+I
+
+AICc      model              K            lnL          score          delta    weight
+--------------------------------------------------------------------------------
+       1  TVM+I              8   -307647.9544    615369.9088         0.0000    0.9049
+       2  GTR+I              9   -307649.2070    615374.4140         4.5052    0.0951
+       3  TPM2uf+I           6   -307788.1403    615646.2806       276.3718    0.0000
+       4  TIM2+I             7   -307795.4769    615662.9539       293.0451    0.0000
+       5  TPM1uf+I           6   -307891.0051    615852.0103       482.1015    0.0000
+       6  TIM1+I             7   -307919.7700    615911.5400       541.6312    0.0000
+       7  TIM3+I             7   -308104.7346    616281.4693       911.5605    0.0000
+       8  TrN+I              6   -308118.6297    616307.2593       937.3505    0.0000
+       9  TPM3uf+I           6   -308136.4517    616342.9034       972.9946    0.0000
+      10  HKY+I              5   -308160.7880    616389.5761      1019.6673    0.0000
+--------------------------------------------------------------------------------
+Best model according to AICc
+---------------------------
+Model:              TVM+I
+lnL:                -307647.9544
+Frequencies:        0.3132 0.3324 0.1379 0.2164
+Subst. Rates:       1.3493 8.8404 0.9441 0.2644 8.8404 1.0000 
+Inv. sites prop:    0.6381
+Gamma shape:        -
+Score:              615369.9088
+Weight:             0.9049
+---------------------------
+Parameter importances
+---------------------------
+P.Inv:              1.0000
+Gamma:              -
+Gamma-Inv:          -
+Frequencies:        1.0000
+---------------------------
+Model averaged estimates
+---------------------------
+P.Inv:              0.6381
+Alpha:              -
+Alpha-P.Inv:        -
+P.Inv-Alpha:        -
+Frequencies:        0.3132 0.3324 0.1379 0.2164 
+
+Commands:
+  > phyml  -i concat.fasta -m 012314 -f m -v e -a 0 -c 1 -o tlr
+  > raxmlHPC-SSE3 -s concat.fasta -c 1 -m GTRCATIX -n EXEC_NAME -p PARSIMONY_SEED
+  > raxml-ng --msa concat.fasta --model TVM+I
+  > paup -s concat.fasta
+  > iqtree -s concat.fasta -m TVM+I
+Summary:
+
+Partition 1/1:
+                         Model         Score        Weight
+----------------------------------------------------------
+       BIC               TVM+I   615707.7490        0.9989
+       AIC               TVM+I   615369.9088        0.9049
+      AICc               TVM+I   615369.9088        0.9049
+
+Execution results written to model.out
+Starting tree written to model.tree
