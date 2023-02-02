@@ -35,11 +35,14 @@ def get_named_fastas(directory):
     '''
     with open("FiltredScientificNames_list.txt", encoding= 'utf8') as doc:
         new_names = doc.read().splitlines()
+
     if os.path.exists(directory):
         shutil.rmtree(directory)
     if not os.path.exists(directory):
         os.makedirs(directory)
+
     fasta_files = glob.glob("Squences_Fasta/*.fasta")
+
     for fasta in fasta_files:
         records = list(SeqIO.parse(fasta, "fasta"))
         for record, new_name in zip(records, new_names):
@@ -47,6 +50,7 @@ def get_named_fastas(directory):
             record.id = new_name.replace("'", "")
             record.description = ""
         new_file_name = os.path.basename(fasta).split(".")[0] + "_updated.fasta"
+
         with open(f"{directory}/{new_file_name}", "w", encoding= 'utf8') as doc:
             SeqIO.write(records, doc, "fasta")
 
@@ -62,15 +66,16 @@ def fastas_aligner(input_folder,out_folder):
 
     Returns:
        none
-
     '''
     folder = input_folder
     if not os.path.isdir(out_folder):
         os.makedirs(out_folder)
+
     fasta_files = [doc for doc in os.listdir(folder) if doc.endswith('.fasta')]
+
     for fasta in fasta_files:
         doc = open(f"{out_folder}/_aligned{fasta}","w", encoding='utf8')
-        subprocess.run(['mafft', folder + '/' + fasta], stdout = doc)
+        subprocess.run(['mafft', folder + '/' + fasta], stdout = doc, check= False)
 
 def fastas_concatenator(input_folder):
     '''
@@ -103,7 +108,7 @@ def fastas_concatenator(input_folder):
                 else:
                     seq = line.strip()
                     concatenated_fasta[name].append(seq)
-    subprocess.run(f'rm -r {folder}', shell = True)
+    subprocess.run(f'rm -r {folder}', shell = True, check = False)
     with open ("concat.fasta","w", encoding='utf8') as doc:
         for key, value in concatenated_fasta.items():
             doc.write(f'{key}\n')
@@ -114,3 +119,4 @@ if __name__ == "__main__":
     get_named_fastas('named_Fastas')
     fastas_aligner('named_Fastas','alignedFastas')
     fastas_concatenator('alignedFastas')
+    print('Completed!')

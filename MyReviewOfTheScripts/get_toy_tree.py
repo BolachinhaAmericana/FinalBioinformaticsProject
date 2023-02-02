@@ -1,23 +1,23 @@
-#!/usr/bin/python3
-'''Created Trees'''
+#!/usr/bin/python
+'''Tree design'''
 
 import sys
 import toytree # Uma biblioteca para o desenho gráfico de árvores
 import toyplot.pdf
+from essentials import get_user_arguments
 
-def get_user_input(max_lilelyhood_tree, mr_bayes_tree):
+def get_user_inputr(max_lilelyhood_tree, mr_bayes_tree):
     '''Gets user Inputs'''
     max_lilelyhood_tree = sys.argv[1]
     mr_bayes_tree = sys.argv[2]
     return max_lilelyhood_tree, mr_bayes_tree
 
-def get_user_args(specie_name):
+def get_user_argsr(specie_name):
     '''Gets user inputs'''
     specie_name = sys.argv[3]
     specie_name = specie_name.replace(" ", "_")
     print(specie_name)
     return specie_name
-
 
 def open_tree_file(tree_file):
     '''Opens tree file'''
@@ -52,7 +52,6 @@ def style_ml_tree(specie_name,tre):
     # Guarda os valores que retornam do desenho da arvore em canvas, axes, mark
     ml_canvas = tre.draw(height=900,**my_style)
     return ml_canvas
-
 def mb_tree_styler(specie_name, tre):
     ''' sets the style for the mb tree'''
     # Uma lista com as diversas cores para os nomes das espécies da árvores
@@ -84,8 +83,9 @@ def write_to_pdf(ml_canvas,mb_canvas):
     toyplot.pdf.render(mb_canvas , "tree-plot_MB.pdf")
 
 if __name__ == '__main__':
-    ml_tree, mr_bayes = get_user_input(max_lilelyhood_tree='', mr_bayes_tree='')
-    specie = get_user_args(specie_name='')
+    ml_tree, mr_bayes, specie = get_user_arguments(3)
+    specie= specie.replace(" ", "_")
+
     tree = open_tree_file(tree_file=ml_tree)
     max_likelyhood_canvas = style_ml_tree(specie,tree)
     tree = open_tree_file(tree_file=mr_bayes)
