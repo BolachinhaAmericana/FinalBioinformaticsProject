@@ -257,6 +257,6 @@ We used external help from ChatGPT, an AI language model developed by OpenAI to 
 for genes in genoma:
   print('Obrigado, Thank you, You migth need be able to take Excalibur from the stone')
   print('Buzzer Fireman!')
-  print('Made The Force Be With You')
+  print('May The Force Be With You')
 ```
 
