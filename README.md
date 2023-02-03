@@ -17,7 +17,7 @@ This program works using a set of files working with input and outputs. However 
 $ git clone https://gitlab.com/LabBinf2022/team-b/auto_magic_phylogenetic.git
 # This line downloads the magic_phylogenetic directory with our project
 $ cd auto_magic_phylogenetic
-$ bash executer.sh -s <term> -r <rank> -p <proximity> -i <similarity>
+$ bash executer.sh -s <Species Name> -r <Taxonomy Rank> -p <Proximity> -i <Similarity>
 ```
 
 ### FAQ
