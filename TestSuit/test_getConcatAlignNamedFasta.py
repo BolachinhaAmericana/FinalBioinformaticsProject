@@ -1,7 +1,6 @@
 #################MYTEST###############################
 
 import os
-import subprocess
 from scripts.getConcatAlignNamedFasta import  fastas_Aligner, fastas_Concatenator
 
 
