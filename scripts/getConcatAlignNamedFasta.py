@@ -26,8 +26,8 @@ def getNamed_fastas(dir):
        none
 
     '''
-    with open("FiltredScientificNames_list.txt") as f:
-        new_names = f.read().splitlines()
+    with open("FiltredScientificNames_list.txt") as doc:
+        new_names = doc.read().splitlines()
     if os.path.exists(dir):
         shutil.rmtree(dir)
     if not os.path.exists(dir):
@@ -39,12 +39,12 @@ def getNamed_fastas(dir):
             record.id = new_name.replace(" ", "_") 
             record.description = ""
         new_file_name = os.path.basename(fasta).split(".")[0] + "_updated.fasta"
-        with open(f"{dir}/{new_file_name}", "w") as f:
-            SeqIO.write(records, f, "fasta")
+        with open(f"{dir}/{new_file_name}", "w") as doc:
+            SeqIO.write(records, doc, "fasta")
 
 
 
-def fastas_Aligner(inputFolder,outfolder):
+def fastas_Aligner(input_Folder,out_folder):
     '''
     What for:
         This function aligns the fasta files in a specified input folder using the MAFFT alignment tool.
@@ -57,16 +57,16 @@ def fastas_Aligner(inputFolder,outfolder):
        none
 
     '''
-    folder = inputFolder
-    if not os.path.isdir(outfolder):
-        os.makedirs(outfolder)
-    fasta_Files = [f for f in os.listdir(folder) if f.endswith('.fasta')]
+    folder = input_Folder
+    if not os.path.isdir(out_folder):
+        os.makedirs(out_folder)
+    fasta_Files = [doc for doc in os.listdir(folder) if doc.endswith('.fasta')]
     for fasta in fasta_Files:
-        f = open(f"{outfolder}/_aligned{fasta}","w")
-        subprocess.run(['mafft', folder + '/' + fasta], stdout = f)
+        doc = open(f"{out_folder}/_aligned{fasta}","w")
+        subprocess.run(['mafft', folder + '/' + fasta], stdout = doc)
 
 
-def fastas_Concatenator(inputFolder):
+def fastas_Concatenator(input_Folder):
     '''
     What for:
         This function concatenates all the fasta files in the directory and stores the concatenated fasta in a new file called "concat.fasta" in the current directory. 
@@ -85,26 +85,26 @@ def fastas_Concatenator(inputFolder):
         None
 
     '''
-    folder = inputFolder
-    concatenatedFasta = {}
+    folder = input_Folder
+    concatenated_Fasta = {}
     seq = ""
     name = ""
     for fasta in os.listdir(folder):
-        with open (f"{folder}/{fasta}","r") as r:
-            for line in r:
+        with open (f"{folder}/{fasta}","r") as read:
+            for line in read:
                 if line.startswith(">"):
                     name = line.strip()
-                    if name not in concatenatedFasta:
-                        concatenatedFasta[name] = []
+                    if name not in concatenated_Fasta:
+                        concatenated_Fasta[name] = []
                 else:
                     seq = line.strip()
-                    concatenatedFasta[name].append(seq)
+                    concatenated_Fasta[name].append(seq)
     subprocess.run(f'rm -r {folder}', shell = True)
-    with open ("concat.fasta","w") as f:
-        for key, value in concatenatedFasta.items():
-            f.write('%s\n' %(key))
+    with open ("concat.fasta","w") as doc:
+        for key, value in concatenated_Fasta.items():
+            doc.write('%s\n' %(key))
             for i in value:
-                f.write(i+"\n")
+                doc.write(i+"\n")
 
 if __name__ == "__main__":
     getNamed_fastas('named_Fastas')
