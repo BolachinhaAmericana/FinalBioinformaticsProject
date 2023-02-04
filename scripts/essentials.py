@@ -2,7 +2,23 @@
 '''
 This file has some general functions that will be user throughout the programs
 '''
+import sys
 from Bio import Entrez
+
+def get_user_arguments(number_of_args: int):
+    '''get user arguments'''
+    try:
+        args = [sys.argv[number + 1] for number in range(number_of_args)]
+        if number_of_args == 1:
+            args = args + ['Empty']
+            return args[0]
+        else :
+            return args
+            
+    except IndexError:
+        sys.exit('''
+        Something wrong with the input arguments!! please check README.md
+        ''')
 
 def entrez_search(database: str, term: str): ######
     '''
@@ -50,7 +66,7 @@ def entrez_fetch(database: str, web_environment, query_key): ######
     fetch_result = fetch_handle.read()
     return fetch_result
 
-def print_to_file(output_path, mode, output): ######
+def print_to_file(output_path, mode, output):
     '''
     prints value to file
     Arguments:
@@ -64,7 +80,7 @@ def print_to_file(output_path, mode, output): ######
     print(output, file= output_file)
     return None
 
-def file_reader(path: str): ######
+def file_reader(path: str):
     '''
     reads file to var
     Arguments:
