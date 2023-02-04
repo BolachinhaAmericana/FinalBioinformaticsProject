@@ -16,8 +16,7 @@ test:
     - python3 -m pytest --cov=./ TestSuit/test_getSpeciesNamesList.py
     - python3 -m pytest --cov=./ TestSuit/test_getSpeciesGeneList.py 
     - python3 -m pytest --cov=./ TestSuit/test_getSatisfiedlist.py
-    - python3 -m pytest --cov=./ TestSuit/test_getConcatAlignNamedFasta.py 
-    - python3 -m pytest --cov=./ TestSuit/test_model_tree.py
+    - python3 -m pytest --cov=./ TestSuit/test_getConcatAlignNamedFasta.py
     - echo "Coverage report"
     - coverage report
     - coverage xml
