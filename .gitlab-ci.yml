@@ -12,7 +12,9 @@ test:
   stage: test
   script:
     - echo "Running tests with coverage measurement"
+    - python3 -m pytest --cov=./ TestSuit/test_essentials.py
     - python3 -m pytest --cov=./ TestSuit/test_getSpeciesRankName.py 
+    - python3 -m pytest --cov=./ TestSuit/test_getToyTree.py
     - python3 -m pytest --cov=./ TestSuit/test_getSpeciesNamesList.py
     - python3 -m pytest --cov=./ TestSuit/test_getSatisfiedlist.py
     - python3 -m pytest --cov=./ TestSuit/test_getConcatAlignNamedFasta.py
