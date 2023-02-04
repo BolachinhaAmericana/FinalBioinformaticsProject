@@ -1,4 +1,4 @@
-from scripts.getML_Tree import getBestModel, raxMLExecutor
+from scripts.getML_Tree import raxml_executor
 import os
 
 def test_getBest():
@@ -6,5 +6,5 @@ def test_getBest():
 
 def test_raxMLEx():
     lastLine = "23  +I"
-    raxMLExecutor(lastLine)
+    raxml_executor(lastLine)
     assert os.path.isfile("RAxML_bootstrap.nwk")
