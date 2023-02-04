@@ -1,5 +1,3 @@
-#Made by Silva
-
 #Doker commands:
 #docker build -t imagename .
 #docker run --name "conteiner name" -v $(pwd):/lab -it imagename
@@ -27,8 +25,8 @@ rule all:
         directory("Squences_Fasta"),
         "named_Fastas",
         "concat.fasta",
-        "MyBayes.con.tre",
         "RAxML_bootstrap.nwk",
+        "MyBayes.con.tre",
         "tree-plot_bootstrap_ML.pdf",
         "tree-plot_MB.pdf",
          directory("output_dir")
@@ -43,8 +41,8 @@ rule copy_outputs:
         "Squences_Fasta",
         "named_Fastas",
         "concat.fasta",
+        "RAxML_bootstrap.nwk",
         "MyBayes.con.tre",
-        "RAxML_bootstrap.nwk", 
         "tree-plot_bootstrap_ML.pdf",
         "tree-plot_MB.pdf"
     output:
@@ -56,7 +54,7 @@ rule copy_outputs:
             if os.path.isdir(item):
                 shutil.copytree(item, "output_dir"+"/"+os.path.basename(item))
             else: 
-                shutil.copy(item, "output_dir")                
+                shutil.copy(item, "output_dir")                 
          
 rule getSpeciesRankName:
     params:
@@ -126,24 +124,24 @@ rule getConcatAlignNamedFasta:
         python3 scripts/getConcatAlignNamedFasta.py
         """ 
 
-rule getBayes_Tree:
-    input:
-        rules.getConcatAlignNamedFasta.output    
-    output:
-        "MyBayes.con.tre"
-    shell:
-        """
-        python3 scripts/getBayes_Tree.py
-        """
-
 rule getMl_Tree:
     input:
-       rules.getBayes_Tree.output
+       rules.getConcatAlignNamedFasta.output
     output:
         "RAxML_bootstrap.nwk"
     shell:
         """
         python3 scripts/getML_Tree.py 
+        """        
+
+rule getBayes_Tree:
+    input:
+        rules.getMl_Tree.output    
+    output:
+        "MyBayes.con.tre"
+    shell:
+        """
+        python3 scripts/getBayes_Tree.py
         """
 
 rule get_toy_tree:
@@ -163,18 +161,5 @@ rule get_toy_tree:
         """
 
 rule clean:
-    input:
-        "RankName.txt",
-        "ScientificNames_list.txt",
-        directory("GeneLists"),
-        "FiltredScientificNames_list.txt",
-        "FiltredGeneNames_list.txt",
-        directory("Squences_Fasta"),
-        "named_Fastas",
-        "concat.fasta",
-        "MyBayes.nex.con.tre",
-        "RAxML_bootstrap.nwk",
-        "tree-plot_bootstrap_ML.pdf",
-        "tree-plot_MB.pdf"
     shell:
-        "rm -rf {input}"
+        "rm -rf FiltredGeneNames_list.txt FiltredScientificNames_list.txt GeneLists MyBayes.ckp MyBayes.ckp~ MyBayes.con.tre MyBayes.lstat MyBayes.mcmc MyBayes.parts MyBayes.pstat MyBayes.run1.p MyBayes.run1.t MyBayes.run2.p MyBayes.run2.t MyBayes.trprobs MyBayes.tstat MyBayes.vstat RAxML_bootstrap.nwk RAxML_info.nwk RankName.txt ScientificNames_list.txt Squences_Fasta concat.fasta concat.nex model.ckp model.log model.out model.tree model.txt named_Fastas tree-plot_MB.pdf tree-plot_bootstrap_ML.pdf"
