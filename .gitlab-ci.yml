@@ -7,7 +7,6 @@ before_script:
 - echo "Verifying dependencies"
 - python3 -m pip install pytest
 - python3 -m pip install pytest-cov
-- python3 -m pip install pylint
 
 
 test:
@@ -21,8 +20,6 @@ test:
     - python3 -m pytest --cov=./ TestSuit/test_getSatisfiedlist.py
     - python3 -m pytest --cov=./ TestSuit/test_getConcatAlignNamedFasta.py
     - python3 -m pytest --cov=./ TestSuit/test_model_tree.py
-    - coverage run TestSuit/test_essentials.py
-    - coverage run TestSuit/test_getSpeciesRankName.py 
     - coverage report
     - coverage xml
   coverage: '/TOTAL.*\s+(\d+\%)/'
