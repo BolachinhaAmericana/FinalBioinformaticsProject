@@ -7,6 +7,10 @@ before_script:
 - echo "Verifying dependencies"
 - python3 -m pip install pytest
 - python3 -m pip install pytest-cov
+- python3 -m pip install pylint
+
+# Run PyLint on your project's code
+- pylint my_project
 
 test:
   stage: test
