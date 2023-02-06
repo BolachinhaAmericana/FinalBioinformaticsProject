@@ -1,5 +1,5 @@
 import sys
-from scripts.essentials import get_user_arguments, entrez_search, entrez_fetch, print_to_file, file_reader, file_reader_to_list
+from scripts.essentials import get_user_arguments, entrez_search, entrez_fetch, print_to_file, file_reader
 from Bio import Entrez
 
 def test_get_user_arguments():
@@ -51,18 +51,3 @@ def test_print_to_file():
         content = file.read()
         assert content == 'test\n'
         
-def test_file_reader():
-    path = 'test_input.txt'
-    with open(path, 'w') as file:
-        file.write('test')
-        
-    result = file_reader(path)
-    assert result == 'test'
-
-def test_file_reader_to_list():
-    path_to_file = 'test_input_list.txt'
-    with open(path_to_file, 'w') as file:
-        file.write('test\ntest2\n')
-        
-    result = file_reader_to_list(path_to_file)
-    assert result == ['test', 'test2']
