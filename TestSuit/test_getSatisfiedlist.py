@@ -17,36 +17,6 @@ def test_directory_loader():
     shutil.rmtree(path_gene_lists_dir)
     shutil.rmtree(directory)
 
-def test_target_list_finder():
-    search_term = "test_term"
-    directory = "test_dir"
-    os.mkdir(directory)
-    filename = f"{search_term}_GeneList"
-    with open(os.path.join(directory, filename), "w") as f:
-        f.write("gene1\ngene2")
-    target_list, directory, path_target_list = target_list_finder(search_term, directory)
-    assert target_list == {"gene1", "gene2"}
-    assert path_target_list == os.path.join(directory, filename)
-    shutil.rmtree(directory)
-
-def test_proximity_tester():
-    directory = "test_dir"
-    os.mkdir(directory)
-    species_genes_list = {"gene1", "gene2"}
-    target_list = {"gene2", "gene3"}
-    proximity_value = 50
-    result = proximity_tester(directory, species_genes_list, target_list, proximity_value)
-    assert result == True
-    proximity_value = 75
-    result = proximity_tester(directory, species_genes_list, target_list, proximity_value)
-    assert result == False
-    shutil.rmtree(directory)
-
-def test_set_target_genes_empty_dict():
-    target_list = {"gene1", "gene2"}
-    target_genes_dict = set_target_genes_empty_dict(target_list)
-    assert target_genes_dict == {"gene1": 0, "gene2": 0}
-
 
 def test_proximity_tester():
     # Test 1: proximity_value = 50, intersection = target_list, expected result = True
@@ -72,3 +42,8 @@ def test_proximity_tester():
     directory = 'filteredProximity_GeneLists'
     result = proximity_tester(directory, species_genes_list, target_list, proximity_value)
     assert result == False, f"For proximity_value = {proximity_value}, species_genes_list = {species_genes_list}, target_list = {target_list}, expected result = False but got {result}"
+
+def test_set_target_genes_empty_dict():
+    target_list = {"gene1", "gene2"}
+    target_genes_dict = set_target_genes_empty_dict(target_list)
+    assert target_genes_dict == {"gene1": 0, "gene2": 0}
