@@ -1,5 +1,3 @@
-#################MYTEST###############################
-
 import os
 from scripts.getConcatAlignNamedFasta import  fastas_Aligner, fastas_Concatenator
 
