@@ -1,0 +1,51 @@
+#NEXUS
+[ID: 1798795385]
+begin taxa;
+	dimensions ntax=16;
+	taxlabels
+		Pyrgilauda_davidiana
+		Pyrgilauda_blanfordi
+		Prunella_fulvescens
+		Chloebia_gouldiae
+		Montifringilla_nivalis
+		Pyrgilauda_ruficollis
+		Prunella_strophiata
+		Padda_oryzivora
+		Prunella_rubeculoides
+		Montifringilla_adamsi
+		Onychostruthus_taczanowskii
+		Prunella_himalayana
+		Passer_ammodendri
+		Passer_domesticus
+		Montifringilla_henrici
+		Prunella_montanella
+		;
+end;
+begin trees;
+	translate
+		1	Pyrgilauda_davidiana,
+		2	Pyrgilauda_blanfordi,
+		3	Prunella_fulvescens,
+		4	Chloebia_gouldiae,
+		5	Montifringilla_nivalis,
+		6	Pyrgilauda_ruficollis,
+		7	Prunella_strophiata,
+		8	Padda_oryzivora,
+		9	Prunella_rubeculoides,
+		10	Montifringilla_adamsi,
+		11	Onychostruthus_taczanowskii,
+		12	Prunella_himalayana,
+		13	Passer_ammodendri,
+		14	Passer_domesticus,
+		15	Montifringilla_henrici,
+		16	Prunella_montanella
+		;
+   [Note: This tree contains information on the topology, 
+          branch lengths (if present), and the probability
+          of the partition indicated by the branch.]
+   tree con_50_majrule = (1:1.130427e-02,2:2.523839e-02,((((((((3:2.678836e-02,(7:2.740927e-02,16:2.715744e-02)1.000:7.151598e-03)1.000:1.661415e-02,9:5.678793e-02)1.000:2.391856e-02,12:4.784719e-02)1.000:3.184176e-02,(4:5.335863e-02,8:5.490037e-02)1.000:3.438876e-02)1.000:2.546239e-02,(13:5.583362e-02,14:5.338335e-02)1.000:2.582669e-02)1.000:2.632752e-02,((5:2.059029e-03,15:9.855061e-04)1.000:3.300469e-02,10:2.605936e-02)1.000:2.383187e-02)1.000:1.371097e-02,6:4.482223e-02)1.000:2.047738e-02,11:2.534422e-02)1.000:1.551437e-02);
+
+   [Note: This tree contains information only on the topology
+          and branch lengths (median of the posterior probability density).]
+   tree con_50_majrule = (1:1.130427e-02,2:2.523839e-02,((((((((3:2.678836e-02,(7:2.740927e-02,16:2.715744e-02):7.151598e-03):1.661415e-02,9:5.678793e-02):2.391856e-02,12:4.784719e-02):3.184176e-02,(4:5.335863e-02,8:5.490037e-02):3.438876e-02):2.546239e-02,(13:5.583362e-02,14:5.338335e-02):2.582669e-02):2.632752e-02,((5:2.059029e-03,15:9.855061e-04):3.300469e-02,10:2.605936e-02):2.383187e-02):1.371097e-02,6:4.482223e-02):2.047738e-02,11:2.534422e-02):1.551437e-02);
+end;

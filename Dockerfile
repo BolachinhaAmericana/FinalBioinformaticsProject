@@ -1,22 +1,36 @@
+FROM debian:buster-slim AS builder
+WORKDIR /modeltest
+
+RUN apt update \
+    && apt install -y \
+    autoconf \
+    automake \
+    libtool \
+    bison \
+    flex \
+    cmake \
+    build-essential \
+    git
+RUN git clone https://github.com/ddarriba/modeltest 
+RUN cd modeltest && mkdir build && cd build \
+    && cmake .. && make
+
+
 FROM snakemake/snakemake
 
-RUN apt-get update
-RUN apt-get install --yes build-essential
+RUN apt update
+RUN apt-get install software-properties-common --yes
+RUN python3 -m pip install requests biopython
+RUN apt-get install mafft --yes
 
-RUN pip3 install requests biopython
-RUN pip3 install taxoniq
+COPY --from=builder /modeltest/modeltest/bin/modeltest-ng /bin
 
-RUN wget https://github.com/shenwei356/taxonkit/releases/download/v0.14.0/taxonkit_linux_amd64.tar.gz
-RUN tar -zxvf *.tar.gz 
-RUN cp taxonkit /usr/local/bin/ 
-RUN mkdir -p $HOME/bin/; cp taxonkit $HOME/bin/
+RUN python3 -m pip install seqmagick
+RUN apt-get install mrbayes --yes
+RUN python3 -m pip install toytree
+RUN apt-get install raxml
 
-#RUN wget http://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
-#RUN tar -zxvf taxdump.tar.gz
-#RUN mv *.dmp /root/.taxonkit
 
 WORKDIR /lab
 COPY Snakefile /lab
 COPY scripts /lab
-    
-

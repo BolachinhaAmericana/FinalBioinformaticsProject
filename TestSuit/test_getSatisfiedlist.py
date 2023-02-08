@@ -1,70 +1,74 @@
 import os
-import sys
 import shutil
-from scripts.getSatisfiedList import getLoadindDir, getUserArguments, getsetGoldList, getGoldEmptyDict, getGoldDictValue, getFilteredScientificName_list, FiltredGeneNames_list, verifyDir
 
-#Made by Marine feat Pinto
+from essentials import get_user_arguments
+from scripts.getSatisfiedList import (directory_loader, target_list_finder, proximity_tester, 
+                      set_target_genes_empty_dict)
 
-def test_getLoadingdir():
-    directory = getLoadindDir(geneLists_directory='GeneLists')
+def test_directory_loader():
+    path_gene_lists_dir = "test_dir"
+    os.mkdir(path_gene_lists_dir)
+    filename = "test_file.txt"
+    with open(os.path.join(path_gene_lists_dir, filename), "w") as f:
+        f.write("test")
+    directory = directory_loader(path_gene_lists_dir)
     assert os.path.exists(directory)
+    assert os.path.exists(os.path.join(directory, filename))
+    shutil.rmtree(path_gene_lists_dir)
+    shutil.rmtree(directory)
 
-def test_userArgs():
-    sys.argv = ['getUserArguments', '', '', '']
-    term, proximity, similarity = getUserArguments(sys.argv[1], sys.argv[2], sys.argv[3])
-    assert term == ''
-    assert proximity == ''
-    assert similarity == ''
+def test_target_list_finder():
+    search_term = "test_term"
+    directory = "test_dir"
+    os.mkdir(directory)
+    filename = f"{search_term}_GeneList"
+    with open(os.path.join(directory, filename), "w") as f:
+        f.write("gene1\ngene2")
+    target_list, directory, path_target_list = target_list_finder(search_term, directory)
+    assert target_list == {"gene1", "gene2"}
+    assert path_target_list == os.path.join(directory, filename)
+    shutil.rmtree(directory)
 
-def test_getSetGollist():
-    pass
+def test_proximity_tester():
+    directory = "test_dir"
+    os.mkdir(directory)
+    species_genes_list = {"gene1", "gene2"}
+    target_list = {"gene2", "gene3"}
+    proximity_value = 50
+    result = proximity_tester(directory, species_genes_list, target_list, proximity_value)
+    assert result == True
+    proximity_value = 75
+    result = proximity_tester(directory, species_genes_list, target_list, proximity_value)
+    assert result == False
+    shutil.rmtree(directory)
 
-def test_getGoldEmpty():
-    setGoldList = {'gene1', 'gene2', 'gene3'}
-    goldDict = getGoldEmptyDict(setGoldList)
-    assert goldDict == {'gene1': 0, 'gene2': 0, 'gene3': 0}
-
-def test_getGolddictValue():
-    setGoldList = set(["gene1", "gene2", "gene3"])
-    directory = "filteredProximity_GeneLists"
-    goldDict = {"gene1": 0, "gene2": 0, "gene3": 0}
-    proximity = 10
-    result = getGoldDictValue(setGoldList, directory, goldDict, proximity)
-    assert result == ({"gene1": 0, "gene2": 0, "gene3": 0}, 0), f"Expected ({{'gene1': 0, 'gene2': 0, 'gene3': 0}}, 0), but got {result}"
+def test_set_target_genes_empty_dict():
+    target_list = {"gene1", "gene2"}
+    target_genes_dict = set_target_genes_empty_dict(target_list)
+    assert target_genes_dict == {"gene1": 0, "gene2": 0}
 
 
-def test_getFilteredScientificName_list():
-    test_dir = 'test_dir'
-    os.mkdir(test_dir)
-    open(os.path.join(test_dir, 'file1_GeneList'), 'w').close()
-    open(os.path.join(test_dir, 'file2_GeneList'), 'w').close()
-    getFilteredScientificName_list(test_dir)
-    with open("FiltredScientificNames_list.txt", 'r') as f:
-        scientific_names = f.read().strip().split("\n")
-    assert type(scientific_names) == list
-    assert len(scientific_names) > 0
-    shutil.rmtree(test_dir)
-    os.remove("FiltredScientificNames_list.txt")   
-    
-def test_FiltredGeneNames_list():
-    directory = "test_directory"
-    goldDict = {'gene1': 10, 'gene2': 5, 'gene3': 7}
-    intresectCount = 20
-    similarity = 0.5
-    os.makedirs(directory, exist_ok=True)
-    result = FiltredGeneNames_list(directory, goldDict, intresectCount, similarity)
-    assert type(result) == dict
-    os.rmdir(directory)
+def test_proximity_tester():
+    # Test 1: proximity_value = 50, intersection = target_list, expected result = True
+    target_list = set(['gene1', 'gene2', 'gene3'])
+    species_genes_list = set(['gene1', 'gene2', 'gene3'])
+    proximity_value = 50
+    directory = 'filteredProximity_GeneLists'
+    result = proximity_tester(directory, species_genes_list, target_list, proximity_value)
+    assert result == True, f"For proximity_value = {proximity_value}, species_genes_list = {species_genes_list}, target_list = {target_list}, expected result = True but got {result}"
 
-def test_verifyDir():
-    # create a test directory and a test file
-    test_dir = 'test_dir'
-    os.mkdir(test_dir)
-    open(os.path.join(test_dir, 'test_file.txt'), 'a').close()
+    # Test 2: proximity_value = 75, intersection = target_list, expected result = True
+    target_list = set(['gene1', 'gene2', 'gene3'])
+    species_genes_list = set(['gene1', 'gene2', 'gene3'])
+    proximity_value = 75
+    directory = 'filteredProximity_GeneLists'
+    result = proximity_tester(directory, species_genes_list, target_list, proximity_value)
+    assert result == True, f"For proximity_value = {proximity_value}, species_genes_list = {species_genes_list}, target_list = {target_list}, expected result = True but got {result}"
 
-    # call the verifyDir function with the test directory and test file
-    pathToGoldList = os.path.join(test_dir, 'test_file.txt')
-    verifyDir(test_dir, pathToGoldList)
-
-    # check if the test directory has been deleted
-    assert not os.path.exists(test_dir)
+    # Test 3: proximity_value = 75, intersection = 2, expected result = False
+    target_list = set(['gene1', 'gene2', 'gene3'])
+    species_genes_list = set(['gene1', 'gene2'])
+    proximity_value = 75
+    directory = 'filteredProximity_GeneLists'
+    result = proximity_tester(directory, species_genes_list, target_list, proximity_value)
+    assert result == False, f"For proximity_value = {proximity_value}, species_genes_list = {species_genes_list}, target_list = {target_list}, expected result = False but got {result}"

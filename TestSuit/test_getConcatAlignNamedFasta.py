@@ -1,22 +1,16 @@
 #################MYTEST###############################
 
 import os
-import shutil
-from scripts.getConcatAlignNamedFasta import  fastas_Aligner, getNamed_fastas, fastas_Concatenator
+from scripts.getConcatAlignNamedFasta import  fastas_Aligner, fastas_Concatenator
+
 
 def test_Aligned_Fastas():
-    fastas_Aligner("named_Fastas", "alignedFastas")
-    assert os.path.exists("alignedFastas")
+    fastas_Aligner("TestSuit/named_Fastas", "TestSuit/alignedFastas")
+    assert os.path.exists("TestSuit/alignedFastas")
 
-def test_getNamed_Fastas():
-    dir = "named_Fastas"
-    getNamed_fastas(dir)
-    assert os.path.exists(dir)
-    assert len(os.listdir(dir)) > 0
 
 def test_Concatenator():
-    fastas_Concatenator('alignedFastas')
+    fastas_Concatenator('TestSuit/alignedFastas')
     assert os.path.isfile("concat.fasta")
-    
 
 
