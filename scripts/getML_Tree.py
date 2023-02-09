@@ -15,9 +15,9 @@ def get_best_model(fasta):
 def raxml_executor(last_line):
     '''executes raxml'''
     if "+I" in last_line:
-        subprocess.run("raxmlHPC -m GTRCATI -p 1234567 -x 1234567 -# autoFC -s concat.fasta -n nwk", shell = True)
+        subprocess.run("raxmlHPC -f a -m GTRCATI -p 1234567 -x 1234567 -# autoFC -s concat.fasta -n nwk", shell = True)
     else:
-        subprocess.run("raxmlHPC -m GTRCAT -p 1234567 -x 1234567 -# autoFC -s concat.fasta -n nwk", shell = True)
+        subprocess.run("raxmlHPC -f a -m GTRCAT -p 1234567 -x 1234567 -# autoFC -s concat.fasta -n nwk", shell = True)
     #subprocess.run("rm -r model*", shell = True)
     #subprocess.run("RAxML_info.nwk", shell = True)
 

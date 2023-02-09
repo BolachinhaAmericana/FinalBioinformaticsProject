@@ -25,20 +25,21 @@ def style_ml_tree(specie_name,tre):
             "stroke": toytree.colors[2],
             "stroke": "darkcyan",
             "stroke": "darkorange",
-            "stroke-width": 2.5,
+            "stroke-width": 4,
         },
         "tip_labels_align": True,
         "tip_labels_colors" : color_list,
         "tip_labels_style": {
             "font-size": "10px",
         },
-        "node_labels" : tre.get_node_values("support",1,0),
+        "node_labels" : tre.get_node_values("support", 1,0),
         "node_sizes" : 7,
         "node_colors": toytree.colors[2],
     }
     # Guarda os valores que retornam do desenho da arvore em canvas, axes, mark
     ml_canvas ,axes, mark = tre.draw(height=900,**my_style)
     return ml_canvas
+
 def mb_tree_styler(specie_name, tre):
     ''' sets the style for the mb tree'''
     # Uma lista com as diversas cores para os nomes das espécies da árvores
@@ -55,7 +56,7 @@ def mb_tree_styler(specie_name, tre):
         "tip_labels_style": {
             "font-size": "10px"
         },
-        "node_labels" : tre.get_node_values("support",1,0),
+        "node_labels" : False,
         "node_sizes" : 7,
         "node_colors": toytree.colors[2],
     }
