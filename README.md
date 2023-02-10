@@ -2,6 +2,8 @@
 
 In this project, we aim to automate the creation and visualization of a phylogeny tree based on a species input by the user. Our goal is to make the process of creating such trees more efficient and accessible, allowing for for deeper insights into evolutionary relationships within the animal kingdom.
 
+## This project was developed, written and tested at [GitLab](https://gitlab.com/LabBinf2022/team-b/auto_magic_phylogenetic/-/tree/master)
+
 ## Dependencies
 The following dependencies are required to run this project:
 > Docker v20.10.22
